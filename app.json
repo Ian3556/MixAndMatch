@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Mix & Match",
+    "slug": "mix-and-match",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "mixandmatch",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mixandmatch.app"
+    },
+    "android": {
+      "package": "com.mixandmatch.app"
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "experiments": {
+      "tsconfigPaths": true
+    }
+  }
+}
