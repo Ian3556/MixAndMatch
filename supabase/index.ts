@@ -1,1 +1,1 @@
-export { getSupabaseClient } from './client';
+export { getSupabaseClient, startSupabaseAutoRefresh } from './client';

@@ -1,32 +1,143 @@
 # Mix & Match
 
-Mix & Match is planned as an AI-powered wardrobe assistant for creating outfits from a user's own wardrobe. This repository currently contains **Phase 0 only**: the technical foundation for a long-lived Expo application.
+Mix & Match is an Expo and React Native application planned as an AI-powered wardrobe assistant. The repository currently implements **Phase 1: Authentication and User Foundation**.
 
-No product functionality is implemented. There is no authentication, wardrobe, AI, camera, upload, recommendation, payment, database-schema, notification, search, or 3D-preview behavior in this phase.
+Phase 1 establishes identity, persistent sessions, protected navigation, email verification, password recovery, and private profile onboarding. It does not implement wardrobe items, uploads, AI, recommendations, subscriptions, or any other Phase 2 product feature.
 
 ## Technical baseline
 
-- Expo SDK 57
-- React Native 0.86
-- React 19.2
-- TypeScript 6 in strict mode
+- Expo SDK 57 and React Native 0.86
+- React 19.2 and TypeScript 6 in strict mode
 - React Navigation 7 with native stacks
-- Supabase JavaScript client foundation
-- Zustand state-management dependency, with no stores yet
-- ESLint 9 and Prettier 3
-- Node.js 22.13 or newer
+- Supabase JavaScript client 2
+- Zustand 5 for centralized authentication state
+- AsyncStorage for native Supabase session persistence
+- Expo Linking for authentication callback URLs
+- Vitest for focused unit tests
+- npm with `package-lock.json` as the exact dependency source of truth
 
-Expo SDK 57 is the current stable baseline at the time Phase 0 was created. The package lockfile is the source of truth for exact installed versions.
+No major dependency was upgraded for Phase 1. Run `npm ls --depth=0` for exact installed versions.
 
-## Getting started
+## Phase 1 architecture
 
-### Prerequisites
+### Application composition
+
+`app/AppRoot.tsx` composes the safe-area provider, existing theme provider, authentication bootstrap, React Navigation container, and root navigator. `AuthBootstrap` owns the one-time Supabase auth subscription, native foreground token-refresh lifecycle, initial URL handling, and live URL subscription cleanup.
+
+### Authentication boundary
+
+`services/authService.ts` is the only UI-facing boundary for Supabase Auth operations. Screens do not query Supabase directly. The service:
+
+- signs up and signs in with email/password;
+- signs out the local device session;
+- requests neutral password-recovery emails;
+- updates passwords only inside a valid recovery session;
+- resends signup verification emails;
+- restores and refreshes sessions;
+- converts recovery and verification callbacks into Supabase sessions; and
+- maps backend failures to safe application errors.
+
+Passwords and tokens are never logged or copied into navigation parameters.
+
+### Authentication-state lifecycle
+
+`store/authStore.ts` is the single client-side source of truth for session, user, profile, initialization, verification, recovery, and errors.
+
+1. The app renders a branded initialization screen.
+2. The store subscribes to auth changes and restores the persisted Supabase session once.
+3. No session renders the signed-out Auth navigator.
+4. A pending or unverified email renders only the verification screen.
+5. A recovery callback renders only the password-reset flow.
+6. A verified session loads the profile matching `session.user.id`.
+7. A missing or incomplete profile renders Profile Setup.
+8. A completed profile renders the existing Main application foundation.
+9. Configuration, session, or profile-loading failures render a recoverable error state.
+
+Profile requests are versioned and checked against the current user before results enter state. Sign-out immediately clears session, user, profile, onboarding, verification, and recovery state so a later user cannot see stale data.
+
+### Navigation protection
+
+`navigation/RootNavigator.tsx` derives the mounted navigation tree from authentication state. It does not call `navigate` after sign-in/sign-out to force a flow change. When state changes, the old navigator is unmounted and a new keyed tree is mounted, preventing protected-screen flashes, duplicate auth history, and back navigation into sign-in after authentication.
+
+The Phase 0 `Settings` and `Admin` placeholders remain registered inside the protected Main navigator; no settings or admin functionality was added.
+
+### Profile strategy
+
+The migration creates `public.profiles` with the auth user ID as its primary and foreign key. An `auth.users` trigger creates a minimal row with a nullable `display_name` and `onboarding_completed = false`.
+
+This avoids fake names while keeping profile creation reliable. Profile Setup atomically upserts the real display name and marks onboarding complete only when the database write succeeds. The trade-off is that incomplete rows intentionally allow `display_name = null`; a database constraint requires a valid 2–50 character trimmed name whenever onboarding is complete.
+
+## Environment configuration
+
+Copy the placeholder file and add local project values:
+
+```powershell
+Copy-Item .env.example .env.local
+```
+
+Required for Phase 1:
+
+| Variable                               | Purpose                  |
+| -------------------------------------- | ------------------------ |
+| `EXPO_PUBLIC_SUPABASE_URL`             | Supabase project URL     |
+| `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Public mobile client key |
+
+Expo embeds every `EXPO_PUBLIC_*` value in the application bundle. Only use the Supabase publishable/anon client key. Never add the service-role key, passwords, refresh tokens, OpenAI secrets, or other privileged credentials to mobile code or `.env.example`.
+
+Phase 0 reserved additional placeholders for later product phases. Phase 1 does not read or use them.
+
+## Supabase setup
+
+1. Create or select a Supabase project.
+2. Put its URL and publishable key in `.env.local`.
+3. Link the local `supabase/` directory to the intended project using the Supabase CLI.
+4. Review and apply `supabase/migrations/20260803000100_create_profiles.sql`.
+5. In Authentication settings, decide whether email confirmation is required.
+6. Add `mixandmatch://**` to the allowed redirect URLs. The application specifically uses:
+   - `mixandmatch://auth/verify-email`
+   - `mixandmatch://auth/reset-password`
+7. Configure email templates and SMTP delivery as required for the target environment.
+
+Example migration workflow after installing/authenticating the Supabase CLI:
+
+```powershell
+npx supabase link --project-ref YOUR_PROJECT_REF
+npx supabase db push
+```
+
+The Expo scheme already exists in `app.json`. A new development build is required when a native scheme changes. Stable email callbacks should be tested with a development or standalone build; Expo Go callback URLs are development-host-specific.
+
+Official references:
+
+- [Supabase React Native Auth quickstart](https://supabase.com/docs/guides/auth/quickstarts/react-native)
+- [Supabase native mobile deep linking](https://supabase.com/docs/guides/auth/native-mobile-deep-linking)
+- [React Navigation authentication flows](https://reactnavigation.org/docs/auth-flow/)
+- [Expo Linking](https://docs.expo.dev/versions/latest/sdk/linking/)
+
+## Database and Row Level Security
+
+The migration creates:
+
+- `public.profiles` with cascading ownership from `auth.users`;
+- display-name, avatar-URL, and completed-onboarding constraints;
+- `public.set_profiles_updated_at()` and its update trigger;
+- `public.handle_new_auth_user()` and its auth-user trigger;
+- RLS policies for own-row `SELECT`, `INSERT`, and `UPDATE` only.
+
+The unauthenticated role receives no profile privileges. Every authenticated policy compares `(select auth.uid())` with `profiles.id`. There is no unrestricted policy and no client delete policy.
+
+Detailed migration and two-user RLS verification notes are in `supabase/README.md`.
+
+## Local development
+
+Prerequisites:
 
 - Node.js 22.13 or newer
 - npm 10 or newer
-- Expo-compatible Android, iOS, or web development environment
+- an Expo-compatible Android, iOS, or web environment
+- a Supabase project with the migration applied for end-to-end auth testing
 
-### Install and run
+Install and start:
 
 ```powershell
 npm install
@@ -34,168 +145,74 @@ Copy-Item .env.example .env.local
 npm run start
 ```
 
-Use `npm run android`, `npm run ios`, or `npm run web` to target a platform. iOS builds require macOS and Xcode.
+Use `npm run android`, `npm run ios`, or `npm run web` for a target platform. iOS native builds require macOS and Xcode.
 
-### Quality checks
+## Testing and quality checks
 
 ```powershell
 npm run typecheck
 npm run lint
 npm run format:check
+npm test
 npm run validate
+npx expo install --check
+npx expo-doctor
+npx expo export --platform web
 ```
 
-Run these checks before committing. Use `npm run format` to apply formatting.
+Automated tests cover:
 
-## Environment configuration
+- valid, invalid, normalized, and empty email input;
+- password policy and matching confirmation;
+- trimmed, empty, short, and valid display names;
+- initialization, signed-out, incomplete-profile, completed-profile, expired-session, missing-profile, and sign-out cleanup states; and
+- profile fetch, update, missing-row behavior, onboarding upsert, model mapping, and error normalization.
 
-Copy `.env.example` to `.env.local` and replace example values locally. All `.env` variants are ignored except `.env.example`.
+## Manual verification checklist
 
-| Variable                               | Runtime             | Purpose                          |
-| -------------------------------------- | ------------------- | -------------------------------- |
-| `EXPO_PUBLIC_SUPABASE_URL`             | Mobile bundle       | Supabase project URL             |
-| `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Mobile bundle       | Supabase publishable client key  |
-| `EXPO_PUBLIC_REVENUECAT_PUBLIC_KEY`    | Mobile bundle       | Future RevenueCat public SDK key |
-| `EXPO_PUBLIC_STORAGE_BUCKET`           | Mobile bundle       | Future public bucket identifier  |
-| `OPENAI_API_KEY`                       | Trusted server only | Future OpenAI server credential  |
+Run these against a configured Supabase project and a development/standalone build where deep links are involved:
 
-Every `EXPO_PUBLIC_*` value is readable by application users because Expo embeds it in the bundle. Never place an OpenAI secret, Supabase service-role key, RevenueCat secret key, or other privileged credential in an `EXPO_PUBLIC_*` variable.
+- [ ] A new user can register.
+- [ ] Invalid sign-up data is rejected locally.
+- [ ] Duplicate submissions are prevented.
+- [ ] Email verification follows the project configuration.
+- [ ] A registered user can sign in.
+- [ ] Incorrect credentials display a safe error.
+- [ ] An authenticated user cannot reach auth screens through back navigation.
+- [ ] A signed-out user cannot reach the Main navigator.
+- [ ] A new verified user reaches Profile Setup.
+- [ ] Profile Setup persists the normalized display name.
+- [ ] Onboarding completion persists after app restart.
+- [ ] The authenticated session survives app restart.
+- [ ] Sign-out clears the session and profile state.
+- [ ] A second user never sees the first user’s profile.
+- [ ] Password-reset requests show the same success response for all valid emails.
+- [ ] A valid recovery link reaches Reset Password.
+- [ ] An expired or malformed recovery link shows a recoverable error.
+- [ ] RLS blocks cross-user profile reads.
+- [ ] RLS blocks cross-user profile updates.
+- [ ] Missing Supabase environment values show a clear configuration error.
+- [ ] No protected screen flashes during initialization.
+- [ ] Existing theme behavior and protected Phase 0 Main placeholders still render.
 
-The Supabase publishable key is designed for public clients, but it is not an authorization boundary. A future database phase must enforce Row Level Security before any tables are exposed.
+## Security notes
 
-## Project structure
+- Supabase persists only its session data through the official React Native-compatible storage adapter; the application never stores raw credentials.
+- Native token refresh runs only while the application is active.
+- The client is created with the public key and typed database schema.
+- UI route protection is paired with database RLS; navigation is not treated as an authorization boundary.
+- Password reset responses do not reveal whether an account exists.
+- Original backend errors are retained only as in-memory error causes for development inspection and are never rendered or logged.
+- Sensitive callback parameters are processed directly and never stored in navigation state.
 
-```text
-MixAndMatch/
-|-- app/                 # Application composition root
-|-- assets/              # Future static images, fonts, and icons
-|-- components/          # Shared, domain-neutral UI components
-|-- constants/           # Application configuration and constants
-|-- features/            # Future vertical product feature modules
-|-- hooks/               # Shared React hooks
-|-- lib/                 # Framework-neutral internal libraries
-|-- navigation/          # Typed route contracts and navigators
-|-- screens/             # Route-level screen composition
-|-- scripts/             # Cross-platform project tooling
-|-- services/            # External service boundaries
-|-- store/               # Future Zustand stores and selectors
-|-- supabase/            # Supabase client initialization boundary
-|-- theme/               # Light/dark tokens and theme provider
-|-- types/               # Shared ambient and cross-cutting types
-|-- utils/               # Small framework-neutral helpers
-|   |-- date/
-|   |-- image/
-|   |-- storage/
-|   |-- string/
-|   `-- validation/
-|-- .env.example
-|-- .editorconfig
-|-- .gitignore
-|-- .prettierrc.json
-|-- app.json
-|-- App.tsx
-|-- eslint.config.js
-|-- index.ts
-|-- package.json
-`-- tsconfig.json
-```
+## Known limitations and external configuration
 
-Empty architecture directories are intentional. Phase 0 does not add placeholder modules simply to populate them; real files should appear only when their owning feature is implemented.
+- Live sign-up, email delivery, profile persistence, RLS, and password recovery require a real Supabase project and cannot be proven by local unit tests alone.
+- Custom-scheme links do not provide the install fallback and domain ownership of universal links. Universal links are deferred until production domains are defined.
+- Email deliverability, redirect allow-list configuration, password policy, and rate limits are controlled partly by the Supabase project.
+- Profile image upload is intentionally absent. The schema and service can retain an avatar URL for future compatible work, but Phase 1 exposes no avatar UI.
+- The Phase 0 Expo transitive dependency audit note remains applicable: current advisories are moderate and an automated forced fix would require an incompatible Expo downgrade.
 
-## Architecture
+## Phase 2 readiness
 
-### Application composition
-
-`index.ts` registers the Expo root. The root `App.tsx` delegates to `app/AppRoot.tsx`, which composes infrastructure providers and the navigation container. Global providers belong here; product logic does not.
-
-### Navigation
-
-`navigation/RootNavigator.tsx` owns the top-level navigation boundary. Typed routes are reserved for:
-
-- Auth
-- Main application
-- Settings
-- Admin
-- Onboarding
-
-All five routes currently render the same minimal `FoundationScreen`. This is only enough to prove the navigation graph is wired. Each route should be replaced by a nested flow navigator when that phase begins; do not add auth gating or product screens to Phase 0.
-
-### Theme
-
-`theme/` is the only source of design tokens. It provides:
-
-- Semantic light and dark colors
-- Spacing scale
-- Typography families, sizes, weights, and line heights
-- Border-radius scale
-- Cross-platform shadow tokens
-- React Navigation theme mapping
-
-The app follows the device color scheme automatically. A future manual theme preference can be added at the provider boundary without changing component token usage.
-
-### Environment and Supabase
-
-`constants/environment.ts` reads public Expo configuration through static property access, as required by Expo's environment-variable inlining. `supabase/client.ts` creates one lazy, configuration-checked client.
-
-Supabase authentication persistence, token refresh, schema types, queries, and mutations are intentionally absent. Authentication options remain disabled until the authentication phase defines storage and lifecycle behavior explicitly.
-
-### State management
-
-Zustand is installed as the selected lightweight global-state tool, and `store/` is the ownership boundary. No stores exist yet. Prefer local component state for local concerns; add a global store only when state genuinely crosses screens or feature boundaries.
-
-Server data should not be copied into Zustand by default. A future server-state strategy should be selected when actual data flows exist.
-
-### Features and shared code
-
-Future product work should be organized as vertical modules under `features/`. A feature may own its components, hooks, types, and state. Code should move into a root shared directory only after it is reused across features and no longer carries domain ownership.
-
-`services/` owns external-system adapters. `lib/` owns internal framework-neutral capabilities. `utils/` is limited to small, deterministic helpers; it must not become a dumping ground for business logic.
-
-## Development guidelines
-
-1. Keep feature logic inside its feature boundary.
-2. Use the `@/*` alias for cross-directory imports; use relative imports within a tightly related module.
-3. Prefer named exports, except for Expo's required root component export.
-4. Define types at module boundaries and avoid `any`.
-5. Keep components accessible, responsive, and token-driven.
-6. Model loading, empty, success, and error states when real asynchronous flows are introduced.
-7. Keep secrets and privileged calls on trusted server infrastructure.
-8. Do not add dependencies until an existing platform or project capability is insufficient.
-9. Do not create shared abstractions before there are at least two real consumers.
-10. Keep navigation, domain state, service clients, and presentation concerns separate.
-
-## Coding standards
-
-- TypeScript strict mode, unchecked-index checking, and exact optional properties remain enabled.
-- ESLint is responsible for correctness rules; Prettier is responsible for formatting.
-- Use semantic theme values instead of hard-coded presentation values in components.
-- External integrations must be wrapped by a service boundary rather than imported throughout features.
-- Validate configuration at the point of use and fail with actionable errors.
-- Add tests alongside real behavior in the phase that introduces it; Phase 0 contains no business logic to unit test.
-
-## Future expansion notes
-
-- **Authentication:** replace the Auth route placeholder with a dedicated navigator, choose secure session storage, then enable Supabase auth persistence.
-- **Onboarding:** implement as an isolated flow that produces typed profile inputs.
-- **Wardrobe:** add a vertical feature module only after data ownership and Supabase RLS are designed.
-- **AI styling:** call OpenAI from trusted server or edge infrastructure; never from the mobile client with a secret key.
-- **Media:** define upload validation, image processing, retention, and storage policies before adding camera or upload screens.
-- **RevenueCat:** integrate platform SDKs only when product and entitlement identifiers are finalized.
-- **Admin:** keep administrative authorization and UI separate from consumer navigation.
-- **3D preview:** evaluate native/runtime constraints as an independent technical spike before committing it to the main app architecture.
-
-## Phase 0 readiness
-
-The foundation is ready for the next explicitly approved phase when:
-
-- `npm run validate` passes.
-- Expo dependency compatibility checks pass.
-- A production bundle/export can be generated.
-- Real environment values are configured outside version control.
-- The next phase defines its own objective, scope, data ownership, and verification plan.
-
-## Known dependency status
-
-As of 2026-08-02, `npm audit` reports 10 moderate advisories through Expo's transitive build-tool chain, rooted in `xcode@3.0.1` using `uuid@7.0.3`. There are no high or critical advisories. The flagged UUID behavior affects v3/v5/v6 buffer-writing APIs, while this dependency calls `uuid.v4()` during native project generation.
-
-The automated npm remediation proposes downgrading Expo to SDK 46, which is incompatible with this SDK 57 foundation and must not be applied. Track the upstream Expo dependency and remove this note when Expo ships a compatible patched chain.
+The codebase is structurally ready for the Digital Wardrobe phase after the migration is applied and the manual Supabase/device checklist passes. Phase 2 must add its own schema, storage policies, media validation, feature boundaries, and verification plan; none are prebuilt here.

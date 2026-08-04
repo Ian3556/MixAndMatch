@@ -1,6 +1,6 @@
 import { spawnSync } from 'node:child_process';
 
-const checks = ['typecheck', 'lint', 'format:check'];
+const checks = ['typecheck', 'lint', 'format:check', 'test'];
 const npmCli = process.env.npm_execpath;
 
 if (!npmCli) {

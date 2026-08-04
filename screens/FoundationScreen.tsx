@@ -1,15 +1,11 @@
-import type { RouteProp } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import type { RootStackParamList } from '@/navigation/types';
 import { useAppTheme, type AppTheme } from '@/theme';
 
-type FoundationRoute = RouteProp<RootStackParamList, keyof RootStackParamList>;
-
 export function FoundationScreen() {
-  const route = useRoute<FoundationRoute>();
+  const route = useRoute();
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
