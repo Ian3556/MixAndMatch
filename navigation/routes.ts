@@ -20,7 +20,49 @@ export const ONBOARDING_ROUTES = {
 } as const;
 
 export const MAIN_ROUTES = {
+  HOME_TAB: 'HomeTab',
+  EXPLORE_TAB: 'ExploreTab',
+  WARDROBE_TAB: 'WardrobeTab',
+  STYLIST_TAB: 'StylistTab',
+  PROFILE_TAB: 'ProfileTab',
+} as const;
+
+export const HOME_ROUTES = {
   HOME: 'Home',
-  SETTINGS: 'Settings',
-  ADMIN: 'Admin',
+  INSPIRATION_DETAIL: 'InspirationDetail',
+} as const;
+
+export const EXPLORE_ROUTES = {
+  EXPLORE: 'Explore',
+  SEARCH_RESULTS: 'SearchResults',
+  STYLE_CATEGORY: 'StyleCategory',
+} as const;
+
+export const WARDROBE_ROUTES = {
+  WARDROBE: 'Wardrobe',
+  ADD_ITEM_ENTRY: 'AddItemEntry',
+  ADD_ITEM_IMAGE: 'AddItemImage',
+  ADD_ITEM_DETAILS: 'AddItemDetails',
+  ADD_ITEM_REVIEW: 'AddItemReview',
+  ITEM_DETAIL: 'WardrobeItemDetail',
+} as const;
+
+export const STYLIST_ROUTES = {
+  STYLIST: 'Stylist',
+  OUTFIT_GOAL: 'OutfitGoal',
+  OUTFIT_PREFERENCES: 'OutfitPreferences',
+  OUTFIT_GENERATING: 'OutfitGenerating',
+  OUTFIT_RESULT: 'OutfitResult',
+  OUTFIT_DETAIL: 'OutfitDetail',
+} as const;
+
+export const PROFILE_ROUTES = {
+  PROFILE: 'Profile',
+  EDIT_PROFILE: 'EditProfile',
+  ACCOUNT: 'AccountSettings',
+  APPEARANCE: 'AppearanceSettings',
+  NOTIFICATIONS: 'NotificationSettings',
+  PRIVACY: 'PrivacySettings',
+  HELP: 'HelpAndSupport',
+  ABOUT: 'About',
 } as const;

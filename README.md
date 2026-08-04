@@ -1,14 +1,17 @@
 # Mix & Match
 
-Mix & Match is an Expo and React Native application planned as an AI-powered wardrobe assistant. The repository currently implements **Phase 1: Authentication and User Foundation**.
+Mix & Match is an Expo and React Native application planned as an AI-powered wardrobe assistant. The repository currently implements **Phase 2: UI Structuring** on top of the Phase 1 authentication and profile foundation.
 
-Phase 1 establishes identity, persistent sessions, protected navigation, email verification, password recovery, and private profile onboarding. It does not implement wardrobe items, uploads, AI, recommendations, subscriptions, or any other Phase 2 product feature.
+The authenticated application now provides a five-tab, nested-stack product shell for Home, Explore, Wardrobe, Stylist, and Profile. Product content is deterministic fixture data and deferred actions are labelled honestly. Wardrobe persistence, uploads, AI, recommendations, subscriptions, camera access, and 3D functionality remain unimplemented.
+
+The complete Phase 2 route map, screen/component inventories, UI conventions, verification checklist, and deferred-functionality boundary are documented in [`docs/PHASE_2_UI_STRUCTURE.md`](docs/PHASE_2_UI_STRUCTURE.md).
 
 ## Technical baseline
 
 - Expo SDK 57 and React Native 0.86
 - React 19.2 and TypeScript 6 in strict mode
 - React Navigation 7 with native stacks
+- React Navigation 7 bottom tabs for the protected product shell
 - Supabase JavaScript client 2
 - Zustand 5 for centralized authentication state
 - AsyncStorage for native Supabase session persistence
@@ -50,7 +53,7 @@ Passwords and tokens are never logged or copied into navigation parameters.
 5. A recovery callback renders only the password-reset flow.
 6. A verified session loads the profile matching `session.user.id`.
 7. A missing or incomplete profile renders Profile Setup.
-8. A completed profile renders the existing Main application foundation.
+8. A completed profile renders the five-tab Phase 2 application shell.
 9. Configuration, session, or profile-loading failures render a recoverable error state.
 
 Profile requests are versioned and checked against the current user before results enter state. Sign-out immediately clears session, user, profile, onboarding, verification, and recovery state so a later user cannot see stale data.
@@ -82,9 +85,33 @@ Required for Phase 1:
 | `EXPO_PUBLIC_SUPABASE_URL`             | Supabase project URL     |
 | `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Public mobile client key |
 
-Expo embeds every `EXPO_PUBLIC_*` value in the application bundle. Only use the Supabase publishable/anon client key. Never add the service-role key, passwords, refresh tokens, OpenAI secrets, or other privileged credentials to mobile code or `.env.example`.
+Optional for the development-only testing shortcut:
+
+| Variable                          | Purpose                                 |
+| --------------------------------- | --------------------------------------- |
+| `EXPO_PUBLIC_TEST_LOGIN_EMAIL`    | Dedicated disposable test-account email |
+| `EXPO_PUBLIC_TEST_LOGIN_PASSWORD` | Dedicated disposable test password      |
+
+Expo embeds every `EXPO_PUBLIC_*` value in the application bundle. Only use the Supabase publishable/anon client key and a disposable test account that has no sensitive data or privileges. Never use a real user password, service-role key, refresh token, OpenAI secret, or other privileged credential in mobile configuration.
 
 Phase 0 reserved additional placeholders for later product phases. Phase 1 does not read or use them.
+
+### Development Quick Login
+
+Quick Login is a development-build shortcut on the existing Sign In screen. It calls the same Supabase `signInWithPassword` flow as the regular form; it does not bypass authentication, verification, profile loading, onboarding, or RLS.
+
+1. In Supabase Authentication, create a dedicated test user with no production data or elevated access.
+2. Confirm the test user's email in Supabase, or complete the configured verification flow once.
+3. Add the test email and password to `.env.local` using the optional variables above.
+4. Restart Metro so Expo reloads the environment:
+
+```powershell
+npx expo start --clear
+```
+
+5. Select **Quick Login** on the Sign In screen. Complete Profile Setup once if the test profile is new; later Quick Login attempts will enter the main tabs directly.
+
+The shortcut and its credentials are unavailable through the UI when `__DEV__` is false. Treat the public test credentials as disposable, rotate them if exposed, and never configure them for a store/production build.
 
 ## Supabase setup
 
@@ -193,7 +220,7 @@ Run these against a configured Supabase project and a development/standalone bui
 - [ ] RLS blocks cross-user profile updates.
 - [ ] Missing Supabase environment values show a clear configuration error.
 - [ ] No protected screen flashes during initialization.
-- [ ] Existing theme behavior and protected Phase 0 Main placeholders still render.
+- [ ] The protected five-tab Phase 2 shell renders after profile onboarding.
 
 ## Security notes
 
@@ -213,6 +240,6 @@ Run these against a configured Supabase project and a development/standalone bui
 - Profile image upload is intentionally absent. The schema and service can retain an avatar URL for future compatible work, but Phase 1 exposes no avatar UI.
 - The Phase 0 Expo transitive dependency audit note remains applicable: current advisories are moderate and an automated forced fix would require an incompatible Expo downgrade.
 
-## Phase 2 readiness
+## Phase 3 readiness
 
-The codebase is structurally ready for the Digital Wardrobe phase after the migration is applied and the manual Supabase/device checklist passes. Phase 2 must add its own schema, storage policies, media validation, feature boundaries, and verification plan; none are prebuilt here.
+The UI shell is structurally ready for a separately scoped Phase 3 after the Phase 1 Supabase migration and the manual device/auth checklist pass. Phase 3 must choose one real vertical slice and add its schema, storage policies, media validation, service boundary, and end-to-end verification without treating Phase 2 fixtures as production data.

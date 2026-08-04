@@ -2,10 +2,12 @@ export type ThemeColors = {
   background: string;
   surface: string;
   surfaceElevated: string;
+  surfaceMuted: string;
   text: string;
   textMuted: string;
   primary: string;
   primaryPressed: string;
+  primarySoft: string;
   border: string;
   success: string;
   warning: string;
@@ -17,10 +19,12 @@ export const lightColors: ThemeColors = {
   background: '#F8F8F6',
   surface: '#FFFFFF',
   surfaceElevated: '#FFFFFF',
+  surfaceMuted: '#F0EFEB',
   text: '#171714',
   textMuted: '#686861',
   primary: '#5B4BDB',
   primaryPressed: '#4637B9',
+  primarySoft: '#ECE9FF',
   border: '#E5E4DF',
   success: '#18794E',
   warning: '#A15C00',
@@ -32,10 +36,12 @@ export const darkColors: ThemeColors = {
   background: '#11110F',
   surface: '#1B1B18',
   surfaceElevated: '#252521',
+  surfaceMuted: '#20201C',
   text: '#F5F5F2',
   textMuted: '#ADADA5',
   primary: '#A99EFF',
   primaryPressed: '#C1B9FF',
+  primarySoft: '#302B54',
   border: '#35352F',
   success: '#59C794',
   warning: '#F0AD4E',

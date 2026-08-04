@@ -6,24 +6,48 @@ import { ActionButton } from '@/components/ActionButton';
 import { ErrorBanner } from '@/components/ErrorBanner';
 import { FormTextInput } from '@/components/FormTextInput';
 import { ScreenContainer } from '@/components/ScreenContainer';
+import { getDevelopmentQuickLoginCredentials } from '@/constants/developmentQuickLogin';
 import { AUTH_ROUTES } from '@/navigation/routes';
 import type { AuthStackParamList } from '@/navigation/types';
 import { useAuthStore } from '@/store/authStore';
 import type { FieldErrors } from '@/utils/validation/authValidation';
 import { normalizeEmail, validateEmail } from '@/utils/validation/authValidation';
 
+import { DevelopmentQuickLogin } from '../components/DevelopmentQuickLogin';
+
 type Props = NativeStackScreenProps<AuthStackParamList, 'SignIn'>;
 type SignInField = 'email' | 'password';
+type SubmitSource = 'form' | 'quickLogin';
 
 export function SignInScreen({ navigation }: Props) {
   const signIn = useAuthStore((state) => state.signIn);
   const authError = useAuthStore((state) => state.authError);
   const clearAuthError = useAuthStore((state) => state.clearAuthError);
   const passwordRef = useRef<TextInput>(null);
+  const isSubmittingRef = useRef(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<FieldErrors<SignInField>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSource, setSubmitSource] = useState<SubmitSource | null>(null);
+  const quickLoginCredentials = getDevelopmentQuickLoginCredentials();
+  const isSubmitting = submitSource !== null;
+
+  const submitCredentials = async (
+    credentials: { email: string; password: string },
+    source: SubmitSource,
+  ) => {
+    if (isSubmittingRef.current) return;
+
+    isSubmittingRef.current = true;
+    clearAuthError();
+    setSubmitSource(source);
+    try {
+      await signIn(normalizeEmail(credentials.email), credentials.password);
+    } finally {
+      isSubmittingRef.current = false;
+      setSubmitSource(null);
+    }
+  };
 
   const handleSubmit = async () => {
     if (isSubmitting) return;
@@ -36,10 +60,13 @@ export function SignInScreen({ navigation }: Props) {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    clearAuthError();
-    setIsSubmitting(true);
-    await signIn(normalizeEmail(email), password);
-    setIsSubmitting(false);
+    await submitCredentials({ email, password }, 'form');
+  };
+
+  const handleQuickLogin = async () => {
+    if (!quickLoginCredentials || isSubmitting) return;
+    setErrors({});
+    await submitCredentials(quickLoginCredentials, 'quickLogin');
   };
 
   return (
@@ -95,7 +122,18 @@ export function SignInScreen({ navigation }: Props) {
         onPress={() => navigation.navigate(AUTH_ROUTES.FORGOT_PASSWORD)}
         variant="text"
       />
-      <ActionButton label="Sign In" loading={isSubmitting} onPress={() => void handleSubmit()} />
+      <ActionButton
+        disabled={isSubmitting}
+        label="Sign In"
+        loading={submitSource === 'form'}
+        onPress={() => void handleSubmit()}
+      />
+      <DevelopmentQuickLogin
+        configured={quickLoginCredentials !== null}
+        disabled={isSubmitting}
+        loading={submitSource === 'quickLogin'}
+        onPress={() => void handleQuickLogin()}
+      />
     </ScreenContainer>
   );
 }

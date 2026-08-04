@@ -8,7 +8,10 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mixandmatch.app"
+      "bundleIdentifier": "com.mixandmatch.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.mixandmatch.app"
@@ -18,6 +21,11 @@
     },
     "experiments": {
       "tsconfigPaths": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8c0c06c3-a367-40d8-8ed3-a1ab91eced09"
+      }
     }
   }
 }

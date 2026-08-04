@@ -1,18 +1,28 @@
-import { createContext, type PropsWithChildren, useContext } from 'react';
+import { createContext, type PropsWithChildren, useContext, useMemo, useState } from 'react';
 import { useColorScheme } from 'react-native';
 
 import { darkTheme, lightTheme, type AppTheme } from './theme';
 
-const ThemeContext = createContext<AppTheme | null>(null);
+export type ThemePreference = 'system' | 'light' | 'dark';
+
+export type AppThemeContextValue = AppTheme & {
+  preference: ThemePreference;
+  setPreference: (preference: ThemePreference) => void;
+};
+
+const ThemeContext = createContext<AppThemeContextValue | null>(null);
 
 export function AppThemeProvider({ children }: PropsWithChildren) {
   const colorScheme = useColorScheme();
-  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
+  const [preference, setPreference] = useState<ThemePreference>('system');
+  const isDark = preference === 'dark' || (preference === 'system' && colorScheme === 'dark');
+  const theme = isDark ? darkTheme : lightTheme;
+  const value = useMemo(() => ({ ...theme, preference, setPreference }), [preference, theme]);
 
-  return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
-export function useAppTheme(): AppTheme {
+export function useAppTheme(): AppThemeContextValue {
   const theme = useContext(ThemeContext);
 
   if (!theme) {
