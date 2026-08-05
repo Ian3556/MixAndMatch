@@ -40,6 +40,7 @@ describe('Phase 2 navigation configuration', () => {
   it('registers the complete add-item and outfit workflow route sequences', () => {
     expect(Object.values(WARDROBE_ROUTES)).toEqual(
       expect.arrayContaining([
+        'ImportWardrobeWebsite',
         'AddItemEntry',
         'AddItemImage',
         'AddItemDetails',

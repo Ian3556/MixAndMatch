@@ -101,7 +101,7 @@ export function SearchResultsScreen({ navigation, route }: Props) {
               setSubmittedQuery('');
             },
           }}
-          message="Try a broader style, category, or occasion. Search currently checks only the local Phase 2 fixtures."
+          message="Try a broader style, category, or occasion. Explore search still checks only local editorial fixtures."
           symbol="⌕"
           title="No fixture results match"
         />

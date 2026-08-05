@@ -2,7 +2,6 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { AppScreen } from '@/components/ui/AppScreen';
-import { DeferredNotice } from '@/components/ui/StateViews';
 import { WARDROBE_ROUTES } from '@/navigation/routes';
 import type { WardrobeStackParamList } from '@/navigation/types';
 import { useAppTheme, type AppTheme } from '@/theme';
@@ -11,53 +10,66 @@ type Props = NativeStackScreenProps<WardrobeStackParamList, 'AddItemEntry'>;
 
 const inputOptions = [
   {
-    source: 'camera',
-    title: 'Take photo',
-    subtitle: 'Preview the future camera entry point',
-    symbol: '◎',
+    key: 'website',
+    title: 'Import from Website',
+    subtitle: 'Analyse a public product or collection page',
+    symbol: 'â†—',
+    enabled: true,
   },
   {
-    source: 'gallery',
-    title: 'Choose from gallery',
-    subtitle: 'Preview the future library entry point',
-    symbol: '▣',
-  },
-  {
-    source: 'online',
-    title: 'Search online',
-    subtitle: 'Preview the future catalogue entry point',
-    symbol: '⌕',
-  },
-  {
-    source: 'manual',
+    key: 'manual',
     title: 'Add manually',
-    subtitle: 'Continue with a neutral image placeholder',
-    symbol: '＋',
+    subtitle: 'Enter clothing details without an external website',
+    symbol: 'ï¼‹',
+    enabled: true,
+  },
+  {
+    key: 'camera',
+    title: 'Take a photo',
+    subtitle: 'Unavailable in Phase 3 â€” camera and uploads are deferred',
+    symbol: 'â—‰',
+    enabled: false,
+  },
+  {
+    key: 'gallery',
+    title: 'Choose from gallery',
+    subtitle: 'Unavailable in Phase 3 â€” media-library integration is deferred',
+    symbol: 'â–£',
+    enabled: false,
   },
 ] as const;
 
 export function AddItemEntryScreen({ navigation }: Props) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
+
+  const openOption = (key: (typeof inputOptions)[number]['key']) => {
+    if (key === 'website') navigation.navigate(WARDROBE_ROUTES.IMPORT_WEBSITE);
+    if (key === 'manual') {
+      navigation.navigate(WARDROBE_ROUTES.ADD_ITEM_IMAGE, { source: 'manual' });
+    }
+  };
+
   return (
     <AppScreen
       onBack={navigation.goBack}
-      subtitle="Choose how this future workflow should begin."
+      subtitle="Choose a supported way to add a wardrobe item."
       title="Add wardrobe item"
     >
-      <DeferredNotice>
-        Camera, photo-library, upload, and online search integrations are intentionally unavailable
-        in Phase 2. No permission will be requested.
-      </DeferredNotice>
       <View style={styles.options}>
         {inputOptions.map((option) => (
           <Pressable
+            accessibilityHint={option.enabled ? option.subtitle : 'This option is unavailable.'}
             accessibilityRole="button"
-            key={option.source}
-            onPress={() =>
-              navigation.navigate(WARDROBE_ROUTES.ADD_ITEM_IMAGE, { source: option.source })
-            }
-            style={({ pressed }) => [styles.option, pressed ? styles.pressed : null]}
+            accessibilityState={{ disabled: !option.enabled }}
+            disabled={!option.enabled}
+            key={option.key}
+            onPress={() => openOption(option.key)}
+            style={({ pressed }) => [
+              styles.option,
+              !option.enabled ? styles.disabled : null,
+              pressed ? styles.pressed : null,
+            ]}
           >
             <View style={styles.symbolShell}>
               <Text style={styles.symbol}>{option.symbol}</Text>
@@ -66,7 +78,7 @@ export function AddItemEntryScreen({ navigation }: Props) {
               <Text style={styles.title}>{option.title}</Text>
               <Text style={styles.subtitle}>{option.subtitle}</Text>
             </View>
-            <Text style={styles.arrow}>›</Text>
+            {option.enabled ? <Text style={styles.arrow}>â€º</Text> : null}
           </Pressable>
         ))}
       </View>
@@ -109,6 +121,7 @@ function createStyles(theme: AppTheme) {
       lineHeight: theme.typography.lineHeight.sm,
     },
     arrow: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.xl },
+    disabled: { opacity: 0.58 },
     pressed: { opacity: 0.72 },
   });
 }

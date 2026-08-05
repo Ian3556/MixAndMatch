@@ -40,7 +40,7 @@ export function AccountSettingsScreen({ navigation }: Props) {
       />
       <SettingsGroup title="Danger zone">
         <SettingRow
-          description="Unavailable in Phase 2"
+          description="Unavailable in Phase 3"
           destructive
           label="Delete account"
           onPress={() => showDeferredNotice('Account deletion')}

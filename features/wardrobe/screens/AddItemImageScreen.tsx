@@ -1,5 +1,5 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 import { ActionButton } from '@/components/ActionButton';
 import { AppScreen } from '@/components/ui/AppScreen';
@@ -9,7 +9,6 @@ import { neutralGarmentArtworkColors } from '@/fixtures/wardrobe';
 import { WARDROBE_ROUTES } from '@/navigation/routes';
 import type { WardrobeStackParamList } from '@/navigation/types';
 import { useAppTheme, type AppTheme } from '@/theme';
-import { showDeferredNotice } from '@/utils/deferred';
 
 type Props = NativeStackScreenProps<WardrobeStackParamList, 'AddItemImage'>;
 
@@ -28,26 +27,9 @@ export function AddItemImageScreen({ navigation, route }: Props) {
         colors={neutralGarmentArtworkColors}
         label="Garment preview"
       />
-      <View style={styles.actions}>
-        <ActionButton
-          label="Replace image"
-          onPress={() => showDeferredNotice('Image replacement')}
-          variant="secondary"
-        />
-        <ActionButton
-          label="Crop image"
-          onPress={() => showDeferredNotice('Image cropping')}
-          variant="secondary"
-        />
-        <ActionButton
-          label="Remove background"
-          onPress={() => showDeferredNotice('Background removal')}
-          variant="secondary"
-        />
-      </View>
       <DeferredNotice>
-        The preview is local artwork. No image was captured, selected, uploaded, cropped, or
-        analysed.
+        Manual items use local placeholder artwork in Phase 3. Camera, upload, crop, and background
+        removal controls are intentionally unavailable.
       </DeferredNotice>
       <Text style={styles.source}>Entry choice: {route.params.source}</Text>
       <ActionButton
@@ -60,7 +42,6 @@ export function AddItemImageScreen({ navigation, route }: Props) {
 
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
-    actions: { gap: theme.spacing.sm },
     source: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.sm },
   });
 }

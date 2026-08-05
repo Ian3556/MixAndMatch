@@ -72,7 +72,7 @@ export function DeferredNotice({ children }: { children: string }) {
   const styles = createStyles(theme);
   return (
     <View accessibilityRole="summary" style={styles.notice}>
-      <Text style={styles.noticeTitle}>Phase 2 preview</Text>
+      <Text style={styles.noticeTitle}>Phase 3 boundary</Text>
       <Text style={styles.noticeBody}>{children}</Text>
     </View>
   );

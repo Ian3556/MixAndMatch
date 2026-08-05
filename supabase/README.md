@@ -1,8 +1,12 @@
-# Supabase Phase 1 operations
+# Supabase Phase 1 and Phase 3 operations
 
 ## Migration
 
 `migrations/20260803000100_create_profiles.sql` creates the private profile model, timestamps, auth-user trigger, grants, and Row Level Security policies.
+
+`migrations/20260805000100_create_wardrobe_items.sql` creates authenticated wardrobe persistence,
+website-import provenance, deterministic per-user duplicate enforcement, timestamps, grants, and
+own-row `SELECT`, `INSERT`, `UPDATE`, and `DELETE` RLS policies.
 
 Review the target project before applying migrations:
 
@@ -32,7 +36,7 @@ left join pg_policies p
   on p.schemaname = n.nspname
   and p.tablename = c.relname
 where n.nspname = 'public'
-  and c.relname = 'profiles'
+and c.relname in ('profiles', 'wardrobe_items')
 order by p.cmd;
 ```
 
@@ -42,6 +46,22 @@ Expected policies:
 - authenticated `INSERT` with the same ownership check;
 - authenticated `UPDATE` with both `USING` and `WITH CHECK` ownership checks;
 - no anonymous or unrestricted policy.
+
+For `wardrobe_items`, expect authenticated own-row `SELECT`, `INSERT`, `UPDATE`, and `DELETE`
+policies comparing `(select auth.uid())` with `user_id`, and no anonymous or unrestricted policy.
+
+## Phase 3 Edge Function
+
+Deploy the authenticated URL importer after reviewing its outbound-network controls:
+
+```powershell
+npx supabase functions deploy import-wardrobe-url
+```
+
+Keep JWT verification enabled. Hosted Supabase provides `SUPABASE_URL` and `SUPABASE_ANON_KEY` to
+the function runtime; `SB_PUBLISHABLE_KEY` is also accepted. No service-role key is required. The
+function validates the authenticated user, resolves public DNS, rejects local/private destinations
+and unsafe redirects, bounds time/redirects/body size, accepts HTML only, and returns safe errors.
 
 ## Two-user RLS verification
 

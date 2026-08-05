@@ -6,7 +6,6 @@ import { ActionButton } from '@/components/ActionButton';
 import { FormTextInput } from '@/components/FormTextInput';
 import { AppScreen } from '@/components/ui/AppScreen';
 import { SelectField } from '@/components/ui/SelectField';
-import { DeferredNotice } from '@/components/ui/StateViews';
 import { ToggleRow } from '@/components/ui/ToggleRow';
 import { wardrobeCategories } from '@/fixtures/categories';
 import { WARDROBE_ROUTES } from '@/navigation/routes';
@@ -57,13 +56,9 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
   return (
     <AppScreen
       onBack={navigation.goBack}
-      subtitle="Temporary form state is kept only while this flow is open."
+      subtitle="Add the details required to save this item."
       title="Item details"
     >
-      <DeferredNotice>
-        These fields demonstrate the future metadata form. Values are passed to the review screen
-        only and are never saved.
-      </DeferredNotice>
       <FormTextInput
         error={nameError}
         label="Item name"
@@ -156,7 +151,7 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
         value={draft.notes}
       />
       <ToggleRow
-        description="This selection is temporary in Phase 2."
+        description="Favourite status is saved with the wardrobe item."
         label="Favourite item"
         onValueChange={(value) => updateDraft('isFavorite', value)}
         value={draft.isFavorite}

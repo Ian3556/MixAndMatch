@@ -1,28 +1,23 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import type { WardrobeItemFixture } from '@/fixtures/wardrobe';
 import { useAppTheme, type AppTheme } from '@/theme';
+import type { WardrobeItem } from '@/types/wardrobe';
 
 import { IconButton } from './IconButton';
 import { PlaceholderArtwork } from './PlaceholderArtwork';
 
 type WardrobeItemCardProps = {
-  item: WardrobeItemFixture;
+  item: WardrobeItem;
   onOpen: () => void;
   onFavorite: () => void;
-  onMore: () => void;
   width?: number;
 };
 
-export function WardrobeItemCard({
-  item,
-  onOpen,
-  onFavorite,
-  onMore,
-  width,
-}: WardrobeItemCardProps) {
+export function WardrobeItemCard({ item, onOpen, onFavorite, width }: WardrobeItemCardProps) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
+  const [imageFailed, setImageFailed] = useState(false);
 
   return (
     <View style={[styles.card, width ? { width } : null]}>
@@ -32,24 +27,41 @@ export function WardrobeItemCard({
         onPress={onOpen}
         style={({ pressed }) => (pressed ? styles.pressed : null)}
       >
-        <PlaceholderArtwork colors={[item.tone, theme.colors.surfaceMuted]} label={item.name} />
+        {item.imageUrl && !imageFailed ? (
+          <Image
+            accessibilityLabel={`${item.name} wardrobe image`}
+            onError={() => setImageFailed(true)}
+            resizeMode="cover"
+            source={{ uri: item.imageUrl }}
+            style={styles.image}
+          />
+        ) : (
+          <PlaceholderArtwork
+            colors={[theme.colors.primarySoft, theme.colors.surfaceMuted, theme.colors.surface]}
+            label={item.name}
+          />
+        )}
       </Pressable>
       <View style={styles.heading}>
-        <View style={styles.copy}>
+        <Pressable
+          accessibilityLabel={`Open ${item.name} details`}
+          accessibilityRole="button"
+          onPress={onOpen}
+          style={styles.copy}
+        >
           <Text numberOfLines={2} style={styles.title}>
             {item.name}
           </Text>
           <Text numberOfLines={1} style={styles.meta}>
-            {item.category} · {item.color}
+            {[item.category, item.primaryColor].filter(Boolean).join(' Â· ')}
           </Text>
-        </View>
+        </Pressable>
         <IconButton
           label={`${item.isFavorite ? 'Remove' : 'Add'} ${item.name} ${item.isFavorite ? 'from' : 'to'} favourites`}
           onPress={onFavorite}
           selected={item.isFavorite}
-          symbol={item.isFavorite ? '♥' : '♡'}
+          symbol={item.isFavorite ? 'â™¥' : 'â™¡'}
         />
-        <IconButton label={`More options for ${item.name}`} onPress={onMore} symbol="⋯" />
       </View>
     </View>
   );
@@ -58,6 +70,12 @@ export function WardrobeItemCard({
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
     card: { gap: theme.spacing.sm },
+    image: {
+      aspectRatio: 4 / 5,
+      backgroundColor: theme.colors.surfaceMuted,
+      borderRadius: theme.radii.lg,
+      width: '100%',
+    },
     pressed: { opacity: 0.78 },
     heading: { alignItems: 'center', flexDirection: 'row', gap: theme.spacing.xs },
     copy: { flex: 1, minWidth: 0 },

@@ -24,6 +24,7 @@ import { AddItemEntryScreen } from '@/features/wardrobe/screens/AddItemEntryScre
 import { AddItemImageScreen } from '@/features/wardrobe/screens/AddItemImageScreen';
 import { AddItemReviewScreen } from '@/features/wardrobe/screens/AddItemReviewScreen';
 import { WardrobeItemDetailScreen } from '@/features/wardrobe/screens/WardrobeItemDetailScreen';
+import { ImportWardrobeWebsiteScreen } from '@/features/wardrobe/screens/ImportWardrobeWebsiteScreen';
 import { WardrobeScreen } from '@/features/wardrobe/screens/WardrobeScreen';
 
 import {
@@ -71,6 +72,10 @@ export function WardrobeTabNavigator() {
   return (
     <WardrobeStack.Navigator screenOptions={screenOptions}>
       <WardrobeStack.Screen component={WardrobeScreen} name={WARDROBE_ROUTES.WARDROBE} />
+      <WardrobeStack.Screen
+        component={ImportWardrobeWebsiteScreen}
+        name={WARDROBE_ROUTES.IMPORT_WEBSITE}
+      />
       <WardrobeStack.Screen component={AddItemEntryScreen} name={WARDROBE_ROUTES.ADD_ITEM_ENTRY} />
       <WardrobeStack.Screen component={AddItemImageScreen} name={WARDROBE_ROUTES.ADD_ITEM_IMAGE} />
       <WardrobeStack.Screen

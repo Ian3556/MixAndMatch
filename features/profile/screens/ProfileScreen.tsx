@@ -72,10 +72,7 @@ export function ProfileScreen({ navigation }: Props) {
       </View>
 
       <View style={styles.section}>
-        <SectionHeader
-          subtitle="Analytics are not calculated in Phase 2"
-          title="Activity summary"
-        />
+        <SectionHeader subtitle="Analytics remain outside Phase 3" title="Activity summary" />
         <View style={styles.stats}>
           <StatCard label="Wardrobe items" value="—" />
           <StatCard label="Saved outfits" value="—" />

@@ -1,10 +1,10 @@
 # Mix & Match
 
-Mix & Match is an Expo and React Native application planned as an AI-powered wardrobe assistant. The repository currently implements **Phase 2: UI Structuring** on top of the Phase 1 authentication and profile foundation.
+Mix & Match is an Expo and React Native application planned as an AI-powered wardrobe assistant. The repository now implements **Phase 3: Wardrobe Website URL Import and Functional Interaction Audit** on top of the Phase 1 authentication/profile foundation and Phase 2 product shell.
 
-The authenticated application now provides a five-tab, nested-stack product shell for Home, Explore, Wardrobe, Stylist, and Profile. Product content is deterministic fixture data and deferred actions are labelled honestly. Wardrobe persistence, uploads, AI, recommendations, subscriptions, camera access, and 3D functionality remain unimplemented.
+The authenticated application provides a five-tab, nested-stack product shell for Home, Explore, Wardrobe, Stylist, and Profile. Wardrobe items are now user-owned Supabase records, and public server-readable retailer pages can be analysed by an authenticated Supabase Edge Function before the user selects, edits, and saves products. Other product content remains deterministic fixture data and deferred actions are labelled honestly. Uploads, AI recommendations, subscriptions, camera access, and 3D functionality remain unimplemented.
 
-The complete Phase 2 route map, screen/component inventories, UI conventions, verification checklist, and deferred-functionality boundary are documented in [`docs/PHASE_2_UI_STRUCTURE.md`](docs/PHASE_2_UI_STRUCTURE.md).
+Phase 3 architecture, URL security, extraction, persistence, interaction-audit results, tests, deployment steps, and limitations are documented in [`docs/BUILD_PHASE_3_WARDROBE_URL_IMPORT.md`](docs/BUILD_PHASE_3_WARDROBE_URL_IMPORT.md). The Phase 2 UI baseline remains documented in [`docs/PHASE_2_UI_STRUCTURE.md`](docs/PHASE_2_UI_STRUCTURE.md).
 
 ## Technical baseline
 
@@ -16,6 +16,7 @@ The complete Phase 2 route map, screen/component inventories, UI conventions, ve
 - Zustand 5 for centralized authentication state
 - AsyncStorage for native Supabase session persistence
 - Expo Linking for authentication callback URLs
+- Expo Clipboard for the cross-platform Wardrobe URL Paste action
 - Vitest for focused unit tests
 - npm with `package-lock.json` as the exact dependency source of truth
 
@@ -240,6 +241,8 @@ Run these against a configured Supabase project and a development/standalone bui
 - Profile image upload is intentionally absent. The schema and service can retain an avatar URL for future compatible work, but Phase 1 exposes no avatar UI.
 - The Phase 0 Expo transitive dependency audit note remains applicable: current advisories are moderate and an automated forced fix would require an incompatible Expo downgrade.
 
-## Phase 3 readiness
+## Phase 3 deployment
 
-The UI shell is structurally ready for a separately scoped Phase 3 after the Phase 1 Supabase migration and the manual device/auth checklist pass. Phase 3 must choose one real vertical slice and add its schema, storage policies, media validation, service boundary, and end-to-end verification without treating Phase 2 fixtures as production data.
+Apply `supabase/migrations/20260805000100_create_wardrobe_items.sql` and deploy the authenticated `import-wardrobe-url` Edge Function before live URL import testing. The Expo/Vercel web build is static, so retailer fetching must remain in the Edge Function. Controlled fixture tests do not contact live retailers.
+
+See [`docs/BUILD_PHASE_3_WARDROBE_URL_IMPORT.md`](docs/BUILD_PHASE_3_WARDROBE_URL_IMPORT.md) for the complete security model, supported page types, interaction inventory, verification evidence, and the manual deployment/device checklist.

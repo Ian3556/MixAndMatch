@@ -24,6 +24,7 @@ export type ExploreStackParamList = {
 
 export type WardrobeStackParamList = {
   Wardrobe: undefined;
+  ImportWardrobeWebsite: undefined;
   AddItemEntry: undefined;
   AddItemImage: { source: 'camera' | 'gallery' | 'online' | 'manual' };
   AddItemDetails: { imageKey: string };

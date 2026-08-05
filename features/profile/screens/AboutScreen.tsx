@@ -15,7 +15,7 @@ export function AboutScreen({ navigation }: Props) {
     <AppScreen onBack={navigation.goBack} subtitle="Mix & Match product information" title="About">
       <SettingsGroup title="Application">
         <SettingRow label="Version" value={appConfig.expo.version} />
-        <SettingRow label="Build phase" value="Phase 2 UI shell" />
+        <SettingRow label="Build phase" value="Phase 3 wardrobe URL import" />
       </SettingsGroup>
       <SettingsGroup title="Legal">
         <SettingRow label="Terms" onPress={() => showDeferredNotice('Terms')} />

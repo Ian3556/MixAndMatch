@@ -26,7 +26,7 @@ export function HelpAndSupportScreen({ navigation }: Props) {
         <SettingRow label="App guide" onPress={() => showDeferredNotice('App guide')} />
       </SettingsGroup>
       <DeferredNotice>
-        No message, issue report, or support ticket is sent from these Phase 2 entry points.
+        No message, issue report, or support ticket is sent from these unavailable entry points.
       </DeferredNotice>
     </AppScreen>
   );

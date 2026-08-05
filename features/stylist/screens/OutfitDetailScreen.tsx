@@ -82,7 +82,7 @@ export function OutfitDetailScreen({ navigation, route }: Props) {
         variant="secondary"
       />
       <ActionButton
-        label="Open 3D preview"
+        label="3D preview unavailable"
         onPress={() => showDeferredNotice('3D outfit preview')}
         variant="text"
       />

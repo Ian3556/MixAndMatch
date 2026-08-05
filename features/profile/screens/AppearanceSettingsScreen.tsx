@@ -37,7 +37,7 @@ export function AppearanceSettingsScreen({ navigation }: Props) {
       </SettingsGroup>
       <DeferredNotice>
         Theme selection applies immediately for this app session. Persistence across restarts is
-        intentionally not added in Phase 2.
+        intentionally not added in Phase 3.
       </DeferredNotice>
     </AppScreen>
   );
