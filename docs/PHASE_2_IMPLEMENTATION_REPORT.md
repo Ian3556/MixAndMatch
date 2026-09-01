@@ -1,5 +1,7 @@
 # Phase 2 Implementation Report
 
+> Structural note: application source paths recorded below now live under `src/`; the entries remain a historical account of the Phase 2 change set.
+
 ## Outcome
 
 Phase 2 replaces the protected Phase 0/1 placeholder with one coherent, typed, five-tab product shell. Every required workflow is reachable through the final navigation hierarchy. Fixture content and temporary form state remain separate from Supabase services, and deferred controls do not claim persistence, AI completion, upload, deletion, sharing, or notification behavior.

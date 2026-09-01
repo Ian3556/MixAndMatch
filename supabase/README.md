@@ -1,4 +1,4 @@
-# Supabase Phase 1 and Phase 3 operations
+# Supabase Phase 1, Phase 3, and catalogue operations
 
 ## Migration
 
@@ -7,6 +7,11 @@
 `migrations/20260805000100_create_wardrobe_items.sql` creates authenticated wardrobe persistence,
 website-import provenance, deterministic per-user duplicate enforcement, timestamps, grants, and
 own-row `SELECT`, `INSERT`, `UPDATE`, and `DELETE` RLS policies.
+
+`migrations/20260808000100_create_catalog_database.sql` adds the canonical development catalogue,
+30 brand identities, normalized taxonomy, style metadata, import jobs/checkpoints/errors, indexes,
+developer-only management RPCs, validated consumer reads, and an optional wardrobe provenance link.
+It does not seed retailer products or enable a source automatically.
 
 Review the target project before applying migrations:
 
@@ -115,3 +120,19 @@ Because the failing insert aborts the transaction, run it separately if you need
 - SMTP/templates: configured for the target environment before delivery testing.
 
 Do not place the service-role key in the Expo environment or application bundle.
+
+## Catalogue management Edge Function
+
+Deploy only after the catalogue migration has been reviewed and applied:
+
+```powershell
+npx supabase functions deploy catalog-management
+```
+
+Keep JWT verification enabled. `catalog-management` requires an authenticated user in
+`public.catalog_developers`, verifies source governance and domain allowlists for URL imports, and
+uses the hosted server-only `SUPABASE_SERVICE_ROLE_KEY` for catalogue writes. Never copy that key
+into `.env.local` as an `EXPO_PUBLIC_*` value.
+
+See `docs/catalog-database.md` for developer bootstrap, source review, manual seeding, job controls,
+and RLS verification expectations.

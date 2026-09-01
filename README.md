@@ -26,11 +26,11 @@ No major dependency was upgraded for Phase 1. Run `npm ls --depth=0` for exact i
 
 ### Application composition
 
-`app/AppRoot.tsx` composes the safe-area provider, existing theme provider, authentication bootstrap, React Navigation container, and root navigator. `AuthBootstrap` owns the one-time Supabase auth subscription, native foreground token-refresh lifecycle, initial URL handling, and live URL subscription cleanup.
+`src/app/AppRoot.tsx` composes the safe-area provider, existing theme provider, authentication bootstrap, React Navigation container, and root navigator. `AuthBootstrap` owns the one-time Supabase auth subscription, native foreground token-refresh lifecycle, initial URL handling, and live URL subscription cleanup.
 
 ### Authentication boundary
 
-`services/authService.ts` is the only UI-facing boundary for Supabase Auth operations. Screens do not query Supabase directly. The service:
+`src/services/authService.ts` is the only UI-facing boundary for Supabase Auth operations. Screens do not query Supabase directly. The service:
 
 - signs up and signs in with email/password;
 - signs out the local device session;
@@ -45,7 +45,7 @@ Passwords and tokens are never logged or copied into navigation parameters.
 
 ### Authentication-state lifecycle
 
-`store/authStore.ts` is the single client-side source of truth for session, user, profile, initialization, verification, recovery, and errors.
+`src/store/authStore.ts` is the single client-side source of truth for session, user, profile, initialization, verification, recovery, and errors.
 
 1. The app renders a branded initialization screen.
 2. The store subscribes to auth changes and restores the persisted Supabase session once.
@@ -61,7 +61,7 @@ Profile requests are versioned and checked against the current user before resul
 
 ### Navigation protection
 
-`navigation/RootNavigator.tsx` derives the mounted navigation tree from authentication state. It does not call `navigate` after sign-in/sign-out to force a flow change. When state changes, the old navigator is unmounted and a new keyed tree is mounted, preventing protected-screen flashes, duplicate auth history, and back navigation into sign-in after authentication.
+`src/navigation/RootNavigator.tsx` derives the mounted navigation tree from authentication state. It does not call `navigate` after sign-in/sign-out to force a flow change. When state changes, the old navigator is unmounted and a new keyed tree is mounted, preventing protected-screen flashes, duplicate auth history, and back navigation into sign-in after authentication.
 
 The Phase 0 `Settings` and `Admin` placeholders remain registered inside the protected Main navigator; no settings or admin functionality was added.
 
@@ -246,3 +246,11 @@ Run these against a configured Supabase project and a development/standalone bui
 Apply `supabase/migrations/20260805000100_create_wardrobe_items.sql` and deploy the authenticated `import-wardrobe-url` Edge Function before live URL import testing. The Expo/Vercel web build is static, so retailer fetching must remain in the Edge Function. Controlled fixture tests do not contact live retailers.
 
 See [`docs/BUILD_PHASE_3_WARDROBE_URL_IMPORT.md`](docs/BUILD_PHASE_3_WARDROBE_URL_IMPORT.md) for the complete security model, supported page types, interaction inventory, verification evidence, and the manual deployment/device checklist.
+
+## Development fashion catalogue
+
+The additive catalogue architecture, canonical taxonomy, resumable import jobs, validation rules,
+and development-only review dashboard are documented in
+[`docs/catalog-database.md`](docs/catalog-database.md). Current brand/source readiness is tracked in
+[`docs/catalog-source-status.md`](docs/catalog-source-status.md). No retailer source is enabled and
+no 4,500-product dataset is claimed until the phased source review and live imports are completed.

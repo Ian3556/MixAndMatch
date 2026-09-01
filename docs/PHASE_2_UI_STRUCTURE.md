@@ -44,7 +44,7 @@ Authenticated App (Main)
     └── About
 ```
 
-Tab labels and icons are defined once in `navigation/navigationConfig.ts`. Route constants live in `navigation/routes.ts`; all parameter lists live in `navigation/types.ts`. Each tab owns a native stack, so switching tabs preserves nested history. The tab bar hides when the keyboard opens, uses React Navigation safe-area behavior, and gives Wardrobe modest emphasis without turning it into a floating action button.
+Tab labels and icons are defined once in `src/navigation/navigationConfig.ts`. Route constants live in `src/navigation/routes.ts`; all parameter lists live in `src/navigation/types.ts`. Each tab owns a native stack, so switching tabs preserves nested history. The tab bar hides when the keyboard opens, uses React Navigation safe-area behavior, and gives Wardrobe modest emphasis without turning it into a floating action button.
 
 ## Screen inventory
 
@@ -112,15 +112,15 @@ All UI consumes the existing `useAppTheme` contract. Phase 2 adds only two seman
 
 All fixture modules are deterministic and explicitly marked development-only:
 
-| File                      | Future replacement                           |
-| ------------------------- | -------------------------------------------- |
-| `fixtures/categories.ts`  | Product taxonomy/configuration repository    |
-| `fixtures/inspiration.ts` | Inspiration feed/content repository          |
-| `fixtures/wardrobe.ts`    | User-owned wardrobe repository backed by RLS |
-| `fixtures/outfits.ts`     | Outfit/recommendation service output         |
-| `fixtures/stylingTips.ts` | Reviewed editorial content source            |
+| File                          | Future replacement                           |
+| ----------------------------- | -------------------------------------------- |
+| `src/fixtures/categories.ts`  | Product taxonomy/configuration repository    |
+| `src/fixtures/inspiration.ts` | Inspiration feed/content repository          |
+| `src/fixtures/wardrobe.ts`    | User-owned wardrobe repository backed by RLS |
+| `src/fixtures/outfits.ts`     | Outfit/recommendation service output         |
+| `src/fixtures/stylingTips.ts` | Reviewed editorial content source            |
 
-Fixtures never enter `services/`, never query Supabase, and are never presented as persisted user content or generated AI output.
+Fixtures never enter `src/services/`, never query Supabase, and are never presented as persisted user content or generated AI output.
 
 ## Responsive layout rules
 

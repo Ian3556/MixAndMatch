@@ -1,5 +1,8 @@
 .expo
+.codex
 coverage
 dist
+graphify-out
 node_modules
 package-lock.json
+AGENTS.md

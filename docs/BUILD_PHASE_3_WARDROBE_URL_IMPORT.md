@@ -13,7 +13,7 @@ controlled HTML fixtures and never calls retailer websites.
 
 ## Repository architecture discovered
 
-- Expo SDK 57 / React Native 0.86 / React 19, built from `App.tsx` and `app/AppRoot.tsx`.
+- Expo SDK 57 / React Native 0.86 / React 19, built from `App.tsx` and `src/app/AppRoot.tsx`.
 - React Navigation 7 native stacks and bottom tabs; the project does **not** use Expo Router.
 - Expo web uses Metro and `npx expo export -p web`; Vercel serves the static `dist` directory with
   an SPA rewrite. There is no server output or supported Expo API-route runtime.

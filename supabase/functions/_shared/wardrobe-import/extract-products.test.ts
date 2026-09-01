@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { extractProductsFromHtml } from './extract-products';
 
 const fixtureDirectory = fileURLToPath(
-  new URL('../../../../fixtures/wardrobe-import/', import.meta.url),
+  new URL('../../../../src/fixtures/wardrobe-import/', import.meta.url),
 );
 const sourceUrl = 'https://shop.example/collections/new';
 

@@ -6,9 +6,15 @@
     "exactOptionalPropertyTypes": true,
     "types": ["node"],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"],
+      "@root/*": ["./*"],
+      "@supabase": ["./supabase/index.ts"],
+      "@supabase/*": ["./supabase/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["supabase/functions/import-wardrobe-url/index.ts"]
+  "exclude": [
+    "supabase/functions/import-wardrobe-url/index.ts",
+    "supabase/functions/catalog-management/index.ts"
+  ]
 }
