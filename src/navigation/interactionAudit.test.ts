@@ -39,6 +39,29 @@ describe('application interaction audit', () => {
     }
   });
 
+  it('keeps Explore details in the Explore stack so Back follows local history', () => {
+    const navigator = readFileSync('src/navigation/TabNavigators.tsx', 'utf8');
+    const exploreScreens = [
+      'src/features/explore/screens/ExploreScreen.tsx',
+      'src/features/explore/screens/SearchResultsScreen.tsx',
+      'src/features/explore/screens/StyleCategoryScreen.tsx',
+    ]
+      .map((file) => readFileSync(file, 'utf8'))
+      .join('\n');
+
+    expect(navigator).toContain('name={EXPLORE_ROUTES.INSPIRATION_DETAIL}');
+    expect(exploreScreens).toContain('EXPLORE_ROUTES.INSPIRATION_DETAIL');
+    expect(exploreScreens).not.toContain('MAIN_ROUTES.HOME_TAB');
+  });
+
+  it('keeps Explore image lifecycle handlers stable across normal renders', () => {
+    const feed = readFileSync('src/features/explore/components/ExploreMasonryFeed.tsx', 'utf8');
+
+    expect(feed).toContain('onLoadEnd={handleImageLoadEnd}');
+    expect(feed).toContain('onLoadStart={handleImageLoadStart}');
+    expect(feed).not.toMatch(/onLoad(?:End|Start)=\{\(\) =>/);
+  });
+
   it('keeps the complete URL import control contract visible and guarded', () => {
     const screen = [
       'src/features/wardrobe/screens/ImportWardrobeWebsiteScreen.tsx',

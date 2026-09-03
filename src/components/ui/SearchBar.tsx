@@ -7,6 +7,7 @@ type SearchBarProps = {
   onChangeText: (value: string) => void;
   onSubmit: () => void;
   placeholder?: string;
+  square?: boolean;
 };
 
 export function SearchBar({
@@ -14,12 +15,13 @@ export function SearchBar({
   onChangeText,
   onSubmit,
   placeholder = 'Search styles and pieces',
+  square = false,
 }: SearchBarProps) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
   return (
-    <View style={styles.shell}>
+    <View style={[styles.shell, square ? styles.squareShell : null]}>
       <Text accessibilityElementsHidden style={styles.icon}>
         ⌕
       </Text>
@@ -52,6 +54,7 @@ function createStyles(theme: AppTheme) {
       minHeight: 52,
       paddingHorizontal: theme.spacing.md,
     },
+    squareShell: { borderRadius: 0 },
     icon: {
       color: theme.colors.textMuted,
       fontSize: theme.typography.fontSize.xl,

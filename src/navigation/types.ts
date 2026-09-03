@@ -20,6 +20,7 @@ export type ExploreStackParamList = {
   Explore: undefined;
   SearchResults: { query: string };
   StyleCategory: { categoryId: string; title: string };
+  InspirationDetail: { inspirationId: string };
 };
 
 export type WardrobeStackParamList = {
@@ -56,8 +57,8 @@ export type ProfileStackParamList = {
 export type MainTabParamList = {
   HomeTab: NavigatorScreenParams<HomeStackParamList> | undefined;
   ExploreTab: NavigatorScreenParams<ExploreStackParamList> | undefined;
-  WardrobeTab: NavigatorScreenParams<WardrobeStackParamList> | undefined;
   StylistTab: NavigatorScreenParams<StylistStackParamList> | undefined;
+  WardrobeTab: NavigatorScreenParams<WardrobeStackParamList> | undefined;
   ProfileTab: NavigatorScreenParams<ProfileStackParamList> | undefined;
 };
 

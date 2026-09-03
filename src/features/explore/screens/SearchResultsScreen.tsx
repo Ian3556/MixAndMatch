@@ -8,12 +8,11 @@ import { InspirationCard } from '@/components/ui/InspirationCard';
 import { SearchBar } from '@/components/ui/SearchBar';
 import { EmptyState } from '@/components/ui/StateViews';
 import { allInspiration } from '@/fixtures/inspiration';
-import { HOME_ROUTES, MAIN_ROUTES } from '@/navigation/routes';
-import type { ExploreStackParamList, MainTabParamList } from '@/navigation/types';
+import { EXPLORE_ROUTES } from '@/navigation/routes';
+import type { ExploreStackParamList } from '@/navigation/types';
 import { useAppTheme, type AppTheme } from '@/theme';
 import { showDeferredNotice } from '@/utils/deferred';
 import { getGridColumnCount, getGridItemWidth } from '@/utils/layout';
-import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 type Props = NativeStackScreenProps<ExploreStackParamList, 'SearchResults'>;
 
@@ -43,12 +42,7 @@ export function SearchResultsScreen({ navigation, route }: Props) {
   );
 
   const openResult = (inspirationId: string) => {
-    navigation
-      .getParent<BottomTabNavigationProp<MainTabParamList>>()
-      ?.navigate(MAIN_ROUTES.HOME_TAB, {
-        screen: HOME_ROUTES.INSPIRATION_DETAIL,
-        params: { inspirationId },
-      });
+    navigation.navigate(EXPLORE_ROUTES.INSPIRATION_DETAIL, { inspirationId });
   };
 
   return (

@@ -16,9 +16,16 @@ describe('Phase 2 navigation configuration', () => {
     expect(MAIN_TAB_CONFIG.map((item) => item.route)).toEqual([
       MAIN_ROUTES.HOME_TAB,
       MAIN_ROUTES.EXPLORE_TAB,
-      MAIN_ROUTES.WARDROBE_TAB,
       MAIN_ROUTES.STYLIST_TAB,
+      MAIN_ROUTES.WARDROBE_TAB,
       MAIN_ROUTES.PROFILE_TAB,
+    ]);
+    expect(MAIN_TAB_CONFIG.map(({ label, icon }) => [label, icon])).toEqual([
+      ['Home', 'home'],
+      ['Explore', 'explore'],
+      ['Stylist', 'stylist'],
+      ['Wardrobe', 'wardrobe'],
+      ['Profile', 'profile'],
     ]);
     expect(new Set(MAIN_TAB_CONFIG.map((item) => item.label)).size).toBe(5);
     expect(new Set(MAIN_TAB_CONFIG.map((item) => item.icon)).size).toBe(5);

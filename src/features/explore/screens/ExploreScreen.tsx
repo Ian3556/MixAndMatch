@@ -1,176 +1,319 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
 import { AppScreen } from '@/components/ui/AppScreen';
-import { IconButton } from '@/components/ui/IconButton';
-import { OutfitCard } from '@/components/ui/OutfitCard';
 import { SearchBar } from '@/components/ui/SearchBar';
-import { SectionHeader } from '@/components/ui/SectionHeader';
-import { exploreStyles, wardrobeCategories } from '@/fixtures/categories';
-import { outfitConcepts } from '@/fixtures/outfits';
 import { EXPLORE_ROUTES } from '@/navigation/routes';
 import type { ExploreStackParamList } from '@/navigation/types';
 import { useAppTheme, type AppTheme } from '@/theme';
-import { showDeferredNotice } from '@/utils/deferred';
+import { getGridColumnCount } from '@/utils/layout';
+
+import { ExploreFeedSkeleton } from '../components/ExploreFeedSkeleton';
+import { ExploreFilterPanel } from '../components/ExploreFilterPanel';
+import { ExploreMasonryFeed } from '../components/ExploreMasonryFeed';
+import { useExploreDiscoveryContent } from '../hooks/useExploreDiscoveryContent';
+import type { ExploreCategoryId, ExploreDiscoveryItem, ExploreStyle } from '../types/discovery';
+import { filterExploreItems } from '../utils/discovery';
 
 type Props = NativeStackScreenProps<ExploreStackParamList, 'Explore'>;
 
 export function ExploreScreen({ navigation }: Props) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
+  const { width } = useWindowDimensions();
+  const { status, items, error, retry } = useExploreDiscoveryContent();
   const [query, setQuery] = useState('');
+  const [activeQuery, setActiveQuery] = useState('');
+  const [categoryIds, setCategoryIds] = useState<ExploreCategoryId[]>([]);
+  const [selectedStyles, setSelectedStyles] = useState<ExploreStyle[]>([]);
+  const [draftCategoryIds, setDraftCategoryIds] = useState<ExploreCategoryId[]>([]);
+  const [draftStyles, setDraftStyles] = useState<ExploreStyle[]>([]);
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const columnCount = getGridColumnCount(Math.min(width, 900));
+  const activeFilterCount = categoryIds.length + selectedStyles.length;
+  const hasActiveDiscoveryFilters = activeFilterCount > 0 || activeQuery.length > 0;
 
-  const submitSearch = () => {
-    navigation.navigate(EXPLORE_ROUTES.SEARCH_RESULTS, { query: query.trim() });
+  const filteredItems = useMemo(
+    () =>
+      filterExploreItems(items ?? [], {
+        query: activeQuery,
+        categoryIds,
+        styles: selectedStyles,
+      }),
+    [activeQuery, categoryIds, items, selectedStyles],
+  );
+  const draftResultCount = useMemo(
+    () =>
+      filterExploreItems(items ?? [], {
+        query: activeQuery,
+        categoryIds: draftCategoryIds,
+        styles: draftStyles,
+      }).length,
+    [activeQuery, draftCategoryIds, draftStyles, items],
+  );
+
+  const submitSearch = () => setActiveQuery(query.trim());
+
+  const openFilters = () => {
+    setDraftCategoryIds(categoryIds);
+    setDraftStyles(selectedStyles);
+    setFiltersVisible(true);
   };
 
+  const applyFilters = () => {
+    setCategoryIds(draftCategoryIds);
+    setSelectedStyles(draftStyles);
+    setFiltersVisible(false);
+  };
+
+  const clearDiscovery = () => {
+    setQuery('');
+    setActiveQuery('');
+    setCategoryIds([]);
+    setSelectedStyles([]);
+    setDraftCategoryIds([]);
+    setDraftStyles([]);
+  };
+
+  const openItem = useCallback(
+    (item: ExploreDiscoveryItem) =>
+      navigation.navigate(EXPLORE_ROUTES.INSPIRATION_DETAIL, {
+        inspirationId: item.inspirationId,
+      }),
+    [navigation],
+  );
+
   return (
-    <AppScreen
-      actions={
-        <IconButton
-          label="Visual search preview"
-          onPress={() => showDeferredNotice('Visual search')}
-          symbol="▣"
-        />
-      }
-      eyebrow="Discover"
-      subtitle="Browse deterministic concepts and preview the future search experience."
-      title="Find your next direction"
-    >
-      <View style={styles.searchRow}>
-        <View style={styles.search}>
-          <SearchBar onChangeText={setQuery} onSubmit={submitSearch} value={query} />
-        </View>
-        <IconButton
-          label="Open filters"
-          onPress={() => showDeferredNotice('Explore filters')}
-          symbol="≡"
-        />
-      </View>
-
-      <View style={styles.section}>
-        <SectionHeader title="Browse categories" />
-        <ScrollView
-          contentContainerStyle={styles.categories}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        >
-          {wardrobeCategories.slice(1).map((category) => (
-            <Pressable
-              accessibilityRole="button"
-              key={category.id}
-              onPress={() =>
-                navigation.navigate(EXPLORE_ROUTES.STYLE_CATEGORY, {
-                  categoryId: category.id,
-                  title: category.label,
-                })
-              }
-              style={({ pressed }) => [styles.categoryCard, pressed ? styles.pressed : null]}
-            >
-              <View style={[styles.categorySymbol, { backgroundColor: category.tone }]}>
-                <View style={styles.categorySymbolBadge}>
-                  <Text style={styles.categorySymbolText}>{category.symbol}</Text>
-                </View>
-              </View>
-              <Text style={styles.categoryLabel}>{category.label}</Text>
-            </Pressable>
-          ))}
-        </ScrollView>
-      </View>
-
-      <View style={styles.section}>
-        <SectionHeader title="Browse by style" />
-        <View style={styles.styleGrid}>
-          {exploreStyles.map((style) => (
-            <Pressable
-              accessibilityRole="button"
-              key={style}
-              onPress={() =>
-                navigation.navigate(EXPLORE_ROUTES.STYLE_CATEGORY, {
-                  categoryId: style.toLowerCase().replace(/\s+/g, '-'),
-                  title: style,
-                })
-              }
-              style={({ pressed }) => [styles.styleCard, pressed ? styles.pressed : null]}
-            >
-              <Text style={styles.styleLabel}>{style}</Text>
-              <Text style={styles.arrow}>↗</Text>
-            </Pressable>
-          ))}
-        </View>
-      </View>
-
-      <View style={styles.section}>
-        <SectionHeader title="Trending looks" />
-        <ScrollView
-          contentContainerStyle={styles.outfits}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        >
-          {outfitConcepts.map((outfit) => (
-            <View key={outfit.id} style={styles.outfitCard}>
-              <OutfitCard
-                compact
-                onPress={() => showDeferredNotice('Trending look details')}
-                outfit={outfit}
+    <>
+      <AppScreen title="Explore">
+        <View style={styles.page}>
+          <View style={styles.searchRow}>
+            <View style={styles.search}>
+              <SearchBar
+                onChangeText={setQuery}
+                onSubmit={submitSearch}
+                placeholder="Search fashion, outfits, or styles"
+                square
+                value={query}
               />
             </View>
-          ))}
-        </ScrollView>
-      </View>
-    </AppScreen>
+            <Pressable
+              accessibilityLabel="Open Explore filters"
+              accessibilityRole="button"
+              accessibilityState={{ expanded: filtersVisible }}
+              onPress={openFilters}
+              style={({ pressed }) => [
+                styles.filterButton,
+                activeFilterCount > 0 ? styles.filterButtonActive : null,
+                pressed ? styles.pressed : null,
+              ]}
+            >
+              <Text accessibilityElementsHidden style={styles.filterIcon}>
+                ≡
+              </Text>
+              <Text style={styles.filterLabel}>Filter</Text>
+              {activeFilterCount > 0 ? (
+                <Text style={styles.filterCount}>{activeFilterCount}</Text>
+              ) : null}
+            </Pressable>
+          </View>
+
+          {hasActiveDiscoveryFilters && status === 'ready' ? (
+            <View style={styles.resultSummary}>
+              <Text style={styles.resultCount}>
+                {filteredItems.length} {filteredItems.length === 1 ? 'look' : 'looks'}
+                {activeQuery ? ` for “${activeQuery}”` : ''}
+              </Text>
+              <Pressable
+                accessibilityRole="button"
+                onPress={clearDiscovery}
+                style={({ pressed }) => [styles.clearInline, pressed ? styles.pressed : null]}
+              >
+                <Text style={styles.clearInlineLabel}>Clear</Text>
+              </Pressable>
+            </View>
+          ) : null}
+
+          {status === 'loading' ? (
+            <ExploreFeedSkeleton columnCount={columnCount} />
+          ) : status === 'error' ? (
+            <ExploreErrorState message={error.message} onRetry={retry} styles={styles} />
+          ) : filteredItems.length === 0 ? (
+            <ExploreEmptyState onClear={clearDiscovery} styles={styles} />
+          ) : (
+            <ExploreMasonryFeed
+              columnCount={columnCount}
+              items={filteredItems}
+              onOpenItem={openItem}
+            />
+          )}
+        </View>
+      </AppScreen>
+
+      <ExploreFilterPanel
+        categoryIds={draftCategoryIds}
+        onApply={applyFilters}
+        onClear={() => {
+          setDraftCategoryIds([]);
+          setDraftStyles([]);
+        }}
+        onDismiss={() => setFiltersVisible(false)}
+        onToggleCategory={(categoryId) =>
+          setDraftCategoryIds((current) => toggleSelection(current, categoryId))
+        }
+        onToggleStyle={(style) => setDraftStyles((current) => toggleSelection(current, style))}
+        resultCount={draftResultCount}
+        styles={draftStyles}
+        visible={filtersVisible}
+      />
+    </>
   );
+}
+
+function ExploreErrorState({
+  message,
+  onRetry,
+  styles,
+}: {
+  message: string;
+  onRetry: () => void;
+  styles: ReturnType<typeof createStyles>;
+}) {
+  return (
+    <View style={styles.state}>
+      <Text accessibilityRole="header" style={styles.stateTitle}>
+        Explore could not load
+      </Text>
+      <Text style={styles.stateMessage}>{message}</Text>
+      <Pressable
+        accessibilityRole="button"
+        onPress={onRetry}
+        style={({ pressed }) => [styles.stateAction, pressed ? styles.pressed : null]}
+      >
+        <Text style={styles.stateActionLabel}>Try again</Text>
+      </Pressable>
+    </View>
+  );
+}
+
+function ExploreEmptyState({
+  onClear,
+  styles,
+}: {
+  onClear: () => void;
+  styles: ReturnType<typeof createStyles>;
+}) {
+  return (
+    <View style={styles.state}>
+      <Text accessibilityRole="header" style={styles.stateTitle}>
+        No looks match this edit
+      </Text>
+      <Text style={styles.stateMessage}>
+        Clear the current search and filters to return to the full discovery feed.
+      </Text>
+      <Pressable
+        accessibilityRole="button"
+        onPress={onClear}
+        style={({ pressed }) => [styles.stateAction, pressed ? styles.pressed : null]}
+      >
+        <Text style={styles.stateActionLabel}>Clear search and filters</Text>
+      </Pressable>
+    </View>
+  );
+}
+
+function toggleSelection<T>(current: readonly T[], value: T) {
+  return current.includes(value) ? current.filter((item) => item !== value) : [...current, value];
 }
 
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
-    searchRow: { alignItems: 'center', flexDirection: 'row', gap: theme.spacing.sm },
-    search: { flex: 1 },
-    section: { gap: theme.spacing.md },
-    categories: { gap: theme.spacing.md, paddingRight: theme.spacing.md },
-    categoryCard: { gap: theme.spacing.sm, width: 104 },
-    categorySymbol: {
-      alignItems: 'center',
-      aspectRatio: 1,
-      borderRadius: theme.radii.lg,
-      justifyContent: 'center',
-      width: 104,
-    },
-    categorySymbolBadge: {
-      alignItems: 'center',
-      backgroundColor: theme.colors.surface,
-      borderRadius: theme.radii.full,
-      height: 44,
-      justifyContent: 'center',
-      width: 44,
-    },
-    categorySymbolText: {
-      color: theme.colors.text,
-      fontSize: theme.typography.fontSize.xl,
-      fontWeight: theme.typography.fontWeight.bold,
-    },
-    categoryLabel: { color: theme.colors.text, fontSize: theme.typography.fontSize.sm },
-    styleGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm },
-    styleCard: {
+    page: { gap: theme.spacing.lg },
+    searchRow: { alignItems: 'stretch', flexDirection: 'row', gap: theme.spacing.sm },
+    search: { flex: 1, minWidth: 0 },
+    filterButton: {
       alignItems: 'center',
       backgroundColor: theme.colors.surface,
       borderColor: theme.colors.border,
-      borderRadius: theme.radii.md,
       borderWidth: 1,
       flexDirection: 'row',
+      gap: theme.spacing.xs,
+      justifyContent: 'center',
       minHeight: 52,
-      minWidth: 160,
       paddingHorizontal: theme.spacing.md,
     },
-    styleLabel: {
-      color: theme.colors.text,
-      flex: 1,
-      fontWeight: theme.typography.fontWeight.medium,
+    filterButtonActive: {
+      backgroundColor: theme.colors.primarySoft,
+      borderColor: theme.colors.primary,
     },
-    arrow: { color: theme.colors.primary },
-    outfits: { gap: theme.spacing.md, paddingRight: theme.spacing.md },
-    outfitCard: { width: 280 },
-    pressed: { opacity: 0.72 },
+    filterIcon: { color: theme.colors.text, fontSize: theme.typography.fontSize.lg },
+    filterLabel: {
+      color: theme.colors.text,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontSize: theme.typography.fontSize.sm,
+      fontWeight: theme.typography.fontWeight.semibold,
+    },
+    filterCount: {
+      color: theme.colors.primary,
+      fontFamily: theme.typography.fontFamily.bold,
+      fontSize: theme.typography.fontSize.xs,
+      fontWeight: theme.typography.fontWeight.bold,
+    },
+    resultSummary: {
+      alignItems: 'center',
+      borderBottomColor: theme.colors.border,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      flexDirection: 'row',
+      gap: theme.spacing.md,
+      paddingBottom: theme.spacing.sm,
+    },
+    resultCount: {
+      color: theme.colors.textMuted,
+      flex: 1,
+      fontFamily: theme.typography.fontFamily.regular,
+      fontSize: theme.typography.fontSize.sm,
+    },
+    clearInline: { justifyContent: 'center', minHeight: 44, paddingHorizontal: theme.spacing.sm },
+    clearInlineLabel: {
+      color: theme.colors.text,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontSize: theme.typography.fontSize.sm,
+      fontWeight: theme.typography.fontWeight.semibold,
+    },
+    state: {
+      borderTopColor: theme.colors.border,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      gap: theme.spacing.md,
+      paddingVertical: theme.spacing.xl,
+    },
+    stateTitle: {
+      color: theme.colors.text,
+      fontFamily: theme.typography.fontFamily.editorial,
+      fontSize: theme.typography.fontSize.xl,
+      lineHeight: theme.typography.lineHeight.xl,
+    },
+    stateMessage: {
+      color: theme.colors.textMuted,
+      fontFamily: theme.typography.fontFamily.regular,
+      fontSize: theme.typography.fontSize.sm,
+      lineHeight: theme.typography.lineHeight.sm,
+      maxWidth: 520,
+    },
+    stateAction: {
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      borderColor: theme.colors.text,
+      borderWidth: 1,
+      justifyContent: 'center',
+      minHeight: 48,
+      paddingHorizontal: theme.spacing.md,
+    },
+    stateActionLabel: {
+      color: theme.colors.text,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontWeight: theme.typography.fontWeight.semibold,
+    },
+    pressed: { opacity: 0.68 },
   });
 }

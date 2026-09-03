@@ -1,5 +1,181 @@
 {
-  "generated_at": "2026-09-01T14:35:56.327243+00:00",
-  "nodes": {},
+  "generated_at": "2026-09-02T16:17:05.639131+00:00",
+  "nodes": {
+    "react": {
+      "code_fingerprint": "5322da55fe83d85e8b517304cf19008576809f587032b8c3fce8f72666e6a1a7",
+      "label": "react",
+      "last": "2026-09-02T15:58:55.671068+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-02T15:58:55.671068+00:00",
+          "outcome": "useful",
+          "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
+        }
+      ],
+      "score": 0.999708566,
+      "source_file": "package.json",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_components_ui_stateviews": {
+      "code_fingerprint": "5891ffd52882cb058cbc9e067d0ea678ddc0900995881407ee85780fe7fa2bf7",
+      "label": "StateViews.tsx",
+      "last": "2026-09-01T15:17:58.176268+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-01T15:17:58.176268+00:00",
+          "outcome": "useful",
+          "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
+        }
+      ],
+      "score": 0.97623342,
+      "source_file": "src/components/ui/StateViews.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_explore_components_exploremasonryfeed": {
+      "code_fingerprint": "a2fd047d547b7ec5d6f86337626da606fa0999d83b3dc29a5dbe8e6a80e735e5",
+      "label": "ExploreMasonryFeed.tsx",
+      "last": "2026-09-02T16:06:41.110275+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-02T16:06:41.110275+00:00",
+          "outcome": "useful",
+          "q": "Understand the ERR_CONNECTION_REFUSED asset-loading error from React Native Web ImageLoader."
+        },
+        {
+          "date": "2026-09-02T15:58:55.671068+00:00",
+          "outcome": "useful",
+          "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
+        }
+      ],
+      "score": 1.999541569,
+      "source_file": "src/features/explore/components/ExploreMasonryFeed.tsx",
+      "status": "preferred",
+      "uses": 2
+    },
+    "src_features_explore_screens_explorescreen": {
+      "code_fingerprint": "0608d875221b34c5d03fe48fa358f8eea0c925836459ea45ca290f03b6ad8a1f",
+      "label": "ExploreScreen.tsx",
+      "last": "2026-09-02T16:06:41.110275+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-02T16:06:41.110275+00:00",
+          "outcome": "useful",
+          "q": "Understand the ERR_CONNECTION_REFUSED asset-loading error from React Native Web ImageLoader."
+        },
+        {
+          "date": "2026-09-02T15:58:55.671068+00:00",
+          "outcome": "useful",
+          "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
+        },
+        {
+          "date": "2026-09-02T15:45:44.069319+00:00",
+          "outcome": "useful",
+          "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
+        }
+      ],
+      "score": 2.99903853,
+      "source_file": "src/features/explore/screens/ExploreScreen.tsx",
+      "status": "preferred",
+      "uses": 3
+    },
+    "src_features_explore_screens_searchresultsscreen": {
+      "code_fingerprint": "b2102e087cf0e989c94dd39dd2221dd844d3aabf193fef8f56dba4bdb7de43fd",
+      "label": "SearchResultsScreen.tsx",
+      "last": "2026-09-02T15:45:44.069319+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-02T15:45:44.069319+00:00",
+          "outcome": "useful",
+          "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
+        }
+      ],
+      "score": 0.999496961,
+      "source_file": "src/features/explore/screens/SearchResultsScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_home_screens_homescreen": {
+      "code_fingerprint": "0f0e50acb0827a1273a9e53f959a5ea542aa84b092ea4c808442348b05cdd552",
+      "label": "HomeScreen.tsx",
+      "last": "2026-09-01T15:17:58.176268+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-01T15:17:58.176268+00:00",
+          "outcome": "useful",
+          "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
+        }
+      ],
+      "score": 0.97623342,
+      "source_file": "src/features/home/screens/HomeScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_navigation_mainappnavigator": {
+      "code_fingerprint": "a9dbf108e1a0d9e9d6acd29fb5f92e0ede4994e11dedc700dcbdcf0c2d6e075e",
+      "label": "MainAppNavigator.tsx",
+      "last": "2026-09-02T15:45:44.069319+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-02T15:45:44.069319+00:00",
+          "outcome": "useful",
+          "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
+        }
+      ],
+      "score": 0.999496961,
+      "source_file": "src/navigation/MainAppNavigator.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_navigation_tabnavigators": {
+      "code_fingerprint": "3bfca9437e99d9b6634e20d3e313faa3e3c16f959312f4215bf673306ebefea4",
+      "label": "TabNavigators.tsx",
+      "last": "2026-09-01T15:17:58.176268+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-01T15:17:58.176268+00:00",
+          "outcome": "useful",
+          "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
+        }
+      ],
+      "score": 0.97623342,
+      "source_file": "src/navigation/TabNavigators.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_navigation_types": {
+      "code_fingerprint": "6b52c53f0c18b0c063b53430e718d41fd09e7ccb76d5dafbe3d4d94210173d6a",
+      "label": "navigation/types.ts",
+      "last": "2026-09-02T15:45:44.069319+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-02T15:45:44.069319+00:00",
+          "outcome": "useful",
+          "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
+        }
+      ],
+      "score": 0.999496961,
+      "source_file": "src/navigation/types.ts",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_theme_index": {
+      "code_fingerprint": "6e7699a81de2be1224161b1189a2ba60d9a0c376c8755272bec754e91d0f38d7",
+      "label": "theme/index.ts",
+      "last": "2026-09-01T15:17:58.176268+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-01T15:17:58.176268+00:00",
+          "outcome": "useful",
+          "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
+        }
+      ],
+      "score": 0.97623342,
+      "source_file": "src/theme/index.ts",
+      "status": "tentative",
+      "uses": 1
+    }
+  },
   "version": 1
 }

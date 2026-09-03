@@ -7,20 +7,50 @@ import { Badge } from '@/components/ui/ProfilePrimitives';
 import { PlaceholderArtwork } from '@/components/ui/PlaceholderArtwork';
 import { DeferredNotice } from '@/components/ui/StateViews';
 import { allInspiration } from '@/fixtures/inspiration';
-import type { HomeStackParamList } from '@/navigation/types';
+import { EXPLORE_ROUTES, HOME_ROUTES } from '@/navigation/routes';
+import type { ExploreStackParamList, HomeStackParamList } from '@/navigation/types';
 import { useAppTheme, type AppTheme } from '@/theme';
 import { showDeferredNotice } from '@/utils/deferred';
 
-type Props = NativeStackScreenProps<HomeStackParamList, 'InspirationDetail'>;
+type HomeProps = NativeStackScreenProps<HomeStackParamList, 'InspirationDetail'>;
+type ExploreProps = NativeStackScreenProps<ExploreStackParamList, 'InspirationDetail'>;
 
-export function InspirationDetailScreen({ navigation, route }: Props) {
+export function InspirationDetailScreen({ navigation, route }: HomeProps) {
+  const handleBack = () => {
+    if (navigation.canGoBack()) navigation.goBack();
+    else navigation.replace(HOME_ROUTES.HOME);
+  };
+
+  return (
+    <InspirationDetailContent inspirationId={route.params.inspirationId} onBack={handleBack} />
+  );
+}
+
+export function ExploreInspirationDetailScreen({ navigation, route }: ExploreProps) {
+  const handleBack = () => {
+    if (navigation.canGoBack()) navigation.goBack();
+    else navigation.replace(EXPLORE_ROUTES.EXPLORE);
+  };
+
+  return (
+    <InspirationDetailContent inspirationId={route.params.inspirationId} onBack={handleBack} />
+  );
+}
+
+function InspirationDetailContent({
+  inspirationId,
+  onBack,
+}: {
+  inspirationId: string;
+  onBack: () => void;
+}) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
-  const item = allInspiration.find((candidate) => candidate.id === route.params.inspirationId);
+  const item = allInspiration.find((candidate) => candidate.id === inspirationId);
 
   if (!item) {
     return (
-      <AppScreen onBack={navigation.goBack} title="Inspiration unavailable">
+      <AppScreen onBack={onBack} title="Inspiration unavailable">
         <DeferredNotice>
           This fixture is no longer available in the local presentation set.
         </DeferredNotice>
@@ -29,7 +59,7 @@ export function InspirationDetailScreen({ navigation, route }: Props) {
   }
 
   return (
-    <AppScreen onBack={navigation.goBack} subtitle={item.caption} title={item.title}>
+    <AppScreen onBack={onBack} subtitle={item.caption} title={item.title}>
       <PlaceholderArtwork aspectRatio={4 / 3} colors={item.colors} label={item.title} />
       <View style={styles.copy}>
         <Badge label={item.category} />

@@ -36,7 +36,6 @@ function createStyles(theme: AppTheme) {
   return StyleSheet.create({
     shell: {
       alignItems: 'center',
-      borderRadius: theme.radii.full,
       height: 30,
       justifyContent: 'center',
       width: 36,

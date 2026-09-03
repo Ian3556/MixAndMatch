@@ -23,7 +23,7 @@ export function MainAppNavigator() {
       backBehavior="history"
       screenOptions={({ route }) => {
         const config = getTabConfig(route.name);
-        const prominent = route.name === MAIN_ROUTES.WARDROBE_TAB;
+        const prominent = route.name === MAIN_ROUTES.STYLIST_TAB;
         return {
           headerShown: false,
           tabBarAccessibilityLabel: `${config?.label ?? route.name} tab`,
@@ -50,8 +50,8 @@ export function MainAppNavigator() {
     >
       <Tabs.Screen component={HomeTabNavigator} name={MAIN_ROUTES.HOME_TAB} />
       <Tabs.Screen component={ExploreTabNavigator} name={MAIN_ROUTES.EXPLORE_TAB} />
-      <Tabs.Screen component={WardrobeTabNavigator} name={MAIN_ROUTES.WARDROBE_TAB} />
       <Tabs.Screen component={StylistTabNavigator} name={MAIN_ROUTES.STYLIST_TAB} />
+      <Tabs.Screen component={WardrobeTabNavigator} name={MAIN_ROUTES.WARDROBE_TAB} />
       <Tabs.Screen component={ProfileTabNavigator} name={MAIN_ROUTES.PROFILE_TAB} />
     </Tabs.Navigator>
   );

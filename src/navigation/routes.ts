@@ -22,8 +22,8 @@ export const ONBOARDING_ROUTES = {
 export const MAIN_ROUTES = {
   HOME_TAB: 'HomeTab',
   EXPLORE_TAB: 'ExploreTab',
-  WARDROBE_TAB: 'WardrobeTab',
   STYLIST_TAB: 'StylistTab',
+  WARDROBE_TAB: 'WardrobeTab',
   PROFILE_TAB: 'ProfileTab',
 } as const;
 
@@ -36,6 +36,7 @@ export const EXPLORE_ROUTES = {
   EXPLORE: 'Explore',
   SEARCH_RESULTS: 'SearchResults',
   STYLE_CATEGORY: 'StyleCategory',
+  INSPIRATION_DETAIL: 'InspirationDetail',
 } as const;
 
 export const WARDROBE_ROUTES = {
