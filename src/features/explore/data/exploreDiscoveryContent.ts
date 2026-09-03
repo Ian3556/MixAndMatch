@@ -9,6 +9,8 @@ export const exploreDiscoveryContent: readonly ExploreDiscoveryItem[] = [
     id: 'city-minimal-uniform',
     title: 'City Minimal',
     aesthetic: 'Quiet tailoring',
+    description:
+      'Balance an oversized blazer with a clean base layer and fluid trousers for a composed city uniform.',
     style: 'Minimalist',
     categoryIds: ['outerwear', 'tops', 'bottoms', 'footwear'],
     tags: ['neutral', 'tailoring', 'transitional', 'city'],
@@ -21,6 +23,8 @@ export const exploreDiscoveryContent: readonly ExploreDiscoveryItem[] = [
     id: 'riviera-whites',
     title: 'Riviera Whites',
     aesthetic: 'Resort tailoring',
+    description:
+      'Keep warm-weather tailoring light and tonal, then add one structured accessory for definition.',
     style: 'Old Money',
     categoryIds: ['outerwear', 'bottoms', 'footwear', 'accessories'],
     tags: ['summer', 'linen', 'monochrome', 'coastal'],
@@ -33,6 +37,8 @@ export const exploreDiscoveryContent: readonly ExploreDiscoveryItem[] = [
     id: 'soft-utility-walk',
     title: 'Soft Utility Walk',
     aesthetic: 'Weekend layers',
+    description:
+      'Soften practical outerwear with pale denim and a crisp shirt for an easy layered weekend look.',
     style: 'City Walk',
     categoryIds: ['outerwear', 'tops', 'bottoms', 'footwear'],
     tags: ['olive', 'utility', 'denim', 'weekend'],
@@ -45,6 +51,8 @@ export const exploreDiscoveryContent: readonly ExploreDiscoveryItem[] = [
     id: 'tonal-commute',
     title: 'Tonal Commute',
     aesthetic: 'Modern classic',
+    description:
+      'Layer sand, cream, and charcoal in clean proportions to make commuter staples feel intentional.',
     style: 'Smart Casual',
     categoryIds: ['outerwear', 'tops', 'bottoms', 'footwear'],
     tags: ['tonal', 'trench', 'knitwear', 'menswear'],
@@ -57,6 +65,8 @@ export const exploreDiscoveryContent: readonly ExploreDiscoveryItem[] = [
     id: 'blue-hour-drape',
     title: 'Blue Hour Drape',
     aesthetic: 'After-dark resort',
+    description:
+      'Let a sculptural silhouette lead, keeping accessories restrained and the palette deep and focused.',
     style: 'Formal',
     categoryIds: ['dresses', 'footwear', 'accessories'],
     tags: ['evening', 'drape', 'ocean', 'occasion'],
@@ -69,6 +79,8 @@ export const exploreDiscoveryContent: readonly ExploreDiscoveryItem[] = [
     id: 'archive-burgundy',
     title: 'Archive Burgundy',
     aesthetic: 'Runway layers',
+    description:
+      'Pair oxblood leather with charcoal wool and simple foundations to modernise archival references.',
     style: 'Vintage',
     categoryIds: ['outerwear', 'tops', 'bottoms', 'footwear', 'accessories'],
     tags: ['oxblood', 'leather', 'wool', 'runway'],
@@ -81,6 +93,8 @@ export const exploreDiscoveryContent: readonly ExploreDiscoveryItem[] = [
     id: 'street-line',
     title: 'Street Line',
     aesthetic: 'Relaxed proportions',
+    description:
+      'Use one tailored layer over generous separates, grounding the volume with clean everyday sneakers.',
     style: 'Streetwear',
     categoryIds: ['outerwear', 'tops', 'bottoms', 'footwear'],
     tags: ['oversized', 'street', 'sneakers', 'layering'],
@@ -93,6 +107,8 @@ export const exploreDiscoveryContent: readonly ExploreDiscoveryItem[] = [
     id: 'off-duty-olive',
     title: 'Off-Duty Olive',
     aesthetic: 'Easy separates',
+    description:
+      'Build an everyday palette around olive, white, and cream with uncomplicated cotton separates.',
     style: 'Casual',
     categoryIds: ['outerwear', 'tops', 'bottoms', 'footwear'],
     tags: ['casual', 'cotton', 'cream', 'everyday'],

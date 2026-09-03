@@ -8,6 +8,7 @@ type SearchBarProps = {
   onSubmit: () => void;
   placeholder?: string;
   square?: boolean;
+  submitLabel?: string;
 };
 
 export function SearchBar({
@@ -16,6 +17,7 @@ export function SearchBar({
   onSubmit,
   placeholder = 'Search styles and pieces',
   square = false,
+  submitLabel = 'Go',
 }: SearchBarProps) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -35,8 +37,15 @@ export function SearchBar({
         style={styles.input}
         value={value}
       />
-      <Pressable accessibilityLabel="Submit search" accessibilityRole="button" onPress={onSubmit}>
-        <Text style={styles.submit}>Go</Text>
+      <Pressable
+        accessibilityLabel="Submit search"
+        accessibilityRole="button"
+        onPress={onSubmit}
+        style={({ pressed }) => [styles.submitButton, pressed ? styles.pressed : null]}
+      >
+        <Text style={[styles.submit, submitLabel === '→' ? styles.submitArrow : null]}>
+          {submitLabel}
+        </Text>
       </Pressable>
     </View>
   );
@@ -67,12 +76,22 @@ function createStyles(theme: AppTheme) {
       minHeight: 50,
       paddingHorizontal: theme.spacing.sm,
     },
+    submitButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: 44,
+      minWidth: 44,
+    },
     submit: {
       color: theme.colors.primary,
       fontFamily: theme.typography.fontFamily.medium,
       fontSize: theme.typography.fontSize.sm,
       fontWeight: theme.typography.fontWeight.semibold,
-      padding: theme.spacing.sm,
     },
+    submitArrow: {
+      fontSize: theme.typography.fontSize.xl,
+      lineHeight: theme.typography.lineHeight.xl,
+    },
+    pressed: { opacity: 0.68 },
   });
 }

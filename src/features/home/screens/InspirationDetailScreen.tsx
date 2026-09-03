@@ -7,29 +7,17 @@ import { Badge } from '@/components/ui/ProfilePrimitives';
 import { PlaceholderArtwork } from '@/components/ui/PlaceholderArtwork';
 import { DeferredNotice } from '@/components/ui/StateViews';
 import { allInspiration } from '@/fixtures/inspiration';
-import { EXPLORE_ROUTES, HOME_ROUTES } from '@/navigation/routes';
-import type { ExploreStackParamList, HomeStackParamList } from '@/navigation/types';
+import { HOME_ROUTES } from '@/navigation/routes';
+import type { HomeStackParamList } from '@/navigation/types';
 import { useAppTheme, type AppTheme } from '@/theme';
 import { showDeferredNotice } from '@/utils/deferred';
 
 type HomeProps = NativeStackScreenProps<HomeStackParamList, 'InspirationDetail'>;
-type ExploreProps = NativeStackScreenProps<ExploreStackParamList, 'InspirationDetail'>;
 
 export function InspirationDetailScreen({ navigation, route }: HomeProps) {
   const handleBack = () => {
     if (navigation.canGoBack()) navigation.goBack();
     else navigation.replace(HOME_ROUTES.HOME);
-  };
-
-  return (
-    <InspirationDetailContent inspirationId={route.params.inspirationId} onBack={handleBack} />
-  );
-}
-
-export function ExploreInspirationDetailScreen({ navigation, route }: ExploreProps) {
-  const handleBack = () => {
-    if (navigation.canGoBack()) navigation.goBack();
-    else navigation.replace(EXPLORE_ROUTES.EXPLORE);
   };
 
   return (

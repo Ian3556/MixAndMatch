@@ -79,14 +79,14 @@ export function ExploreScreen({ navigation }: Props) {
   const openItem = useCallback(
     (item: ExploreDiscoveryItem) =>
       navigation.navigate(EXPLORE_ROUTES.INSPIRATION_DETAIL, {
-        inspirationId: item.inspirationId,
+        itemId: item.id,
       }),
     [navigation],
   );
 
   return (
     <>
-      <AppScreen title="Explore">
+      <AppScreen hideHeader title="">
         <View style={styles.page}>
           <View style={styles.searchRow}>
             <View style={styles.search}>
@@ -95,6 +95,7 @@ export function ExploreScreen({ navigation }: Props) {
                 onSubmit={submitSearch}
                 placeholder="Search fashion, outfits, or styles"
                 square
+                submitLabel="→"
                 value={query}
               />
             </View>

@@ -20,7 +20,12 @@ export type ExploreStackParamList = {
   Explore: undefined;
   SearchResults: { query: string };
   StyleCategory: { categoryId: string; title: string };
-  InspirationDetail: { inspirationId: string };
+  InspirationDetail:
+    | { itemId: string; inspirationId?: never }
+    | {
+        inspirationId: string;
+        itemId?: never;
+      };
 };
 
 export type WardrobeStackParamList = {

@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-02T16:17:05.639131+00:00",
+  "generated_at": "2026-09-03T15:47:19.328208+00:00",
   "nodes": {
     "react": {
-      "code_fingerprint": "5322da55fe83d85e8b517304cf19008576809f587032b8c3fce8f72666e6a1a7",
+      "code_fingerprint": "82d9951bfa5b73dff19cb1a2411a22738a3a1ad021e7767d723fc63b01f075ee",
       "label": "react",
       "last": "2026-09-02T15:58:55.671068+00:00",
       "provenance": [
@@ -12,7 +12,7 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 0.999708566,
+      "score": 0.977341947,
       "source_file": "package.json",
       "status": "tentative",
       "uses": 1
@@ -28,16 +28,21 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.97623342,
+      "score": 0.954392014,
       "source_file": "src/components/ui/StateViews.tsx",
       "status": "tentative",
       "uses": 1
     },
     "src_features_explore_components_exploremasonryfeed": {
-      "code_fingerprint": "a2fd047d547b7ec5d6f86337626da606fa0999d83b3dc29a5dbe8e6a80e735e5",
+      "code_fingerprint": "6a57275c80dc9679fed101e8cc6cd6585bbaefae000f9da7f4d771647b5a045e",
       "label": "ExploreMasonryFeed.tsx",
-      "last": "2026-09-02T16:06:41.110275+00:00",
+      "last": "2026-09-02T16:24:32.745922+00:00",
       "provenance": [
+        {
+          "date": "2026-09-02T16:24:32.745922+00:00",
+          "outcome": "useful",
+          "q": "There are a few errors that need to be fix: Explore Page Image keeps on rendering, make the image to ONLY render when user either refresh or reopen the app; The Back button instead of going back to the home page, make it go back to its previous action."
+        },
         {
           "date": "2026-09-02T16:06:41.110275+00:00",
           "outcome": "useful",
@@ -49,16 +54,21 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 1.999541569,
+      "score": 2.932549305,
       "source_file": "src/features/explore/components/ExploreMasonryFeed.tsx",
       "status": "preferred",
-      "uses": 2
+      "uses": 3
     },
     "src_features_explore_screens_explorescreen": {
-      "code_fingerprint": "0608d875221b34c5d03fe48fa358f8eea0c925836459ea45ca290f03b6ad8a1f",
+      "code_fingerprint": "564d08fcf824b3b5f6aef9685b67fda692c1634aeb4f3b7585ea1264df458bac",
       "label": "ExploreScreen.tsx",
-      "last": "2026-09-02T16:06:41.110275+00:00",
+      "last": "2026-09-02T16:24:32.745922+00:00",
       "provenance": [
+        {
+          "date": "2026-09-02T16:24:32.745922+00:00",
+          "outcome": "useful",
+          "q": "There are a few errors that need to be fix: Explore Page Image keeps on rendering, make the image to ONLY render when user either refresh or reopen the app; The Back button instead of going back to the home page, make it go back to its previous action."
+        },
         {
           "date": "2026-09-02T16:06:41.110275+00:00",
           "outcome": "useful",
@@ -75,13 +85,13 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 2.99903853,
+      "score": 3.909684382,
       "source_file": "src/features/explore/screens/ExploreScreen.tsx",
       "status": "preferred",
-      "uses": 3
+      "uses": 4
     },
     "src_features_explore_screens_searchresultsscreen": {
-      "code_fingerprint": "b2102e087cf0e989c94dd39dd2221dd844d3aabf193fef8f56dba4bdb7de43fd",
+      "code_fingerprint": "b06fc3bcb91b4b22fe4f843563ff8edc35b7dda0e3b7849c9bcecbaaf6409421",
       "label": "SearchResultsScreen.tsx",
       "last": "2026-09-02T15:45:44.069319+00:00",
       "provenance": [
@@ -91,7 +101,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 0.999496961,
+      "score": 0.977135077,
       "source_file": "src/features/explore/screens/SearchResultsScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -107,8 +117,24 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.97623342,
+      "score": 0.954392014,
       "source_file": "src/features/home/screens/HomeScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_home_screens_inspirationdetailscreen": {
+      "code_fingerprint": "5b06dee50e564a5f33316bba32b30c07d98f3a8d6da9025fa153e38399e7c534",
+      "label": "InspirationDetailScreen.tsx",
+      "last": "2026-09-02T16:24:32.745922+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-02T16:24:32.745922+00:00",
+          "outcome": "useful",
+          "q": "There are a few errors that need to be fix: Explore Page Image keeps on rendering, make the image to ONLY render when user either refresh or reopen the app; The Back button instead of going back to the home page, make it go back to its previous action."
+        }
+      ],
+      "score": 0.977743757,
+      "source_file": "src/features/home/screens/InspirationDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
     },
@@ -123,29 +149,34 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 0.999496961,
+      "score": 0.977135077,
       "source_file": "src/navigation/MainAppNavigator.tsx",
       "status": "tentative",
       "uses": 1
     },
     "src_navigation_tabnavigators": {
-      "code_fingerprint": "3bfca9437e99d9b6634e20d3e313faa3e3c16f959312f4215bf673306ebefea4",
+      "code_fingerprint": "ebf3d2a0cb1357945e9eb5c733562773ee57c315d0ad53235f8f3842e35a178a",
       "label": "TabNavigators.tsx",
-      "last": "2026-09-01T15:17:58.176268+00:00",
+      "last": "2026-09-02T16:24:32.745922+00:00",
       "provenance": [
+        {
+          "date": "2026-09-02T16:24:32.745922+00:00",
+          "outcome": "useful",
+          "q": "There are a few errors that need to be fix: Explore Page Image keeps on rendering, make the image to ONLY render when user either refresh or reopen the app; The Back button instead of going back to the home page, make it go back to its previous action."
+        },
         {
           "date": "2026-09-01T15:17:58.176268+00:00",
           "outcome": "useful",
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.97623342,
+      "score": 1.932135771,
       "source_file": "src/navigation/TabNavigators.tsx",
-      "status": "tentative",
-      "uses": 1
+      "status": "preferred",
+      "uses": 2
     },
     "src_navigation_types": {
-      "code_fingerprint": "6b52c53f0c18b0c063b53430e718d41fd09e7ccb76d5dafbe3d4d94210173d6a",
+      "code_fingerprint": "1e76f44d78a80898a0835e09ef4b7490f162226083f1bb73dfb5b518ee4bed7d",
       "label": "navigation/types.ts",
       "last": "2026-09-02T15:45:44.069319+00:00",
       "provenance": [
@@ -155,7 +186,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 0.999496961,
+      "score": 0.977135077,
       "source_file": "src/navigation/types.ts",
       "status": "tentative",
       "uses": 1
@@ -171,7 +202,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.97623342,
+      "score": 0.954392014,
       "source_file": "src/theme/index.ts",
       "status": "tentative",
       "uses": 1

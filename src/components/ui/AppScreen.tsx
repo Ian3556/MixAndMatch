@@ -19,6 +19,7 @@ type AppScreenProps = PropsWithChildren<{
   eyebrow?: string;
   onBack?: () => void;
   actions?: ReactNode;
+  hideHeader?: boolean;
   scrollProps?: Omit<ScrollViewProps, 'contentContainerStyle'>;
 }>;
 
@@ -28,6 +29,7 @@ export function AppScreen({
   eyebrow,
   onBack,
   actions,
+  hideHeader = false,
   scrollProps,
   children,
 }: AppScreenProps) {
@@ -45,13 +47,15 @@ export function AppScreen({
           keyboardShouldPersistTaps="handled"
           {...scrollProps}
         >
-          <AppHeader
-            actions={actions}
-            eyebrow={eyebrow}
-            onBack={onBack}
-            subtitle={subtitle}
-            title={title}
-          />
+          {hideHeader ? null : (
+            <AppHeader
+              actions={actions}
+              eyebrow={eyebrow}
+              onBack={onBack}
+              subtitle={subtitle}
+              title={title}
+            />
+          )}
           <View style={styles.body}>{children}</View>
         </ScrollView>
       </KeyboardAvoidingView>

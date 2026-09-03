@@ -46,6 +46,7 @@
   "44": "extraction-spec.md",
   "45": "validate.mjs",
   "46": "vitest.config.mts",
+  "47": "editProduct",
   "48": "Mix & Match catalogue database",
   "49": "Q: Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile.",
   "50": "Q: Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image.",

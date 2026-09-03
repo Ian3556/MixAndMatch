@@ -65,7 +65,12 @@ export function SearchResultsScreen({ navigation, route }: Props) {
       subtitle="Local fixture filtering only—no external catalogue is connected."
       title="Search results"
     >
-      <SearchBar onChangeText={setQuery} onSubmit={() => setSubmittedQuery(query)} value={query} />
+      <SearchBar
+        onChangeText={setQuery}
+        onSubmit={() => setSubmittedQuery(query)}
+        submitLabel="→"
+        value={query}
+      />
       <View style={styles.toolbar}>
         <Text style={styles.count}>
           {results.length} {results.length === 1 ? 'result' : 'results'}

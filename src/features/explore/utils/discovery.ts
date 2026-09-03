@@ -48,3 +48,38 @@ export function buildMasonryColumns<T extends { imageAspectRatio: number }>(
 
   return columns;
 }
+
+export function getRelatedExploreItems(
+  items: readonly ExploreDiscoveryItem[],
+  selectedItem: ExploreDiscoveryItem,
+  limit = 6,
+) {
+  return items
+    .map((item, index) => ({
+      index,
+      item,
+      score: scoreExploreSimilarity(selectedItem, item),
+    }))
+    .filter(({ item }) => item.id !== selectedItem.id)
+    .sort((left, right) => right.score - left.score || left.index - right.index)
+    .slice(0, Math.max(0, limit))
+    .map(({ item }) => item);
+}
+
+function scoreExploreSimilarity(
+  selectedItem: ExploreDiscoveryItem,
+  candidate: ExploreDiscoveryItem,
+) {
+  let score = 0;
+
+  if (selectedItem.style === candidate.style) score += 12;
+  if (selectedItem.aesthetic === candidate.aesthetic) score += 8;
+  score += countSharedValues(selectedItem.categoryIds, candidate.categoryIds) * 3;
+  score += countSharedValues(selectedItem.tags, candidate.tags) * 2;
+
+  return score;
+}
+
+function countSharedValues<T>(left: readonly T[], right: readonly T[]) {
+  return left.reduce((count, value) => count + (right.includes(value) ? 1 : 0), 0);
+}

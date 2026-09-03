@@ -44,25 +44,16 @@ export function ExploreFilterPanel({
       transparent
       visible={visible}
     >
-      <Pressable
-        accessibilityLabel="Dismiss Explore filters"
-        accessibilityRole="button"
-        onPress={onDismiss}
-        style={styles.backdrop}
-      >
+      <View style={styles.backdrop}>
+        <Pressable
+          accessibilityLabel="Dismiss Explore filters"
+          accessibilityRole="button"
+          onPress={onDismiss}
+          style={styles.backdropDismiss}
+        />
         <SafeAreaView edges={['bottom']} style={styles.safeArea}>
-          <Pressable
-            accessibilityRole="none"
-            onPress={(event) => event.stopPropagation()}
-            style={styles.panel}
-          >
+          <View style={styles.panel}>
             <View style={styles.header}>
-              <View>
-                <Text style={styles.eyebrow}>REFINE DISCOVERY</Text>
-                <Text accessibilityRole="header" style={styles.title}>
-                  Filter
-                </Text>
-              </View>
               <Pressable
                 accessibilityLabel="Close Explore filters"
                 accessibilityRole="button"
@@ -73,8 +64,12 @@ export function ExploreFilterPanel({
               </Pressable>
             </View>
 
-            <ScrollView contentContainerStyle={styles.sections}>
-              <FilterSection title="Categories">
+            <ScrollView
+              contentContainerStyle={styles.sections}
+              keyboardShouldPersistTaps="handled"
+              style={styles.scrollArea}
+            >
+              <FilterSection title="Category">
                 {EXPLORE_CATEGORY_OPTIONS.map((option) => (
                   <FilterOption
                     key={option.id}
@@ -117,9 +112,9 @@ export function ExploreFilterPanel({
                 </Text>
               </Pressable>
             </View>
-          </Pressable>
+          </View>
         </SafeAreaView>
-      </Pressable>
+      </View>
     </Modal>
   );
 }
@@ -174,39 +169,33 @@ function createStyles(theme: AppTheme) {
       flex: 1,
       justifyContent: 'flex-end',
     },
-    safeArea: { width: '100%' },
-    panel: {
-      alignSelf: 'center',
+    backdropDismiss: {
+      bottom: 0,
+      left: 0,
+      position: 'absolute',
+      right: 0,
+      top: 0,
+    },
+    safeArea: {
+      alignItems: 'center',
       backgroundColor: theme.colors.surfaceElevated,
-      borderColor: theme.colors.border,
+      borderTopColor: theme.colors.border,
       borderTopWidth: 1,
       maxHeight: '88%',
+      width: '100%',
+    },
+    panel: {
+      backgroundColor: theme.colors.surfaceElevated,
       maxWidth: 620,
-      paddingHorizontal: theme.spacing.md,
-      paddingTop: theme.spacing.lg,
+      flexShrink: 1,
       width: '100%',
     },
     header: {
-      alignItems: 'flex-start',
-      borderBottomColor: theme.colors.border,
-      borderBottomWidth: StyleSheet.hairlineWidth,
+      alignItems: 'center',
       flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingBottom: theme.spacing.md,
-    },
-    eyebrow: {
-      color: theme.colors.textMuted,
-      fontFamily: theme.typography.fontFamily.medium,
-      fontSize: theme.typography.fontSize.xs,
-      fontWeight: theme.typography.fontWeight.semibold,
-      letterSpacing: 1.5,
-      lineHeight: theme.typography.lineHeight.xs,
-    },
-    title: {
-      color: theme.colors.text,
-      fontFamily: theme.typography.fontFamily.editorial,
-      fontSize: 36,
-      lineHeight: 42,
+      justifyContent: 'flex-end',
+      minHeight: 52,
+      paddingHorizontal: theme.spacing.md,
     },
     textButton: { justifyContent: 'center', minHeight: 44, paddingHorizontal: theme.spacing.sm },
     textButtonLabel: {
@@ -215,7 +204,13 @@ function createStyles(theme: AppTheme) {
       fontSize: theme.typography.fontSize.sm,
       fontWeight: theme.typography.fontWeight.semibold,
     },
-    sections: { gap: theme.spacing.xl, paddingVertical: theme.spacing.lg },
+    scrollArea: { flexShrink: 1 },
+    sections: {
+      gap: theme.spacing.xl,
+      paddingBottom: theme.spacing.xl,
+      paddingHorizontal: theme.spacing.md,
+      paddingTop: theme.spacing.sm,
+    },
     section: { gap: theme.spacing.md },
     sectionTitle: {
       color: theme.colors.text,
@@ -257,10 +252,12 @@ function createStyles(theme: AppTheme) {
     },
     optionLabelSelected: { color: theme.colors.text },
     actions: {
+      backgroundColor: theme.colors.surfaceElevated,
       borderTopColor: theme.colors.border,
       borderTopWidth: StyleSheet.hairlineWidth,
       flexDirection: 'row',
       gap: theme.spacing.sm,
+      paddingHorizontal: theme.spacing.md,
       paddingVertical: theme.spacing.md,
     },
     clearButton: {

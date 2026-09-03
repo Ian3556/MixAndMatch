@@ -1,13 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ExploreScreen } from '@/features/explore/screens/ExploreScreen';
+import { ExploreOutfitDetailScreen } from '@/features/explore/screens/ExploreOutfitDetailScreen';
 import { SearchResultsScreen } from '@/features/explore/screens/SearchResultsScreen';
 import { StyleCategoryScreen } from '@/features/explore/screens/StyleCategoryScreen';
 import { HomeScreen } from '@/features/home/screens/HomeScreen';
-import {
-  ExploreInspirationDetailScreen,
-  InspirationDetailScreen,
-} from '@/features/home/screens/InspirationDetailScreen';
+import { InspirationDetailScreen } from '@/features/home/screens/InspirationDetailScreen';
 import { CatalogDevelopmentScreen } from '@/features/catalog/screens/CatalogDevelopmentScreen';
 import { AboutScreen } from '@/features/profile/screens/AboutScreen';
 import { AccountSettingsScreen } from '@/features/profile/screens/AccountSettingsScreen';
@@ -70,7 +68,7 @@ export function ExploreTabNavigator() {
       <ExploreStack.Screen component={SearchResultsScreen} name={EXPLORE_ROUTES.SEARCH_RESULTS} />
       <ExploreStack.Screen component={StyleCategoryScreen} name={EXPLORE_ROUTES.STYLE_CATEGORY} />
       <ExploreStack.Screen
-        component={ExploreInspirationDetailScreen}
+        component={ExploreOutfitDetailScreen}
         name={EXPLORE_ROUTES.INSPIRATION_DETAIL}
       />
     </ExploreStack.Navigator>

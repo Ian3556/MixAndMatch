@@ -62,6 +62,38 @@ describe('application interaction audit', () => {
     expect(feed).not.toMatch(/onLoad(?:End|Start)=\{\(\) =>/);
   });
 
+  it('keeps the refined Explore controls functional and heading-free', () => {
+    const explore = readFileSync('src/features/explore/screens/ExploreScreen.tsx', 'utf8');
+    const searchBar = readFileSync('src/components/ui/SearchBar.tsx', 'utf8');
+
+    expect(explore).toContain('<AppScreen hideHeader title="">');
+    expect(explore).toContain('submitLabel="→"');
+    expect(searchBar).toContain('onPress={onSubmit}');
+  });
+
+  it('uses a bottom sheet with sticky actions and no filter title hierarchy', () => {
+    const filterPanel = readFileSync(
+      'src/features/explore/components/ExploreFilterPanel.tsx',
+      'utf8',
+    );
+
+    expect(filterPanel).toContain("justifyContent: 'flex-end'");
+    expect(filterPanel).toContain('style={styles.scrollArea}');
+    expect(filterPanel).not.toContain('REFINE DISCOVERY');
+    expect(filterPanel).not.toContain('styles.title');
+  });
+
+  it('pushes related Explore outfits onto the existing navigation stack', () => {
+    const detail = readFileSync(
+      'src/features/explore/screens/ExploreOutfitDetailScreen.tsx',
+      'utf8',
+    );
+
+    expect(detail).toContain('navigation.push(EXPLORE_ROUTES.INSPIRATION_DETAIL');
+    expect(detail).toContain('<ExploreMasonryFeed');
+    expect(detail).not.toContain('borderRadius');
+  });
+
   it('keeps the complete URL import control contract visible and guarded', () => {
     const screen = [
       'src/features/wardrobe/screens/ImportWardrobeWebsiteScreen.tsx',

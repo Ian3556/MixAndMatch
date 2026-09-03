@@ -22,9 +22,11 @@ export function AppHeader({ title, subtitle, eyebrow, onBack, actions }: AppHead
       {onBack ? <IconButton label="Go back" onPress={onBack} symbol="‹" /> : null}
       <View style={styles.copy}>
         {eyebrow ? <Text style={styles.eyebrow}>{eyebrow}</Text> : null}
-        <Text accessibilityRole="header" numberOfLines={2} style={styles.title}>
-          {title}
-        </Text>
+        {title ? (
+          <Text accessibilityRole="header" numberOfLines={2} style={styles.title}>
+            {title}
+          </Text>
+        ) : null}
         {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
       </View>
       {actions ? <View style={styles.actions}>{actions}</View> : null}

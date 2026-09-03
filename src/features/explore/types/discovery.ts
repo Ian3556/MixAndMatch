@@ -27,6 +27,7 @@ export type ExploreDiscoveryItem = {
   id: string;
   title: string;
   aesthetic: string;
+  description: string;
   style: ExploreStyle;
   categoryIds: readonly ExploreCategoryId[];
   tags: readonly string[];

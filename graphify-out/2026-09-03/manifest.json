@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1785943341.6339917,
-    "ast_hash": "02aec47b2d116ed7c9a62636aca46ab9",
+    "mtime": 1788366024.2100286,
+    "ast_hash": "3547ba152088ff3fcb5e269ef261fe5e",
     "semantic_hash": ""
   },
   "scripts/validate.mjs": {
@@ -215,18 +215,18 @@
     "semantic_hash": ""
   },
   "src/features/explore/screens/ExploreScreen.tsx": {
-    "mtime": 1788363610.913248,
-    "ast_hash": "227384d30e6e17ff417f5c5c5bb94244",
+    "mtime": 1788366090.8977463,
+    "ast_hash": "81754a8f70263dd5cc79f85706bc9488",
     "semantic_hash": ""
   },
   "src/features/explore/screens/SearchResultsScreen.tsx": {
-    "mtime": 1785941271.5002885,
-    "ast_hash": "df23029f74b6a830a5703db0ea555c08",
+    "mtime": 1788366092.1694174,
+    "ast_hash": "4089e291882973c941c5e9ff6cbe07e4",
     "semantic_hash": ""
   },
   "src/features/explore/screens/StyleCategoryScreen.tsx": {
-    "mtime": 1785853393.7073934,
-    "ast_hash": "d07cef76e68dd9d196022e5f94881396",
+    "mtime": 1788366093.4385867,
+    "ast_hash": "cf16c08c3c36bc34cba1b43f3a30539f",
     "semantic_hash": ""
   },
   "src/features/home/screens/HomeScreen.tsx": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "src/features/home/screens/InspirationDetailScreen.tsx": {
-    "mtime": 1785853393.6710067,
-    "ast_hash": "404431b45cc6206cae47143f31926d54",
+    "mtime": 1788366187.8599,
+    "ast_hash": "e2351e1ff231814446c22f5a7a60f8f9",
     "semantic_hash": ""
   },
   "src/features/profile/screens/AboutScreen.tsx": {
@@ -450,13 +450,13 @@
     "semantic_hash": ""
   },
   "src/navigation/TabNavigators.tsx": {
-    "mtime": 1786121056.7709243,
-    "ast_hash": "e04d2fd0b878d7ba214122f6253ef008",
+    "mtime": 1788366098.8928578,
+    "ast_hash": "381794f58a3b29190e3e23840ae99ea1",
     "semantic_hash": ""
   },
   "src/navigation/interactionAudit.test.ts": {
-    "mtime": 1786117951.0826714,
-    "ast_hash": "c5d56756786fc1aa68ebb93f7ffc241e",
+    "mtime": 1788366148.0905507,
+    "ast_hash": "5671c8761d98ce3cb6ec9c119011226c",
     "semantic_hash": ""
   },
   "src/navigation/navigationConfig.test.ts": {
@@ -470,13 +470,13 @@
     "semantic_hash": ""
   },
   "src/navigation/routes.ts": {
-    "mtime": 1788363552.2192857,
-    "ast_hash": "fcbbcf7e288f67de42621b9fd4239655",
+    "mtime": 1788366094.773805,
+    "ast_hash": "b16a2e12d7394c0b74ebb887f48aed16",
     "semantic_hash": ""
   },
   "src/navigation/types.ts": {
-    "mtime": 1788363553.4186828,
-    "ast_hash": "7eac36efa241528fa41ba2e4e140d071",
+    "mtime": 1788366096.155359,
+    "ast_hash": "e13f7dfbb0cb27ac527dd6971d395c5a",
     "semantic_hash": ""
   },
   "src/screens/AuthStateErrorScreen.tsx": {
@@ -1200,8 +1200,8 @@
     "semantic_hash": ""
   },
   "src/features/explore/components/ExploreMasonryFeed.tsx": {
-    "mtime": 1788363610.8632228,
-    "ast_hash": "db32aefb50f50497a4f2268c8d895a6b",
+    "mtime": 1788366145.4905927,
+    "ast_hash": "305e22fd77ef24b824a721c7e78f8875",
     "semantic_hash": ""
   },
   "src/features/explore/data/exploreDiscoveryContent.test.ts": {
@@ -1237,6 +1237,21 @@
   "graphify-out/memory/query_20260901_151758_how_is_the_current_home_page_implemented__includin.md": {
     "mtime": 1788275878.1763542,
     "ast_hash": "d31481403ba239473052de8ff95b4ee9",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260902_154544_update_explore_into_a_pinterest_style_fashion_feed.md": {
+    "mtime": 1788363944.0702055,
+    "ast_hash": "77a22b04c89ff1aeb2a7dc29e259c8ba",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260902_155855_understand_this_maximum_update_depth_exceeded_erro.md": {
+    "mtime": 1788364735.6631162,
+    "ast_hash": "5f1967ca098e43abe4366db82c6c2c6f",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260902_160641_understand_the_err_connection_refused_asset_loadin.md": {
+    "mtime": 1788365201.1104555,
+    "ast_hash": "67d3eea1eb6d97ce4a98003585c70e7e",
     "semantic_hash": ""
   }
 }
