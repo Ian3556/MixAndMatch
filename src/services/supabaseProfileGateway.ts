@@ -4,7 +4,7 @@ import type { ProfileInsert, ProfileUpdate } from '@/types/profile';
 import { withTimeout } from '@/utils/promise/withTimeout';
 
 const PROFILE_COLUMNS =
-  'id, display_name, avatar_url, onboarding_completed, created_at, updated_at';
+  'id, display_name, avatar_url, style_profile, onboarding_completed, created_at, updated_at';
 
 export function createSupabaseProfileGateway(): ProfileGateway {
   const client = getSupabaseClient();

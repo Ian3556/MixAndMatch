@@ -1,4 +1,5 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useCallback, useMemo, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
@@ -59,8 +60,8 @@ export function ExploreOutfitDetailScreen({ navigation, route }: Props) {
 
   if (status === 'loading') {
     return (
-      <AppScreen onBack={handleBack} title="">
-        <ExploreDetailSkeleton columnCount={columnCount} />
+      <AppScreen hideHeader title="">
+        <ExploreDetailSkeleton columnCount={columnCount} onBack={handleBack} />
       </AppScreen>
     );
   }
@@ -94,8 +95,8 @@ export function ExploreOutfitDetailScreen({ navigation, route }: Props) {
   const categoryLabels = selectedItem.categoryIds.map((categoryId) => CATEGORY_LABELS[categoryId]);
 
   return (
-    <AppScreen onBack={handleBack} title="">
-      <DetailImage item={selectedItem} styles={styles} />
+    <AppScreen hideHeader title="">
+      <DetailImage item={selectedItem} onBack={handleBack} styles={styles} />
 
       <View style={styles.introduction}>
         <Text style={styles.eyebrow}>
@@ -144,9 +145,11 @@ export function ExploreOutfitDetailScreen({ navigation, route }: Props) {
 
 function DetailImage({
   item,
+  onBack,
   styles,
 }: {
   item: ExploreDiscoveryItem;
+  onBack: () => void;
   styles: ReturnType<typeof createStyles>;
 }) {
   const [loading, setLoading] = useState(true);
@@ -167,17 +170,46 @@ function DetailImage({
         style={styles.heroImage}
       />
       {loading ? <View accessibilityElementsHidden style={styles.heroSkeleton} /> : null}
+      <OutfitImageBackButton onPress={onBack} styles={styles} />
     </View>
   );
 }
 
-function ExploreDetailSkeleton({ columnCount }: { columnCount: number }) {
+function OutfitImageBackButton({
+  onPress,
+  styles,
+}: {
+  onPress: () => void;
+  styles: ReturnType<typeof createStyles>;
+}) {
+  return (
+    <Pressable
+      accessibilityLabel="Go back"
+      accessibilityRole="button"
+      hitSlop={4}
+      onPress={onPress}
+      style={({ pressed }) => [styles.imageBackButton, pressed ? styles.pressed : null]}
+    >
+      <Ionicons accessibilityElementsHidden color="#FFFFFF" name="chevron-back-outline" size={26} />
+    </Pressable>
+  );
+}
+
+function ExploreDetailSkeleton({
+  columnCount,
+  onBack,
+}: {
+  columnCount: number;
+  onBack: () => void;
+}) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
   return (
-    <View accessibilityElementsHidden style={styles.skeletonLayout}>
-      <View style={styles.detailSkeletonImage} />
+    <View style={styles.skeletonLayout}>
+      <View style={styles.detailSkeletonImage}>
+        <OutfitImageBackButton onPress={onBack} styles={styles} />
+      </View>
       <View style={styles.detailSkeletonTitle} />
       <View style={styles.detailSkeletonMeta} />
       <View style={styles.detailSkeletonCopy} />
@@ -231,6 +263,20 @@ function createStyles(theme: AppTheme) {
       position: 'absolute',
       right: 0,
       top: 0,
+    },
+    imageBackButton: {
+      alignItems: 'center',
+      backgroundColor: theme.colors.overlay,
+      borderColor: 'rgba(255, 255, 255, 0.42)',
+      borderRadius: theme.radii.full,
+      borderWidth: 1,
+      height: 48,
+      justifyContent: 'center',
+      left: theme.spacing.md,
+      position: 'absolute',
+      top: theme.spacing.md,
+      width: 48,
+      zIndex: 2,
     },
     introduction: { gap: theme.spacing.xs, maxWidth: 720 },
     eyebrow: {

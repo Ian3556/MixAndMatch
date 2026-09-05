@@ -61,6 +61,12 @@ export const STYLIST_ROUTES = {
 export const PROFILE_ROUTES = {
   PROFILE: 'Profile',
   EDIT_PROFILE: 'EditProfile',
+  STYLE_PROFILE: 'StyleProfile',
+  BODY_PROFILE: 'BodyProfile',
+  PREFERRED_STYLES: 'PreferredStyles',
+  COLOR: 'ColorPreferences',
+  OCCASIONS: 'Occasions',
+  FIT_PREFERENCES: 'FitPreferences',
   ACCOUNT: 'AccountSettings',
   APPEARANCE: 'AppearanceSettings',
   NOTIFICATIONS: 'NotificationSettings',

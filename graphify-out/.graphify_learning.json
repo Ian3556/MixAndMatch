@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-03T15:47:19.328208+00:00",
+  "generated_at": "2026-09-05T14:55:49.977077+00:00",
   "nodes": {
     "react": {
-      "code_fingerprint": "82d9951bfa5b73dff19cb1a2411a22738a3a1ad021e7767d723fc63b01f075ee",
+      "code_fingerprint": "790dfe5e52e3096484dd1cfb30f965e64aa543c317ac62cb69b7ed13c41087d6",
       "label": "react",
       "last": "2026-09-02T15:58:55.671068+00:00",
       "provenance": [
@@ -12,8 +12,24 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 0.977341947,
+      "score": 0.933978037,
       "source_file": "package.json",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_components_ui_searchbar": {
+      "code_fingerprint": "5fc4d943ff8fdca5048257c719b510734e35676f077a4f6f969b39661d8540ae",
+      "label": "SearchBar.tsx",
+      "last": "2026-09-05T14:05:53.331119+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-05T14:05:53.331119+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
+        }
+      ],
+      "score": 0.999198964,
+      "source_file": "src/components/ui/SearchBar.tsx",
       "status": "tentative",
       "uses": 1
     },
@@ -28,7 +44,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.954392014,
+      "score": 0.912046376,
       "source_file": "src/components/ui/StateViews.tsx",
       "status": "tentative",
       "uses": 1
@@ -54,16 +70,85 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 2.932549305,
+      "score": 2.802434351,
       "source_file": "src/features/explore/components/ExploreMasonryFeed.tsx",
       "status": "preferred",
       "uses": 3
     },
-    "src_features_explore_screens_explorescreen": {
-      "code_fingerprint": "564d08fcf824b3b5f6aef9685b67fda692c1634aeb4f3b7585ea1264df458bac",
-      "label": "ExploreScreen.tsx",
-      "last": "2026-09-02T16:24:32.745922+00:00",
+    "src_features_explore_screens_exploreoutfitdetailscreen": {
+      "code_fingerprint": "31bc0c2c03f6be4fa2d4ac105d72399eb8adfeeb04e1aadb3e8f359883e6a9bd",
+      "label": "ExploreOutfitDetailScreen.tsx",
+      "last": "2026-09-05T14:05:53.331119+00:00",
       "provenance": [
+        {
+          "date": "2026-09-05T14:05:53.331119+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
+        }
+      ],
+      "score": 0.999198964,
+      "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_explore_screens_exploreoutfitdetailscreen_detailimage": {
+      "code_fingerprint": "31bc0c2c03f6be4fa2d4ac105d72399eb8adfeeb04e1aadb3e8f359883e6a9bd",
+      "label": "DetailImage()",
+      "last": "2026-09-05T14:05:53.331119+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-05T14:05:53.331119+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
+        }
+      ],
+      "score": 0.999198964,
+      "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_explore_screens_exploreoutfitdetailscreen_exploreoutfitdetailscreen": {
+      "code_fingerprint": "31bc0c2c03f6be4fa2d4ac105d72399eb8adfeeb04e1aadb3e8f359883e6a9bd",
+      "label": "ExploreOutfitDetailScreen()",
+      "last": "2026-09-03T16:41:06.618740+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-03T16:41:06.618740+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
+        }
+      ],
+      "score": 0.956455869,
+      "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_explore_screens_exploreoutfitdetailscreen_outfitimagebackbutton": {
+      "code_fingerprint": "31bc0c2c03f6be4fa2d4ac105d72399eb8adfeeb04e1aadb3e8f359883e6a9bd",
+      "label": "OutfitImageBackButton()",
+      "last": "2026-09-05T14:05:53.331119+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-05T14:05:53.331119+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
+        }
+      ],
+      "score": 0.999198964,
+      "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_explore_screens_explorescreen": {
+      "code_fingerprint": "6c3b8d7e87a40c94541b9c9adaa3879777c32481ecdc18a5bf0906f17e0bb40c",
+      "label": "ExploreScreen.tsx",
+      "last": "2026-09-05T14:05:53.331119+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-05T14:05:53.331119+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
+        },
         {
           "date": "2026-09-02T16:24:32.745922+00:00",
           "outcome": "useful",
@@ -85,26 +170,31 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 3.909684382,
+      "score": 4.735413661,
       "source_file": "src/features/explore/screens/ExploreScreen.tsx",
       "status": "preferred",
-      "uses": 4
+      "uses": 5
     },
     "src_features_explore_screens_searchresultsscreen": {
-      "code_fingerprint": "b06fc3bcb91b4b22fe4f843563ff8edc35b7dda0e3b7849c9bcecbaaf6409421",
+      "code_fingerprint": "e2b7fc3eaa61578d17a1bf53bbed5c414c10cdf1b13a0ca93a8b31c4236b473d",
       "label": "SearchResultsScreen.tsx",
-      "last": "2026-09-02T15:45:44.069319+00:00",
+      "last": "2026-09-05T14:05:53.331119+00:00",
       "provenance": [
+        {
+          "date": "2026-09-05T14:05:53.331119+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
+        },
         {
           "date": "2026-09-02T15:45:44.069319+00:00",
           "outcome": "useful",
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 0.977135077,
+      "score": 1.93297931,
       "source_file": "src/features/explore/screens/SearchResultsScreen.tsx",
-      "status": "tentative",
-      "uses": 1
+      "status": "preferred",
+      "uses": 2
     },
     "src_features_home_screens_homescreen": {
       "code_fingerprint": "0f0e50acb0827a1273a9e53f959a5ea542aa84b092ea4c808442348b05cdd552",
@@ -117,13 +207,13 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.954392014,
+      "score": 0.912046376,
       "source_file": "src/features/home/screens/HomeScreen.tsx",
       "status": "tentative",
       "uses": 1
     },
     "src_features_home_screens_inspirationdetailscreen": {
-      "code_fingerprint": "5b06dee50e564a5f33316bba32b30c07d98f3a8d6da9025fa153e38399e7c534",
+      "code_fingerprint": "1581da67f7585bb20a78c9591295397c499b6ce6dd9fce240e837c47d9d2122e",
       "label": "InspirationDetailScreen.tsx",
       "last": "2026-09-02T16:24:32.745922+00:00",
       "provenance": [
@@ -133,32 +223,42 @@
           "q": "There are a few errors that need to be fix: Explore Page Image keeps on rendering, make the image to ONLY render when user either refresh or reopen the app; The Back button instead of going back to the home page, make it go back to its previous action."
         }
       ],
-      "score": 0.977743757,
+      "score": 0.93436202,
       "source_file": "src/features/home/screens/InspirationDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
     },
     "src_navigation_mainappnavigator": {
-      "code_fingerprint": "a9dbf108e1a0d9e9d6acd29fb5f92e0ede4994e11dedc700dcbdcf0c2d6e075e",
+      "code_fingerprint": "cc8ab76e73d1a9b05c6cd11eff765d9cb85e93b3dd6cd157116fcdb440c0a5c6",
       "label": "MainAppNavigator.tsx",
-      "last": "2026-09-02T15:45:44.069319+00:00",
+      "last": "2026-09-03T16:41:06.618740+00:00",
       "provenance": [
+        {
+          "date": "2026-09-03T16:41:06.618740+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
+        },
         {
           "date": "2026-09-02T15:45:44.069319+00:00",
           "outcome": "useful",
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 0.977135077,
+      "score": 1.890236215,
       "source_file": "src/navigation/MainAppNavigator.tsx",
-      "status": "tentative",
-      "uses": 1
+      "status": "preferred",
+      "uses": 2
     },
     "src_navigation_tabnavigators": {
-      "code_fingerprint": "ebf3d2a0cb1357945e9eb5c733562773ee57c315d0ad53235f8f3842e35a178a",
+      "code_fingerprint": "e9c41a010a4205eb1819cad1a430bfb9a64dd7fbbd24853114da86a65762dbb0",
       "label": "TabNavigators.tsx",
-      "last": "2026-09-02T16:24:32.745922+00:00",
+      "last": "2026-09-03T16:41:06.618740+00:00",
       "provenance": [
+        {
+          "date": "2026-09-03T16:41:06.618740+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
+        },
         {
           "date": "2026-09-02T16:24:32.745922+00:00",
           "outcome": "useful",
@@ -170,26 +270,47 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 1.932135771,
+      "score": 2.802864264,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "preferred",
-      "uses": 2
+      "uses": 3
+    },
+    "src_navigation_tabnavigators_exploretabnavigator": {
+      "code_fingerprint": "e9c41a010a4205eb1819cad1a430bfb9a64dd7fbbd24853114da86a65762dbb0",
+      "label": "ExploreTabNavigator()",
+      "last": "2026-09-03T16:41:06.618740+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-03T16:41:06.618740+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
+        }
+      ],
+      "score": 0.956455869,
+      "source_file": "src/navigation/TabNavigators.tsx",
+      "status": "tentative",
+      "uses": 1
     },
     "src_navigation_types": {
-      "code_fingerprint": "1e76f44d78a80898a0835e09ef4b7490f162226083f1bb73dfb5b518ee4bed7d",
+      "code_fingerprint": "e96424478da77f4a3ee96fac95c04eec1f803e3d9c5398b98bab48d1180929f7",
       "label": "navigation/types.ts",
-      "last": "2026-09-02T15:45:44.069319+00:00",
+      "last": "2026-09-03T16:41:06.618740+00:00",
       "provenance": [
+        {
+          "date": "2026-09-03T16:41:06.618740+00:00",
+          "outcome": "useful",
+          "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
+        },
         {
           "date": "2026-09-02T15:45:44.069319+00:00",
           "outcome": "useful",
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 0.977135077,
+      "score": 1.890236215,
       "source_file": "src/navigation/types.ts",
-      "status": "tentative",
-      "uses": 1
+      "status": "preferred",
+      "uses": 2
     },
     "src_theme_index": {
       "code_fingerprint": "6e7699a81de2be1224161b1189a2ba60d9a0c376c8755272bec754e91d0f38d7",
@@ -202,7 +323,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.954392014,
+      "score": 0.912046376,
       "source_file": "src/theme/index.ts",
       "status": "tentative",
       "uses": 1

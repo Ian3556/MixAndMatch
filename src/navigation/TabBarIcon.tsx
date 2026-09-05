@@ -24,10 +24,16 @@ export function TabBarIcon({
   const theme = useAppTheme();
   const styles = createStyles(theme);
   return (
-    <View
-      style={[styles.shell, prominent ? styles.prominent : null, focused ? styles.focused : null]}
-    >
-      <Text style={[styles.glyph, focused ? styles.focusedGlyph : null]}>{glyphs[icon]}</Text>
+    <View style={[styles.shell, prominent ? styles.prominent : null]}>
+      <Text
+        style={[
+          styles.glyph,
+          prominent ? styles.prominentGlyph : null,
+          focused ? styles.focusedGlyph : null,
+        ]}
+      >
+        {glyphs[icon]}
+      </Text>
     </View>
   );
 }
@@ -36,22 +42,20 @@ function createStyles(theme: AppTheme) {
   return StyleSheet.create({
     shell: {
       alignItems: 'center',
-      height: 30,
+      height: 25,
       justifyContent: 'center',
-      width: 36,
+      width: 32,
     },
     prominent: {
-      borderColor: theme.colors.border,
-      borderWidth: 1,
-      height: 36,
-      width: 42,
+      height: 27,
+      width: 34,
     },
-    focused: { backgroundColor: theme.colors.primarySoft },
     glyph: {
       color: theme.colors.textMuted,
       fontSize: theme.typography.fontSize.lg,
       lineHeight: theme.typography.lineHeight.lg,
     },
+    prominentGlyph: { fontSize: theme.typography.fontSize.xl },
     focusedGlyph: { color: theme.colors.primary },
   });
 }

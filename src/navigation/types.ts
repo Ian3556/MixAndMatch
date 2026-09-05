@@ -50,6 +50,12 @@ export type StylistStackParamList = {
 export type ProfileStackParamList = {
   Profile: undefined;
   EditProfile: undefined;
+  StyleProfile: undefined;
+  BodyProfile: undefined;
+  PreferredStyles: undefined;
+  ColorPreferences: undefined;
+  Occasions: undefined;
+  FitPreferences: undefined;
   AccountSettings: undefined;
   AppearanceSettings: undefined;
   NotificationSettings: undefined;

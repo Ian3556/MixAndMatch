@@ -3633,7 +3633,7 @@
       "label": "FilterSection()",
       "file_type": "code",
       "source_file": "src/features/explore/components/ExploreFilterPanel.tsx",
-      "source_location": "L125",
+      "source_location": "L122",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_explore_components_explorefilterpanel_filtersection",
@@ -3645,7 +3645,7 @@
       "label": "FilterOption()",
       "file_type": "code",
       "source_file": "src/features/explore/components/ExploreFilterPanel.tsx",
-      "source_location": "L136",
+      "source_location": "L133",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_explore_components_explorefilterpanel_filteroption",
@@ -3657,7 +3657,7 @@
       "label": "createStyles()",
       "file_type": "code",
       "source_file": "src/features/explore/components/ExploreFilterPanel.tsx",
-      "source_location": "L168",
+      "source_location": "L165",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_explore_components_explorefilterpanel_createstyles",
@@ -8067,8 +8067,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_services_supabaseprofilegateway_createsupabaseprofilegateway",
-      "community": 65,
-      "community_name": "profileService.ts",
+      "community": 15,
+      "community_name": "authStoreRuntime.ts",
       "norm_label": "createsupabaseprofilegateway()"
     },
     {
@@ -8837,8 +8837,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_store_authstoreruntime_getprofileservice",
-      "community": 65,
-      "community_name": "profileService.ts",
+      "community": 15,
+      "community_name": "authStoreRuntime.ts",
       "norm_label": "getprofileservice()"
     },
     {
@@ -11216,8 +11216,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "supabase_functions_shared_catalog_rest_client_catalogrestclient_select",
-      "community": 47,
-      "community_name": "editProduct",
+      "community": 18,
+      "community_name": "catalog-management/index.ts",
       "norm_label": ".select()"
     },
     {
@@ -13113,8 +13113,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "supabase_functions_catalog_management_index_reviewproduct",
-      "community": 47,
-      "community_name": "editProduct",
+      "community": 24,
+      "community_name": "processJob",
       "norm_label": "reviewproduct()"
     },
     {
@@ -13125,8 +13125,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "supabase_functions_catalog_management_index_editproduct",
-      "community": 47,
-      "community_name": "editProduct",
+      "community": 18,
+      "community_name": "catalog-management/index.ts",
       "norm_label": "editproduct()"
     },
     {
@@ -13137,8 +13137,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "supabase_functions_catalog_management_index_validatestoredproduct",
-      "community": 47,
-      "community_name": "editProduct",
+      "community": 18,
+      "community_name": "catalog-management/index.ts",
       "norm_label": "validatestoredproduct()"
     },
     {
@@ -13233,8 +13233,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "supabase_functions_catalog_management_index_findreviewproduct",
-      "community": 47,
-      "community_name": "editProduct",
+      "community": 18,
+      "community_name": "catalog-management/index.ts",
       "norm_label": "findreviewproduct()"
     },
     {
@@ -13245,8 +13245,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "supabase_functions_catalog_management_index_loadpersistencelookup",
-      "community": 47,
-      "community_name": "editProduct",
+      "community": 18,
+      "community_name": "catalog-management/index.ts",
       "norm_label": "loadpersistencelookup()"
     },
     {
@@ -13257,8 +13257,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "supabase_functions_catalog_management_index_loadcategories",
-      "community": 47,
-      "community_name": "editProduct",
+      "community": 18,
+      "community_name": "catalog-management/index.ts",
       "norm_label": "loadcategories()"
     },
     {
@@ -13389,8 +13389,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "supabase_functions_catalog_management_index_normalizenullable",
-      "community": 47,
-      "community_name": "editProduct",
+      "community": 18,
+      "community_name": "catalog-management/index.ts",
       "norm_label": "normalizenullable()"
     },
     {
@@ -28146,7 +28146,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/explore/components/ExploreFilterPanel.tsx",
-      "source_location": "L168",
+      "source_location": "L165",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_explore_components_explorefilterpanel",
@@ -28168,7 +28168,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/explore/components/ExploreFilterPanel.tsx",
-      "source_location": "L136",
+      "source_location": "L133",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_explore_components_explorefilterpanel",
@@ -28179,7 +28179,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/explore/components/ExploreFilterPanel.tsx",
-      "source_location": "L125",
+      "source_location": "L122",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_explore_components_explorefilterpanel",
@@ -28346,7 +28346,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/features/explore/components/ExploreFilterPanel.tsx",
-      "source_location": "L127",
+      "source_location": "L124",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_explore_components_explorefilterpanel_filtersection",
@@ -28358,7 +28358,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/features/explore/components/ExploreFilterPanel.tsx",
-      "source_location": "L126",
+      "source_location": "L123",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_explore_components_explorefilterpanel_filtersection",

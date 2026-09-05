@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { MAIN_TAB_CONFIG } from './navigationConfig';
+import { isMainTabRootRoute, MAIN_TAB_CONFIG } from './navigationConfig';
 import {
   EXPLORE_ROUTES,
   HOME_ROUTES,
@@ -64,5 +64,15 @@ describe('Phase 2 navigation configuration', () => {
         'OutfitDetail',
       ]),
     );
+  });
+
+  it('shows the floating tab bar only at each tab stack root', () => {
+    expect(isMainTabRootRoute(MAIN_ROUTES.HOME_TAB)).toBe(true);
+    expect(isMainTabRootRoute(MAIN_ROUTES.EXPLORE_TAB, EXPLORE_ROUTES.EXPLORE)).toBe(true);
+    expect(isMainTabRootRoute(MAIN_ROUTES.EXPLORE_TAB, EXPLORE_ROUTES.INSPIRATION_DETAIL)).toBe(
+      false,
+    );
+    expect(isMainTabRootRoute(MAIN_ROUTES.STYLIST_TAB, STYLIST_ROUTES.OUTFIT_DETAIL)).toBe(false);
+    expect(isMainTabRootRoute('UnknownTab')).toBe(false);
   });
 });

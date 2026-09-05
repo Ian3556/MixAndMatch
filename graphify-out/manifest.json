@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1788366024.2100286,
-    "ast_hash": "3547ba152088ff3fcb5e269ef261fe5e",
+    "mtime": 1788616116.4307666,
+    "ast_hash": "31a5119d839ec31f8804afaad804a093",
     "semantic_hash": ""
   },
   "scripts/validate.mjs": {
@@ -110,13 +110,13 @@
     "semantic_hash": ""
   },
   "src/components/ui/ProfilePrimitives.tsx": {
-    "mtime": 1785853393.541162,
-    "ast_hash": "9048c3d9970de528b0735a2f079a3e2f",
+    "mtime": 1788618941.8211007,
+    "ast_hash": "608e739026fc08263fe369a42504de11",
     "semantic_hash": ""
   },
   "src/components/ui/SearchBar.tsx": {
-    "mtime": 1788451014.5871668,
-    "ast_hash": "e727529f2a2126e3440f98df2256c278",
+    "mtime": 1788616171.512119,
+    "ast_hash": "ce81a9c8c81bfa943fe3c56043393db4",
     "semantic_hash": ""
   },
   "src/components/ui/SectionHeader.tsx": {
@@ -215,13 +215,13 @@
     "semantic_hash": ""
   },
   "src/features/explore/screens/ExploreScreen.tsx": {
-    "mtime": 1788450620.0133772,
-    "ast_hash": "83cfd0efe6de424f167c5631bc53df84",
+    "mtime": 1788616172.815771,
+    "ast_hash": "a5e1a8e5c2b3b8610161c9c90a07db53",
     "semantic_hash": ""
   },
   "src/features/explore/screens/SearchResultsScreen.tsx": {
-    "mtime": 1788450826.013533,
-    "ast_hash": "5ab95b2882d4485568abc2bac8e67c43",
+    "mtime": 1788616229.8449411,
+    "ast_hash": "58ad931a7875d0a1dc9a8c8d42a74747",
     "semantic_hash": ""
   },
   "src/features/explore/screens/StyleCategoryScreen.tsx": {
@@ -240,43 +240,43 @@
     "semantic_hash": ""
   },
   "src/features/profile/screens/AboutScreen.tsx": {
-    "mtime": 1786117939.6176221,
-    "ast_hash": "4185c73c2b7acc58888f5f07e9065850",
+    "mtime": 1788620751.1184902,
+    "ast_hash": "ee1263cc4f289bc9f221a6b4d0d1e72e",
     "semantic_hash": ""
   },
   "src/features/profile/screens/AccountSettingsScreen.tsx": {
-    "mtime": 1785940978.8179924,
-    "ast_hash": "fad556ee61a00b69eced4b49bf03a892",
+    "mtime": 1788620624.6472135,
+    "ast_hash": "9aa5f2698e97bfed6e73a8c892e2b2c5",
     "semantic_hash": ""
   },
   "src/features/profile/screens/AppearanceSettingsScreen.tsx": {
-    "mtime": 1785940979.7840886,
-    "ast_hash": "68daeb1503c0d14ea2df6ffed27f0019",
+    "mtime": 1788620625.9970298,
+    "ast_hash": "496d3c3e437297d3fad9120a607f7f3e",
     "semantic_hash": ""
   },
   "src/features/profile/screens/EditProfileScreen.tsx": {
-    "mtime": 1785853385.4208272,
-    "ast_hash": "2aaec61e27d077099be1ea81c96740a0",
+    "mtime": 1788620558.5633705,
+    "ast_hash": "2e01ea8d99195550d878e6f52d2558f9",
     "semantic_hash": ""
   },
   "src/features/profile/screens/HelpAndSupportScreen.tsx": {
-    "mtime": 1785940980.6733727,
-    "ast_hash": "2b45cf9051d4c7fc527f5a23d1f2913c",
+    "mtime": 1788620749.7306967,
+    "ast_hash": "c247e6b6df8befbad3257ab38976f7ef",
     "semantic_hash": ""
   },
   "src/features/profile/screens/NotificationSettingsScreen.tsx": {
-    "mtime": 1785853385.438313,
-    "ast_hash": "8702ce6939e66ac964428159840136fa",
+    "mtime": 1788620747.0086527,
+    "ast_hash": "3cc61daa8f3eec3b2dfaddc6e5456510",
     "semantic_hash": ""
   },
   "src/features/profile/screens/PrivacySettingsScreen.tsx": {
-    "mtime": 1785853385.4478347,
-    "ast_hash": "779a28333014a378d5ea471a0e5e4102",
+    "mtime": 1788620748.337237,
+    "ast_hash": "aed31091019b19f632e7fc53a488fa05",
     "semantic_hash": ""
   },
   "src/features/profile/screens/ProfileScreen.tsx": {
-    "mtime": 1786121057.7016165,
-    "ast_hash": "cc839d9ca0c03f3bc4ac16f44df87b96",
+    "mtime": 1788620525.094582,
+    "ast_hash": "7f6b78606efde1728069b5f0fcd045e4",
     "semantic_hash": ""
   },
   "src/features/profile/screens/ProfileSetupScreen.tsx": {
@@ -285,8 +285,8 @@
     "semantic_hash": ""
   },
   "src/features/profile/useSignOutAction.ts": {
-    "mtime": 1785852937.9897945,
-    "ast_hash": "42a25c5a480ef58f9d628c05e4c377ec",
+    "mtime": 1788618783.0728426,
+    "ast_hash": "5e2b99019e369ceafaeb8d81b599d795",
     "semantic_hash": ""
   },
   "src/features/stylist/screens/OutfitDetailScreen.tsx": {
@@ -430,8 +430,8 @@
     "semantic_hash": ""
   },
   "src/navigation/MainAppNavigator.tsx": {
-    "mtime": 1788363555.8634582,
-    "ast_hash": "a23cf6ae6f79c5d464a7691a8f22aa8b",
+    "mtime": 1788453579.879511,
+    "ast_hash": "d6d5ff98aeb2cfa9d04a67a3efeb2dbd",
     "semantic_hash": ""
   },
   "src/navigation/OnboardingNavigator.tsx": {
@@ -445,38 +445,38 @@
     "semantic_hash": ""
   },
   "src/navigation/TabBarIcon.tsx": {
-    "mtime": 1788363557.217667,
-    "ast_hash": "9d6fd6e641ded0b005c5e55b6a5b4914",
+    "mtime": 1788453173.6630437,
+    "ast_hash": "8138bea63d40b63ad30ac740cd24cad3",
     "semantic_hash": ""
   },
   "src/navigation/TabNavigators.tsx": {
-    "mtime": 1788450800.4405327,
-    "ast_hash": "3c378b83facdfa36775a3292398ccbd8",
+    "mtime": 1788620790.1550467,
+    "ast_hash": "f38781739d934625986fdb0ed4985b62",
     "semantic_hash": ""
   },
   "src/navigation/interactionAudit.test.ts": {
-    "mtime": 1788450827.3368711,
-    "ast_hash": "05fa61232ca7a13b5868f2c6f20ee55a",
+    "mtime": 1788616209.1265845,
+    "ast_hash": "009cccde9eabf7f823a350902ce415bf",
     "semantic_hash": ""
   },
   "src/navigation/navigationConfig.test.ts": {
-    "mtime": 1788363827.7705488,
-    "ast_hash": "ca68513c610c896bfac8c50566e25bad",
+    "mtime": 1788453246.13623,
+    "ast_hash": "eb34b1437b6824f4ac4695e29f92fb4b",
     "semantic_hash": ""
   },
   "src/navigation/navigationConfig.ts": {
-    "mtime": 1788363554.6224508,
-    "ast_hash": "247a24e8f5384d2a4f0f4bbff19d8b9e",
+    "mtime": 1788453125.2928321,
+    "ast_hash": "1a63dbeaa411bd9388021d7fef52ff5a",
     "semantic_hash": ""
   },
   "src/navigation/routes.ts": {
-    "mtime": 1788366094.773805,
-    "ast_hash": "b16a2e12d7394c0b74ebb887f48aed16",
+    "mtime": 1788620508.7197704,
+    "ast_hash": "94ec96b0eb778bb52897c56f3c3d3155",
     "semantic_hash": ""
   },
   "src/navigation/types.ts": {
-    "mtime": 1788450888.9508798,
-    "ast_hash": "9bd188e325c1953801c9772792822a5f",
+    "mtime": 1788620510.1606884,
+    "ast_hash": "1cd47a203d3b642d0f63a4fba2b18583",
     "semantic_hash": ""
   },
   "src/screens/AuthStateErrorScreen.tsx": {
@@ -515,18 +515,18 @@
     "semantic_hash": ""
   },
   "src/services/profileService.test.ts": {
-    "mtime": 1785769043.6773815,
-    "ast_hash": "d91924010d104db3da33eeae7601eb5d",
+    "mtime": 1788618821.4056852,
+    "ast_hash": "2d1a2cd52c23081fab41c32f76de9d62",
     "semantic_hash": ""
   },
   "src/services/profileService.ts": {
-    "mtime": 1785769052.34624,
-    "ast_hash": "7242f994138bae87e35b0afe91ca67d7",
+    "mtime": 1788618840.4011068,
+    "ast_hash": "d7c2ac18e778c3bf8c3c96f029e540ee",
     "semantic_hash": ""
   },
   "src/services/supabaseProfileGateway.ts": {
-    "mtime": 1786117947.8096015,
-    "ast_hash": "d8a94bb314862acdb53d53f7d669bc55",
+    "mtime": 1788618306.700714,
+    "ast_hash": "ce6bff3bacba6e29644ce6815b06c195",
     "semantic_hash": ""
   },
   "src/services/supabaseWardrobeGateway.ts": {
@@ -555,13 +555,13 @@
     "semantic_hash": ""
   },
   "src/store/authFlowActions.ts": {
-    "mtime": 1785769748.7416859,
-    "ast_hash": "22f51fafe1fece439cf1d166d3c7f4eb",
+    "mtime": 1788618940.2730737,
+    "ast_hash": "7179d8b7efd50926478c169d9db2ab08",
     "semantic_hash": ""
   },
   "src/store/authState.test.ts": {
-    "mtime": 1785769950.9696708,
-    "ast_hash": "7ec3ee678c29c3fe26867d7f8c284639",
+    "mtime": 1788618822.6831768,
+    "ast_hash": "81ed8c33868a0cd28b6a71333594a977",
     "semantic_hash": ""
   },
   "src/store/authState.ts": {
@@ -630,8 +630,8 @@
     "semantic_hash": ""
   },
   "src/types/database.ts": {
-    "mtime": 1786120667.2696624,
-    "ast_hash": "16fab6bce67e0f6762f4830ea1a2554d",
+    "mtime": 1788618302.663926,
+    "ast_hash": "df7a14a9dc70758d330ce09808586c81",
     "semantic_hash": ""
   },
   "src/types/environment.d.ts": {
@@ -640,8 +640,8 @@
     "semantic_hash": ""
   },
   "src/types/profile.ts": {
-    "mtime": 1785768289.0368092,
-    "ast_hash": "bfb6d02acd1ad4ef858094ae8d0691de",
+    "mtime": 1788618303.9173265,
+    "ast_hash": "65b98094d40e8193af43934977d1256d",
     "semantic_hash": ""
   },
   "src/types/wardrobe.ts": {
@@ -1255,8 +1255,8 @@
     "semantic_hash": ""
   },
   "src/features/explore/screens/ExploreOutfitDetailScreen.tsx": {
-    "mtime": 1788450801.735389,
-    "ast_hash": "438a692116515fe7f1a7d9f7e5b81d48",
+    "mtime": 1788616229.8754969,
+    "ast_hash": "7859bbb3c9c91e20a4dfb519663f1112",
     "semantic_hash": ""
   },
   "src/features/explore/utils/discovery.test.ts": {
@@ -1267,6 +1267,121 @@
   "graphify-out/memory/query_20260902_162432_there_are_a_few_errors_that_need_to_be_fix__explor.md": {
     "mtime": 1788366272.7459407,
     "ast_hash": "ae45dcb557b0cc24a14ccd1a5f937764",
+    "semantic_hash": ""
+  },
+  "src/navigation/FloatingTabBar.tsx": {
+    "mtime": 1788453527.3083007,
+    "ast_hash": "c4f4a2d086900f11a4220ff6457d1052",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260903_161631_refine_the_explore_page_with_a_compact_search_firs.md": {
+    "mtime": 1788452191.4130003,
+    "ast_hash": "08a337011d72ae87234a9f255ad69c9b",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260903_164106_mix___match___image_detail_back_button___bottom_na.md": {
+    "mtime": 1788453666.6184337,
+    "ast_hash": "1a8f3e4f926088f5646997faa2e2ccde",
+    "semantic_hash": ""
+  },
+  "src/features/profile/components/ActivitySummary.tsx": {
+    "mtime": 1788620302.4579866,
+    "ast_hash": "5f6351e81f18ced54de297f74c4e8140",
+    "semantic_hash": ""
+  },
+  "src/features/profile/components/ProfileIdentity.tsx": {
+    "mtime": 1788620301.118835,
+    "ast_hash": "1a87da2b7d3770d12fef0f9581d6889c",
+    "semantic_hash": ""
+  },
+  "src/features/profile/components/ProfileSettingsDirectory.tsx": {
+    "mtime": 1788620789.9989462,
+    "ast_hash": "54daf93b747179ab26832532c21090e0",
+    "semantic_hash": ""
+  },
+  "src/features/profile/components/ProfileSkeletons.tsx": {
+    "mtime": 1788620336.4875178,
+    "ast_hash": "4c9f907fa1c1aa08506a1571e6190727",
+    "semantic_hash": ""
+  },
+  "src/features/profile/components/SignOutRow.tsx": {
+    "mtime": 1788618524.898077,
+    "ast_hash": "3fc65691f3997c17af20860646423352",
+    "semantic_hash": ""
+  },
+  "src/features/profile/styleProfileOptions.ts": {
+    "mtime": 1788618379.779642,
+    "ast_hash": "4cdd0e65843440aaf3b2ed8dff8cf586",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20260905000100_add_style_profile_to_profiles.sql": {
+    "mtime": 1788618308.1969476,
+    "ast_hash": "400c6e3a9c19e17a8dd25e931bb25399",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260905_140553_mix___match___small_ui_amendment__use_ionicons_che.md": {
+    "mtime": 1788617153.3314118,
+    "ast_hash": "1ce999f1106619213ed31a478328e951",
+    "semantic_hash": ""
+  },
+  "src/features/profile/components/PreferenceChoiceGroup.tsx": {
+    "mtime": 1788620789.9477,
+    "ast_hash": "c91acd80bc6715f95645fda70f73a1de",
+    "semantic_hash": ""
+  },
+  "src/features/profile/components/PreferenceSelectionScreen.tsx": {
+    "mtime": 1788620846.7267342,
+    "ast_hash": "d2af72aac02a9337ed3498d841b28636",
+    "semantic_hash": ""
+  },
+  "src/features/profile/components/ProfileSaveFeedback.tsx": {
+    "mtime": 1788620789.9840035,
+    "ast_hash": "3ce053724f715badd44ed675b1b0c983",
+    "semantic_hash": ""
+  },
+  "src/features/profile/components/StyleProfileEntry.tsx": {
+    "mtime": 1788620427.685946,
+    "ast_hash": "4ed246fd8411c727b98b55c3a6f42277",
+    "semantic_hash": ""
+  },
+  "src/features/profile/screens/BodyProfileScreen.tsx": {
+    "mtime": 1788620848.378443,
+    "ast_hash": "fe8fd985b579ca23ce2aad792d977e81",
+    "semantic_hash": ""
+  },
+  "src/features/profile/screens/ColorPreferencesScreen.tsx": {
+    "mtime": 1788620850.083163,
+    "ast_hash": "0f07e598fe3834009507013bd61af51d",
+    "semantic_hash": ""
+  },
+  "src/features/profile/screens/FitPreferencesScreen.tsx": {
+    "mtime": 1788620434.6217496,
+    "ast_hash": "dc4c7b324a476baf38287db784a7dba8",
+    "semantic_hash": ""
+  },
+  "src/features/profile/screens/OccasionsScreen.tsx": {
+    "mtime": 1788620433.2401903,
+    "ast_hash": "8bbfd1626c8aae15a693f9651ec8a2ed",
+    "semantic_hash": ""
+  },
+  "src/features/profile/screens/PreferredStylesScreen.tsx": {
+    "mtime": 1788620431.865292,
+    "ast_hash": "9a1c2f3896f2bb4381c1dde49c15a202",
+    "semantic_hash": ""
+  },
+  "src/features/profile/screens/StyleProfileScreen.tsx": {
+    "mtime": 1788620430.446637,
+    "ast_hash": "718252ce5b84fb43a80101fd3da9a2d7",
+    "semantic_hash": ""
+  },
+  "src/features/profile/useStyleProfileSave.ts": {
+    "mtime": 1788620377.0204675,
+    "ast_hash": "06a558de6c3b3d1ae3242ca504d0f5ef",
+    "semantic_hash": ""
+  },
+  "src/navigation/profileRoutes.test.ts": {
+    "mtime": 1788620889.4339147,
+    "ast_hash": "0b7854795e0d1519aaa65c1a13b01ebd",
     "semantic_hash": ""
   }
 }

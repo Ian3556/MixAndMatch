@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useAuthStore } from '@/store/authStore';
+import { useWardrobeStore } from '@/store/wardrobeStore';
 
 export function useSignOutAction() {
   const signOut = useAuthStore((state) => state.signOut);
@@ -12,6 +13,7 @@ export function useSignOutAction() {
     setIsSigningOut(true);
     setSignOutError(null);
     const result = await signOut();
+    useWardrobeStore.getState().reset();
     if (!result.ok) setSignOutError(result.error.message);
     setIsSigningOut(false);
   };

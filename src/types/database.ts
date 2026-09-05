@@ -16,6 +16,7 @@ export type Database = {
           display_name: string | null;
           id: string;
           onboarding_completed: boolean;
+          style_profile: Json;
           updated_at: string;
         };
         Insert: {
@@ -24,12 +25,14 @@ export type Database = {
           display_name?: string | null;
           id: string;
           onboarding_completed?: boolean;
+          style_profile?: Json;
           updated_at?: string;
         };
         Update: {
           avatar_url?: string | null;
           display_name?: string | null;
           onboarding_completed?: boolean;
+          style_profile?: Json;
           updated_at?: string;
         };
         Relationships: [

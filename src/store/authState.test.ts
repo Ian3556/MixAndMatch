@@ -2,6 +2,7 @@ import type { Session, User } from '@supabase/supabase-js';
 import { describe, expect, it } from 'vitest';
 
 import type { Profile } from '@/types/profile';
+import { createEmptyStyleProfile } from '@/types/profile';
 
 import { createSignedOutSnapshot, resolveAuthFlow, type AuthSnapshot } from './authState';
 
@@ -17,6 +18,7 @@ const incompleteProfile: Profile = {
   id: user.id,
   displayName: null,
   avatarUrl: null,
+  styleProfile: createEmptyStyleProfile(),
   onboardingCompleted: false,
   createdAt: '2026-08-03T00:00:00.000Z',
   updatedAt: '2026-08-03T00:00:00.000Z',

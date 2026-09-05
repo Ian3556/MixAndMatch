@@ -64,11 +64,22 @@ describe('application interaction audit', () => {
 
   it('keeps the refined Explore controls functional and heading-free', () => {
     const explore = readFileSync('src/features/explore/screens/ExploreScreen.tsx', 'utf8');
+    const searchResults = readFileSync(
+      'src/features/explore/screens/SearchResultsScreen.tsx',
+      'utf8',
+    );
     const searchBar = readFileSync('src/components/ui/SearchBar.tsx', 'utf8');
 
     expect(explore).toContain('<AppScreen hideHeader title="">');
-    expect(explore).toContain('submitLabel="→"');
-    expect(searchBar).toContain('onPress={onSubmit}');
+    expect(explore).toContain('showSubmit={false}');
+    expect(explore).toContain('setActiveQuery(query.trim())');
+    expect(searchResults).toContain('showSubmit={false}');
+    expect(searchResults).toContain('setSubmittedQuery(query.trim())');
+    expect(`${explore}\n${searchResults}`).not.toContain('submitLabel=');
+    expect(searchBar).toContain('onSubmitEditing={handleSubmit}');
+    expect(searchBar).toContain('returnKeyType="search"');
+    expect(searchBar).toContain('Keyboard.dismiss()');
+    expect(searchBar).toContain('{showSubmit ? (');
   });
 
   it('uses a bottom sheet with sticky actions and no filter title hierarchy', () => {
@@ -83,7 +94,7 @@ describe('application interaction audit', () => {
     expect(filterPanel).not.toContain('styles.title');
   });
 
-  it('pushes related Explore outfits onto the existing navigation stack', () => {
+  it('pushes related Explore outfits and overlays the circular Back control on the image', () => {
     const detail = readFileSync(
       'src/features/explore/screens/ExploreOutfitDetailScreen.tsx',
       'utf8',
@@ -91,7 +102,31 @@ describe('application interaction audit', () => {
 
     expect(detail).toContain('navigation.push(EXPLORE_ROUTES.INSPIRATION_DETAIL');
     expect(detail).toContain('<ExploreMasonryFeed');
-    expect(detail).not.toContain('borderRadius');
+    expect(detail).toContain('<AppScreen hideHeader title="">');
+    expect(detail).toContain('<OutfitImageBackButton onPress={onBack} styles={styles} />');
+    expect(detail).toContain('accessibilityLabel="Go back"');
+    expect(detail).toContain("import Ionicons from '@expo/vector-icons/Ionicons'");
+    expect(detail).toContain('name="chevron-back-outline"');
+    expect(detail).not.toContain('←');
+    expect(detail).toContain('borderRadius: theme.radii.full');
+    expect(detail.match(/borderRadius:/g)).toHaveLength(1);
+  });
+
+  it('uses one route-driven, safe-area-aware floating tab bar', () => {
+    const navigator = readFileSync('src/navigation/MainAppNavigator.tsx', 'utf8');
+    const floatingTabBar = readFileSync('src/navigation/FloatingTabBar.tsx', 'utf8');
+
+    expect(navigator).toContain('tabBar={FloatingTabBar}');
+    expect(navigator).not.toContain('tabBarStyle:');
+    expect(floatingTabBar).toContain('getFocusedRouteNameFromRoute');
+    expect(floatingTabBar).toContain('Animated.timing(activePosition');
+    expect(floatingTabBar).toContain('duration: TAB_TRANSITION_DURATION_MS');
+    expect(floatingTabBar).toContain('testID="main-navigation-active-indicator"');
+    expect(floatingTabBar).toContain('paddingBottom: insets.bottom + theme.spacing.sm');
+    expect(floatingTabBar).toContain('navigation.emit({');
+    expect(floatingTabBar).toContain('navigation.navigate(route.name, route.params)');
+    expect(floatingTabBar).toContain('aria-selected={focused}');
+    expect(floatingTabBar).not.toContain('borderRadius');
   });
 
   it('keeps the complete URL import control contract visible and guarded', () => {

@@ -5,7 +5,10 @@ import type {
   ProfileRow,
   ProfileUpdate,
   SaveProfileInput,
+  StyleProfile,
 } from '@/types/profile';
+import { createEmptyStyleProfile } from '@/types/profile';
+import type { Json } from '@/types/database';
 import { normalizeDisplayName } from '@/utils/validation/authValidation';
 
 export type ProfileGatewayResult<T> = {
@@ -47,6 +50,10 @@ export function createProfileService(gateway: ProfileGateway) {
         payload.avatar_url = input.avatarUrl;
       }
 
+      if (input.styleProfile !== undefined) {
+        payload.style_profile = input.styleProfile as unknown as Json;
+      }
+
       const result = await gateway.update(userId, payload);
 
       if (result.error) {
@@ -71,6 +78,10 @@ export function createProfileService(gateway: ProfileGateway) {
         payload.avatar_url = input.avatarUrl;
       }
 
+      if (input.styleProfile !== undefined) {
+        payload.style_profile = input.styleProfile as unknown as Json;
+      }
+
       const result = await gateway.upsert(payload);
 
       if (result.error) {
@@ -91,9 +102,32 @@ export function mapProfileRow(row: ProfileRow): Profile {
     id: row.id,
     displayName: row.display_name,
     avatarUrl: row.avatar_url,
+    styleProfile: mapStyleProfile(row.style_profile),
     onboardingCompleted: row.onboarding_completed,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+  };
+}
+
+export function mapStyleProfile(value: Json): StyleProfile {
+  const empty = createEmptyStyleProfile();
+  if (!isRecord(value)) return empty;
+
+  const body = isRecord(value.body) ? value.body : {};
+  return {
+    body: {
+      faceShape: readNullableString(body.faceShape),
+      bodyType: readNullableString(body.bodyType),
+      heightCm: readNullablePositiveNumber(body.heightCm),
+      weightKg: readNullablePositiveNumber(body.weightKg),
+      skinTone: readNullableString(body.skinTone),
+      skinUndertone: readNullableString(body.skinUndertone),
+    },
+    preferredStyles: readStringArray(value.preferredStyles),
+    favoriteColors: readStringArray(value.favoriteColors),
+    avoidColors: readStringArray(value.avoidColors),
+    occasions: readStringArray(value.occasions),
+    fitPreferences: readStringArray(value.fitPreferences),
   };
 }
 
@@ -156,4 +190,28 @@ function readStringProperty(value: unknown, key: string): string {
 
   const property = Reflect.get(value, key);
   return typeof property === 'string' ? property : '';
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function readNullableString(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
+function readNullablePositiveNumber(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null;
+}
+
+function readStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return Array.from(
+    new Set(
+      value
+        .filter((item): item is string => typeof item === 'string')
+        .map((item) => item.trim())
+        .filter(Boolean),
+    ),
+  ).slice(0, 24);
 }

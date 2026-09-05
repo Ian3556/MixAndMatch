@@ -1,20 +1,27 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { ActionButton } from '@/components/ActionButton';
 import { ErrorBanner } from '@/components/ErrorBanner';
 import { AppScreen } from '@/components/ui/AppScreen';
-import { Avatar, StatCard } from '@/components/ui/ProfilePrimitives';
-import { SectionHeader } from '@/components/ui/SectionHeader';
-import { SettingRow } from '@/components/ui/SettingRow';
-import { SettingsGroup } from '@/components/ui/SettingsGroup';
-import { DeferredNotice } from '@/components/ui/StateViews';
+import { isCatalogDevToolsEnabled } from '@/constants/catalogDevTools';
+import { ActivitySummary } from '@/features/profile/components/ActivitySummary';
+import { ProfileIdentity } from '@/features/profile/components/ProfileIdentity';
+import {
+  ProfileDirectoryRow,
+  ProfileSettingsDirectory,
+} from '@/features/profile/components/ProfileSettingsDirectory';
+import {
+  ProfileIdentitySkeleton,
+  StyleProfileRowSkeleton,
+} from '@/features/profile/components/ProfileSkeletons';
+import { SignOutRow } from '@/features/profile/components/SignOutRow';
+import { StyleProfileEntry } from '@/features/profile/components/StyleProfileEntry';
 import { PROFILE_ROUTES } from '@/navigation/routes';
 import type { ProfileStackParamList } from '@/navigation/types';
 import { useAuthStore } from '@/store/authStore';
+import { useWardrobeStore } from '@/store/wardrobeStore';
 import { useAppTheme, type AppTheme } from '@/theme';
-import { showDeferredNotice } from '@/utils/deferred';
-import { isCatalogDevToolsEnabled } from '@/constants/catalogDevTools';
 
 import { useSignOutAction } from '../useSignOutAction';
 
@@ -24,135 +31,107 @@ export function ProfileScreen({ navigation }: Props) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const profile = useAuthStore((state) => state.profile);
+  const profileStatus = useAuthStore((state) => state.profileStatus);
   const user = useAuthStore((state) => state.user);
+  const wardrobeItems = useWardrobeStore((state) => state.items);
+  const wardrobeStatus = useWardrobeStore((state) => state.status);
+  const wardrobeError = useWardrobeStore((state) => state.error);
+  const loadedWardrobeUserId = useWardrobeStore((state) => state.loadedUserId);
+  const refreshWardrobe = useWardrobeStore((state) => state.refresh);
   const { handleSignOut, isSigningOut, signOutError } = useSignOutAction();
-  const name = profile?.displayName || 'Mix & Match member';
+
+  useEffect(() => {
+    if (
+      user &&
+      (loadedWardrobeUserId !== user.id || wardrobeStatus === 'idle') &&
+      wardrobeStatus !== 'loading'
+    ) {
+      void refreshWardrobe(user.id);
+    }
+  }, [loadedWardrobeUserId, refreshWardrobe, user, wardrobeStatus]);
+
+  const editProfile = () => navigation.navigate(PROFILE_ROUTES.EDIT_PROFILE);
+  const profileLoading = profileStatus === 'loading' || !profile;
+  const wardrobeLoading =
+    Boolean(user) &&
+    (wardrobeStatus === 'idle' ||
+      wardrobeStatus === 'loading' ||
+      loadedWardrobeUserId !== user?.id);
+  const currentWardrobeError =
+    wardrobeStatus === 'error' && loadedWardrobeUserId === user?.id ? wardrobeError : null;
+  const appearanceValue =
+    theme.preference === 'system' ? 'System' : theme.preference === 'dark' ? 'Dark' : 'Light';
 
   return (
     <AppScreen
-      eyebrow="Your account"
-      subtitle="Identity, preferences, and app settings"
+      hideHeader
+      scrollProps={{ contentInsetAdjustmentBehavior: 'automatic' }}
       title="Profile"
     >
-      <View style={styles.profileHeader}>
-        <Avatar name={name} />
-        <View style={styles.profileCopy}>
-          <Text accessibilityRole="header" style={styles.name}>
-            {name}
-          </Text>
-          <Text style={styles.email}>{user?.email ?? 'Email unavailable'}</Text>
-        </View>
-        <ActionButton
-          label="Edit profile"
-          onPress={() => navigation.navigate(PROFILE_ROUTES.EDIT_PROFILE)}
-          variant="secondary"
-        />
-      </View>
-
-      <View style={styles.section}>
-        <SectionHeader
-          subtitle="Future preference categories—not stored profile data"
-          title="Style profile"
-        />
-        <View style={styles.preferenceGrid}>
-          {[
-            'Preferred styles',
-            'Favourite colours',
-            'Avoided colours',
-            'Typical occasions',
-            'Fit preferences',
-          ].map((label) => (
-            <SettingRow
-              key={label}
-              label={label}
-              onPress={() => showDeferredNotice(label)}
-              value="Not set"
-            />
-          ))}
-        </View>
-      </View>
-
-      <View style={styles.section}>
-        <SectionHeader subtitle="Analytics remain outside Phase 3" title="Activity summary" />
-        <View style={styles.stats}>
-          <StatCard label="Wardrobe items" value="—" />
-          <StatCard label="Saved outfits" value="—" />
-          <StatCard label="Favourite looks" value="—" />
-          <StatCard label="Outfit history" value="—" />
-        </View>
-      </View>
-
-      <SettingsGroup title="Settings">
-        <SettingRow label="Account" onPress={() => navigation.navigate(PROFILE_ROUTES.ACCOUNT)} />
-        <SettingRow
-          label="Appearance"
-          onPress={() => navigation.navigate(PROFILE_ROUTES.APPEARANCE)}
-          value={
-            theme.preference === 'system'
-              ? 'System'
-              : theme.preference === 'dark'
-                ? 'Dark'
-                : 'Light'
-          }
-        />
-        <SettingRow
-          label="Notifications"
-          onPress={() => navigation.navigate(PROFILE_ROUTES.NOTIFICATIONS)}
-        />
-        <SettingRow label="Privacy" onPress={() => navigation.navigate(PROFILE_ROUTES.PRIVACY)} />
-        <SettingRow label="Help" onPress={() => navigation.navigate(PROFILE_ROUTES.HELP)} />
-        <SettingRow label="About" onPress={() => navigation.navigate(PROFILE_ROUTES.ABOUT)} />
-        {isCatalogDevToolsEnabled() ? (
-          <SettingRow
-            description="Development-only import and review operations"
-            label="Catalogue operations"
-            onPress={() => navigation.navigate(PROFILE_ROUTES.CATALOG_DEVELOPMENT)}
+      <View style={styles.page}>
+        {profileLoading ? (
+          <ProfileIdentitySkeleton />
+        ) : (
+          <ProfileIdentity
+            avatarUrl={profile.avatarUrl}
+            email={user?.email ?? 'Email unavailable'}
+            name={profile.displayName ?? 'Mix & Match member'}
+            onEdit={editProfile}
           />
-        ) : null}
-      </SettingsGroup>
+        )}
 
-      <DeferredNotice>
-        Only display-name updates and sign-out connect to Phase 1 services. Style and activity
-        values remain unpersisted placeholders.
-      </DeferredNotice>
-      {signOutError ? <ErrorBanner message={signOutError} /> : null}
-      <ActionButton
-        label="Sign out"
-        loading={isSigningOut}
-        onPress={() => void handleSignOut()}
-        variant="secondary"
-      />
+        <ActivitySummary
+          onRetryWardrobe={() => {
+            if (user) void refreshWardrobe(user.id);
+          }}
+          wardrobeCount={wardrobeItems.length}
+          wardrobeError={currentWardrobeError}
+          wardrobeLoading={wardrobeLoading}
+        />
+
+        {profileLoading ? (
+          <StyleProfileRowSkeleton />
+        ) : (
+          <StyleProfileEntry onPress={() => navigation.navigate(PROFILE_ROUTES.STYLE_PROFILE)} />
+        )}
+
+        <ProfileSettingsDirectory
+          appearanceValue={appearanceValue}
+          catalogOperationsRow={
+            isCatalogDevToolsEnabled() ? (
+              <ProfileDirectoryRow
+                icon="construct-outline"
+                label="Catalogue Operations"
+                onPress={() => navigation.navigate(PROFILE_ROUTES.CATALOG_DEVELOPMENT)}
+              />
+            ) : undefined
+          }
+          onAbout={() => navigation.navigate(PROFILE_ROUTES.ABOUT)}
+          onAccount={() => navigation.navigate(PROFILE_ROUTES.ACCOUNT)}
+          onAppearance={() => navigation.navigate(PROFILE_ROUTES.APPEARANCE)}
+          onHelp={() => navigation.navigate(PROFILE_ROUTES.HELP)}
+          onNotifications={() => navigation.navigate(PROFILE_ROUTES.NOTIFICATIONS)}
+          onPrivacy={() => navigation.navigate(PROFILE_ROUTES.PRIVACY)}
+        />
+
+        <View style={styles.signOutSection}>
+          {signOutError ? <ErrorBanner message={signOutError} /> : null}
+          <SignOutRow isSigningOut={isSigningOut} onPress={() => void handleSignOut()} />
+        </View>
+      </View>
     </AppScreen>
   );
 }
 
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
-    profileHeader: {
-      alignItems: 'center',
-      backgroundColor: theme.colors.surface,
-      borderColor: theme.colors.border,
-      borderRadius: theme.radii.xl,
-      borderWidth: 1,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      gap: theme.spacing.md,
-      padding: theme.spacing.lg,
+    page: {
+      alignSelf: 'center',
+      gap: theme.spacing.xxl,
+      maxWidth: 760,
+      paddingBottom: theme.spacing.xl,
+      width: '100%',
     },
-    profileCopy: { flex: 1, minWidth: 180 },
-    name: {
-      color: theme.colors.text,
-      fontSize: theme.typography.fontSize.xl,
-      fontWeight: theme.typography.fontWeight.bold,
-    },
-    email: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.sm },
-    section: { gap: theme.spacing.md },
-    preferenceGrid: {
-      borderColor: theme.colors.border,
-      borderRadius: theme.radii.lg,
-      borderWidth: 1,
-      overflow: 'hidden',
-    },
-    stats: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm },
+    signOutSection: { gap: theme.spacing.md },
   });
 }

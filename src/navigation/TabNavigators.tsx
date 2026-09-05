@@ -10,11 +10,17 @@ import { CatalogDevelopmentScreen } from '@/features/catalog/screens/CatalogDeve
 import { AboutScreen } from '@/features/profile/screens/AboutScreen';
 import { AccountSettingsScreen } from '@/features/profile/screens/AccountSettingsScreen';
 import { AppearanceSettingsScreen } from '@/features/profile/screens/AppearanceSettingsScreen';
+import { BodyProfileScreen } from '@/features/profile/screens/BodyProfileScreen';
+import { ColorPreferencesScreen } from '@/features/profile/screens/ColorPreferencesScreen';
 import { EditProfileScreen } from '@/features/profile/screens/EditProfileScreen';
+import { FitPreferencesScreen } from '@/features/profile/screens/FitPreferencesScreen';
 import { HelpAndSupportScreen } from '@/features/profile/screens/HelpAndSupportScreen';
 import { NotificationSettingsScreen } from '@/features/profile/screens/NotificationSettingsScreen';
+import { OccasionsScreen } from '@/features/profile/screens/OccasionsScreen';
+import { PreferredStylesScreen } from '@/features/profile/screens/PreferredStylesScreen';
 import { PrivacySettingsScreen } from '@/features/profile/screens/PrivacySettingsScreen';
 import { ProfileScreen } from '@/features/profile/screens/ProfileScreen';
+import { StyleProfileScreen } from '@/features/profile/screens/StyleProfileScreen';
 import { OutfitDetailScreen } from '@/features/stylist/screens/OutfitDetailScreen';
 import { OutfitGeneratingScreen } from '@/features/stylist/screens/OutfitGeneratingScreen';
 import { OutfitGoalScreen } from '@/features/stylist/screens/OutfitGoalScreen';
@@ -125,6 +131,15 @@ export function ProfileTabNavigator() {
     <ProfileStack.Navigator screenOptions={screenOptions}>
       <ProfileStack.Screen component={ProfileScreen} name={PROFILE_ROUTES.PROFILE} />
       <ProfileStack.Screen component={EditProfileScreen} name={PROFILE_ROUTES.EDIT_PROFILE} />
+      <ProfileStack.Screen component={StyleProfileScreen} name={PROFILE_ROUTES.STYLE_PROFILE} />
+      <ProfileStack.Screen component={BodyProfileScreen} name={PROFILE_ROUTES.BODY_PROFILE} />
+      <ProfileStack.Screen
+        component={PreferredStylesScreen}
+        name={PROFILE_ROUTES.PREFERRED_STYLES}
+      />
+      <ProfileStack.Screen component={ColorPreferencesScreen} name={PROFILE_ROUTES.COLOR} />
+      <ProfileStack.Screen component={OccasionsScreen} name={PROFILE_ROUTES.OCCASIONS} />
+      <ProfileStack.Screen component={FitPreferencesScreen} name={PROFILE_ROUTES.FIT_PREFERENCES} />
       <ProfileStack.Screen component={AccountSettingsScreen} name={PROFILE_ROUTES.ACCOUNT} />
       <ProfileStack.Screen component={AppearanceSettingsScreen} name={PROFILE_ROUTES.APPEARANCE} />
       <ProfileStack.Screen

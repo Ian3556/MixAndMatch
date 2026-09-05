@@ -1,11 +1,11 @@
-# Graph Report - MixAndMatch  (2026-09-03)
+# Graph Report - MixAndMatch  (2026-09-04)
 
 ## Corpus Check
-- 236 files · ~130,270 words
+- 236 files · ~130,280 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1392 nodes · 3425 edges · 81 communities (65 shown, 16 thin omitted)
+- 1392 nodes · 3425 edges · 80 communities (64 shown, 16 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.73)
 - Token cost: 0 input · 0 output
 
@@ -61,7 +61,6 @@
 - AGENTS.md
 - extraction-spec.md
 - validate.mjs
-- editProduct
 - Mix & Match catalogue database
 - Q: Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile.
 - Q: Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image.
@@ -123,7 +122,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (81 total, 16 thin omitted)
+## Communities (80 total, 16 thin omitted)
 
 ### Community 0 - "ActionButton.tsx"
 Cohesion: 0.06
@@ -182,8 +181,8 @@ Cohesion: 0.08
 Nodes (23): Added, Component inventory, Created: development authentication testing, Created: fixtures, navigation, types, utilities, and documentation, Created: Home and Explore, Created: Profile and Settings, Created: shared UI, Created: Stylist (+15 more)
 
 ### Community 15 - "authStoreRuntime.ts"
-Cohesion: 0.19
-Nodes (24): AuthService, createAuthService(), isEmailVerified(), AccountActions, createAuthAccountActions(), createAuthFlowActions(), FlowActions, AuthActionResult (+16 more)
+Cohesion: 0.17
+Nodes (26): AuthService, createAuthService(), isEmailVerified(), createSupabaseProfileGateway(), AccountActions, createAuthAccountActions(), createAuthFlowActions(), FlowActions (+18 more)
 
 ### Community 16 - "expo"
 Cohesion: 0.09
@@ -195,7 +194,7 @@ Nodes (13): createStyles(), EmptyState(), LoadingState(), MessageState(), Messag
 
 ### Community 18 - "catalog-management/index.ts"
 Cohesion: 0.08
-Nodes (28): appendManualCheckpoint(), authenticateCatalogDeveloper(), BrandRow, BrandSourceRow, canPersistRejectedProduct(), CatalogManagementError, CategoryRow, corsHeaders (+20 more)
+Nodes (34): appendManualCheckpoint(), authenticateCatalogDeveloper(), BrandRow, BrandSourceRow, canPersistRejectedProduct(), CatalogManagementError, CategoryRow, corsHeaders (+26 more)
 
 ### Community 19 - "compilerOptions"
 Cohesion: 0.10
@@ -218,8 +217,8 @@ Cohesion: 0.09
 Nodes (22): Affected files, Brand rollout and source governance, Categories and styles, Colour-variant strategy, Current application architecture, Current taxonomy, style, images, and recommendations, Exact migration plan, Executive decision (+14 more)
 
 ### Community 24 - "processJob"
-Cohesion: 0.28
-Nodes (14): appendCheckpointId(), finalizeJob(), findBrand(), findJob(), getRetryDelayMs(), handleAction(), processJob(), readNumberProperty() (+6 more)
+Cohesion: 0.26
+Nodes (15): appendCheckpointId(), finalizeJob(), findBrand(), findJob(), getRetryDelayMs(), handleAction(), processJob(), readNumberProperty() (+7 more)
 
 ### Community 25 - "fetch-page.ts"
 Cohesion: 0.18
@@ -280,10 +279,6 @@ Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphif
 ### Community 39 - "eslint.config.js"
 Cohesion: 0.50
 Nodes (3): { defineConfig, globalIgnores }, eslintPluginPrettierRecommended, expoConfig
-
-### Community 47 - "editProduct"
-Cohesion: 0.36
-Nodes (7): editProduct(), findReviewProduct(), loadCategories(), loadPersistenceLookup(), normalizeNullable(), reviewProduct(), validateStoredProduct()
 
 ### Community 48 - "Mix & Match catalogue database"
 Cohesion: 0.11
@@ -350,8 +345,8 @@ Cohesion: 0.19
 Nodes (12): CatalogMetricCard(), createStyles(), useCatalogAdminStore, createStyles(), SectionHeader(), SectionHeaderProps, isCatalogDevToolsEnabled(), resolveCatalogDevToolsEnabled() (+4 more)
 
 ### Community 65 - "profileService.ts"
-Cohesion: 0.13
-Nodes (20): createProfileService(), normalizeProfileError(), ProfileGateway, ProfileGatewayResult, ProfileService, readStringProperty(), fetchById, row (+12 more)
+Cohesion: 0.14
+Nodes (18): createProfileService(), normalizeProfileError(), ProfileGateway, ProfileGatewayResult, ProfileService, readStringProperty(), fetchById, row (+10 more)
 
 ### Community 67 - "job-state.ts"
 Cohesion: 0.53

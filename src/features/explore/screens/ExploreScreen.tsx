@@ -94,8 +94,8 @@ export function ExploreScreen({ navigation }: Props) {
                 onChangeText={setQuery}
                 onSubmit={submitSearch}
                 placeholder="Search fashion, outfits, or styles"
+                showSubmit={false}
                 square
-                submitLabel="→"
                 value={query}
               />
             </View>

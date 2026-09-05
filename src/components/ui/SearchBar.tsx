@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { useAppTheme, type AppTheme } from '@/theme';
 
@@ -7,6 +7,7 @@ type SearchBarProps = {
   onChangeText: (value: string) => void;
   onSubmit: () => void;
   placeholder?: string;
+  showSubmit?: boolean;
   square?: boolean;
   submitLabel?: string;
 };
@@ -16,11 +17,16 @@ export function SearchBar({
   onChangeText,
   onSubmit,
   placeholder = 'Search styles and pieces',
+  showSubmit = true,
   square = false,
   submitLabel = 'Go',
 }: SearchBarProps) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
+  const handleSubmit = () => {
+    onSubmit();
+    Keyboard.dismiss();
+  };
 
   return (
     <View style={[styles.shell, square ? styles.squareShell : null]}>
@@ -30,23 +36,25 @@ export function SearchBar({
       <TextInput
         accessibilityLabel="Search"
         onChangeText={onChangeText}
-        onSubmitEditing={onSubmit}
+        onSubmitEditing={handleSubmit}
         placeholder={placeholder}
         placeholderTextColor={theme.colors.textMuted}
         returnKeyType="search"
         style={styles.input}
         value={value}
       />
-      <Pressable
-        accessibilityLabel="Submit search"
-        accessibilityRole="button"
-        onPress={onSubmit}
-        style={({ pressed }) => [styles.submitButton, pressed ? styles.pressed : null]}
-      >
-        <Text style={[styles.submit, submitLabel === '→' ? styles.submitArrow : null]}>
-          {submitLabel}
-        </Text>
-      </Pressable>
+      {showSubmit ? (
+        <Pressable
+          accessibilityLabel="Submit search"
+          accessibilityRole="button"
+          onPress={handleSubmit}
+          style={({ pressed }) => [styles.submitButton, pressed ? styles.pressed : null]}
+        >
+          <Text style={[styles.submit, submitLabel === '→' ? styles.submitArrow : null]}>
+            {submitLabel}
+          </Text>
+        </Pressable>
+      ) : null}
     </View>
   );
 }

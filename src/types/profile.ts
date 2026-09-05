@@ -8,6 +8,7 @@ export type Profile = {
   id: string;
   displayName: string | null;
   avatarUrl: string | null;
+  styleProfile: StyleProfile;
   onboardingCompleted: boolean;
   createdAt: string;
   updatedAt: string;
@@ -16,7 +17,44 @@ export type Profile = {
 export type SaveProfileInput = {
   displayName: string;
   avatarUrl?: string | null;
+  styleProfile?: StyleProfile;
 };
+
+export type BodyProfile = {
+  faceShape: string | null;
+  bodyType: string | null;
+  heightCm: number | null;
+  weightKg: number | null;
+  skinTone: string | null;
+  skinUndertone: string | null;
+};
+
+export type StyleProfile = {
+  body: BodyProfile;
+  preferredStyles: string[];
+  favoriteColors: string[];
+  avoidColors: string[];
+  occasions: string[];
+  fitPreferences: string[];
+};
+
+export function createEmptyStyleProfile(): StyleProfile {
+  return {
+    body: {
+      faceShape: null,
+      bodyType: null,
+      heightCm: null,
+      weightKg: null,
+      skinTone: null,
+      skinUndertone: null,
+    },
+    preferredStyles: [],
+    favoriteColors: [],
+    avoidColors: [],
+    occasions: [],
+    fitPreferences: [],
+  };
+}
 
 export type ProfileErrorCode =
   | 'profile_missing'

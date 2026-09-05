@@ -44,6 +44,7 @@ export function SearchResultsScreen({ navigation, route }: Props) {
   const openResult = (inspirationId: string) => {
     navigation.navigate(EXPLORE_ROUTES.INSPIRATION_DETAIL, { inspirationId });
   };
+  const submitSearch = () => setSubmittedQuery(query.trim());
 
   return (
     <AppScreen
@@ -65,12 +66,7 @@ export function SearchResultsScreen({ navigation, route }: Props) {
       subtitle="Local fixture filtering only—no external catalogue is connected."
       title="Search results"
     >
-      <SearchBar
-        onChangeText={setQuery}
-        onSubmit={() => setSubmittedQuery(query)}
-        submitLabel="→"
-        value={query}
-      />
+      <SearchBar onChangeText={setQuery} onSubmit={submitSearch} showSubmit={false} value={query} />
       <View style={styles.toolbar}>
         <Text style={styles.count}>
           {results.length} {results.length === 1 ? 'result' : 'results'}

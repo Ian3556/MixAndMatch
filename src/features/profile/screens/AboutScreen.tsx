@@ -4,28 +4,21 @@ import appConfig from '@root/app.json';
 import { AppScreen } from '@/components/ui/AppScreen';
 import { SettingRow } from '@/components/ui/SettingRow';
 import { SettingsGroup } from '@/components/ui/SettingsGroup';
-import { DeferredNotice } from '@/components/ui/StateViews';
 import type { ProfileStackParamList } from '@/navigation/types';
-import { showDeferredNotice } from '@/utils/deferred';
 
 type Props = NativeStackScreenProps<ProfileStackParamList, 'About'>;
 
 export function AboutScreen({ navigation }: Props) {
   return (
-    <AppScreen onBack={navigation.goBack} subtitle="Mix & Match product information" title="About">
+    <AppScreen onBack={navigation.goBack} title="ABOUT">
       <SettingsGroup title="Application">
         <SettingRow label="Version" value={appConfig.expo.version} />
-        <SettingRow label="Build phase" value="Phase 3 wardrobe URL import" />
       </SettingsGroup>
       <SettingsGroup title="Legal">
-        <SettingRow label="Terms" onPress={() => showDeferredNotice('Terms')} />
-        <SettingRow label="Privacy policy" onPress={() => showDeferredNotice('Privacy policy')} />
-        <SettingRow label="Licences" onPress={() => showDeferredNotice('Open-source licences')} />
+        <SettingRow label="Terms" value="Not published" />
+        <SettingRow label="Privacy policy" value="Not published" />
+        <SettingRow label="Licences" value="Not published" />
       </SettingsGroup>
-      <DeferredNotice>
-        Legal and licence documents require final product review before they are linked from the
-        application.
-      </DeferredNotice>
     </AppScreen>
   );
 }

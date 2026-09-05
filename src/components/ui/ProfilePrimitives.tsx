@@ -1,8 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import { useAppTheme, type AppTheme } from '@/theme';
 
-export function Avatar({ name, size = 72 }: { name: string; size?: number }) {
+export function Avatar({
+  name,
+  imageUrl,
+  size = 72,
+}: {
+  name: string;
+  imageUrl?: string | null;
+  size?: number;
+}) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const initials =
@@ -18,7 +26,15 @@ export function Avatar({ name, size = 72 }: { name: string; size?: number }) {
       accessibilityLabel={`${name} avatar`}
       style={[styles.avatar, { height: size, width: size }]}
     >
-      <Text style={styles.initials}>{initials}</Text>
+      {imageUrl ? (
+        <Image
+          accessibilityLabel={`${name} profile image`}
+          source={{ uri: imageUrl }}
+          style={styles.avatarImage}
+        />
+      ) : (
+        <Text style={styles.initials}>{initials}</Text>
+      )}
     </View>
   );
 }
@@ -53,6 +69,7 @@ function createStyles(theme: AppTheme) {
       borderRadius: theme.radii.full,
       borderWidth: 1,
       justifyContent: 'center',
+      overflow: 'hidden',
     },
     initials: {
       color: theme.colors.primary,
@@ -60,6 +77,7 @@ function createStyles(theme: AppTheme) {
       fontSize: theme.typography.fontSize.xl,
       fontWeight: theme.typography.fontWeight.bold,
     },
+    avatarImage: { height: '100%', width: '100%' },
     stat: {
       backgroundColor: theme.colors.surface,
       borderColor: theme.colors.border,

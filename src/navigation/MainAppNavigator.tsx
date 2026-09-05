@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { useAppTheme } from '@/theme';
-
+import { FloatingTabBar } from './FloatingTabBar';
 import { getTabConfig } from './navigationConfig';
 import { MAIN_ROUTES } from './routes';
 import { TabBarIcon } from './TabBarIcon';
@@ -17,34 +16,21 @@ import type { MainTabParamList } from './types';
 const Tabs = createBottomTabNavigator<MainTabParamList>();
 
 export function MainAppNavigator() {
-  const theme = useAppTheme();
   return (
     <Tabs.Navigator
       backBehavior="history"
+      tabBar={FloatingTabBar}
       screenOptions={({ route }) => {
         const config = getTabConfig(route.name);
         const prominent = route.name === MAIN_ROUTES.STYLIST_TAB;
         return {
           headerShown: false,
           tabBarAccessibilityLabel: `${config?.label ?? route.name} tab`,
-          tabBarActiveTintColor: theme.colors.primary,
           tabBarHideOnKeyboard: true,
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} icon={config?.icon ?? 'home'} prominent={prominent} />
           ),
-          tabBarInactiveTintColor: theme.colors.textMuted,
           tabBarLabel: config?.label ?? route.name,
-          tabBarLabelStyle: {
-            fontFamily: theme.typography.fontFamily.medium,
-            fontSize: theme.typography.fontSize.xs,
-            fontWeight: theme.typography.fontWeight.medium,
-          },
-          tabBarStyle: {
-            backgroundColor: theme.colors.surface,
-            borderTopColor: theme.colors.border,
-            minHeight: 62,
-            paddingTop: theme.spacing.xs,
-          },
         };
       }}
     >

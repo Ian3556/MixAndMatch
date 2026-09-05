@@ -50,7 +50,9 @@ export function createAuthFlowActions(store: AuthStoreAccess): FlowActions {
         return { ok: false, error };
       }
 
-      store.setState({ authError: null, profileStatus: 'loading' });
+      // The editor already owns its pending UI. Keeping the current profile ready avoids
+      // tearing down the authenticated navigator while an in-place profile save is running.
+      store.setState({ authError: null });
 
       try {
         const profile = await getProfileService().completeOnboarding(user.id, input);
