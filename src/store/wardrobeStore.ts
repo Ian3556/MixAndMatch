@@ -9,14 +9,17 @@ import type {
 } from '@/types/wardrobe';
 
 type WardrobeStatus = 'idle' | 'loading' | 'ready' | 'error';
+export type WardrobeViewMode = 'grid' | 'list';
 
 type WardrobeStore = {
   items: WardrobeItem[];
   status: WardrobeStatus;
   error: string | null;
   loadedUserId: string | null;
+  viewMode: WardrobeViewMode;
   refresh: (userId: string) => Promise<void>;
   addMany: (userId: string, inputs: CreateWardrobeItemInput[]) => Promise<WardrobeItemSaveResult[]>;
+  setViewMode: (viewMode: WardrobeViewMode) => void;
   toggleFavorite: (userId: string, itemId: string) => Promise<void>;
   deleteItem: (userId: string, itemId: string) => Promise<void>;
   reset: () => void;
@@ -35,6 +38,11 @@ export const useWardrobeStore = create<WardrobeStore>((set, get) => ({
   status: 'idle',
   error: null,
   loadedUserId: null,
+  viewMode: 'grid',
+
+  setViewMode(viewMode) {
+    set({ viewMode });
+  },
 
   async refresh(userId) {
     const version = ++requestVersion;
@@ -90,6 +98,6 @@ export const useWardrobeStore = create<WardrobeStore>((set, get) => ({
 
   reset() {
     requestVersion += 1;
-    set({ items: [], status: 'idle', error: null, loadedUserId: null });
+    set({ items: [], status: 'idle', error: null, loadedUserId: null, viewMode: 'grid' });
   },
 }));

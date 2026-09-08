@@ -1,7 +1,7 @@
 # Graph Report - MixAndMatch  (2026-09-09)
 
 ## Corpus Check
-- 270 files · ~138,207 words
+- 270 files · ~138,192 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -438,12 +438,12 @@ Nodes (3): createStyles(), Props, WardrobeSummary()
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `ExploreScreen.tsx` (5× useful, score=4.412221258)
-- `TabNavigators.tsx` (3× useful, score=2.61156853)
-- `ExploreMasonryFeed.tsx` (3× useful, score=2.611167958)
-- `SearchResultsScreen.tsx` (2× useful, score=1.801053301)
-- `MainAppNavigator.tsx` (2× useful, score=1.761227426)
-- `navigation/types.ts` (2× useful, score=1.761227426)
+- `ExploreScreen.tsx` (5× useful, score=4.416135312)
+- `TabNavigators.tsx` (3× useful, score=2.613885236)
+- `ExploreMasonryFeed.tsx` (3× useful, score=2.613484308)
+- `SearchResultsScreen.tsx` (2× useful, score=1.802651004)
+- `MainAppNavigator.tsx` (2× useful, score=1.762789799)
+- `navigation/types.ts` (2× useful, score=1.762789799) _(code changed — re-verify)_
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_

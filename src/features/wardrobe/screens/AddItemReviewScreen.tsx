@@ -1,12 +1,14 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import { ActionButton } from '@/components/ActionButton';
 import { AppScreen } from '@/components/ui/AppScreen';
 import { PlaceholderArtwork } from '@/components/ui/PlaceholderArtwork';
 import { ErrorState } from '@/components/ui/StateViews';
+import { buildManualWardrobeInput } from '@/features/wardrobe/manual/manualWardrobeItem';
 import { neutralGarmentArtworkColors } from '@/fixtures/wardrobe';
+import { WARDROBE_ROUTES } from '@/navigation/routes';
 import type { WardrobeStackParamList } from '@/navigation/types';
 import { useAuthStore } from '@/store/authStore';
 import { useWardrobeStore } from '@/store/wardrobeStore';
@@ -22,6 +24,7 @@ export function AddItemReviewScreen({ navigation, route }: Props) {
   const addMany = useWardrobeStore((state) => state.addMany);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [imageFailed, setImageFailed] = useState(false);
   const saveLock = useRef(false);
   const details = [
     ['Category', draft.category],
@@ -33,6 +36,7 @@ export function AddItemReviewScreen({ navigation, route }: Props) {
     ['Brand', draft.brand],
     ['Season', draft.season],
     ['Occasion', draft.occasion],
+    ['Price', draft.price ? `${draft.currency} ${Number(draft.price).toFixed(2)}`.trim() : ''],
     ['Favourite', draft.isFavorite ? 'Yes' : 'No'],
     ['Notes', draft.notes],
   ] as const;
@@ -43,27 +47,20 @@ export function AddItemReviewScreen({ navigation, route }: Props) {
     setIsSaving(true);
     setError(null);
     try {
-      const [result] = await addMany(user.id, [
-        {
-          name: draft.name,
-          category: draft.category || 'Uncategorised',
-          subcategory: draft.subcategory,
-          primaryColor: draft.primaryColor,
-          secondaryColor: draft.secondaryColor,
-          pattern: draft.pattern,
-          material: draft.material,
-          brand: draft.brand,
-          season: draft.season,
-          occasion: draft.occasion,
-          notes: draft.notes,
-          isFavorite: draft.isFavorite,
-          importMethod: 'manual',
-          deduplicationKey: `manual:${user.id}:${Date.now()}:${Math.random().toString(36).slice(2)}`,
-        },
-      ]);
-      if (result?.status === 'added') navigation.popToTop();
-      else if (result?.status === 'duplicate') setError('This item is already in your wardrobe.');
-      else setError(result?.message ?? 'The item could not be saved.');
+      const [result] = await addMany(user.id, [buildManualWardrobeInput(draft)]);
+      if (result?.status === 'added') {
+        navigation.popTo(WARDROBE_ROUTES.WARDROBE, {
+          notice: `${draft.name} was added to your wardrobe.`,
+        });
+      } else if (result?.status === 'duplicate') {
+        setError(
+          'A matching item is already in your wardrobe. Review the details before retrying.',
+        );
+      } else {
+        setError(result?.message ?? 'The item could not be saved.');
+      }
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : 'The item could not be saved.');
     } finally {
       saveLock.current = false;
       setIsSaving(false);
@@ -71,14 +68,28 @@ export function AddItemReviewScreen({ navigation, route }: Props) {
   };
 
   return (
-    <AppScreen onBack={navigation.goBack} subtitle="Confirm before saving." title="Review item">
+    <AppScreen {...(isSaving ? {} : { onBack: navigation.goBack })} title="Review item">
       <View style={styles.preview}>
-        <PlaceholderArtwork colors={neutralGarmentArtworkColors} label={draft.name} />
+        <View style={styles.imageFrame}>
+          {draft.imageUrl && !imageFailed ? (
+            <Image
+              accessibilityLabel={`${draft.name} wardrobe image`}
+              onError={() => setImageFailed(true)}
+              resizeMode="cover"
+              source={{ uri: draft.imageUrl }}
+              style={styles.image}
+            />
+          ) : (
+            <PlaceholderArtwork colors={neutralGarmentArtworkColors} label={draft.name} />
+          )}
+        </View>
         <View style={styles.previewCopy}>
           <Text accessibilityRole="header" style={styles.itemName}>
             {draft.name}
           </Text>
-          <Text style={styles.imageKey}>Local preview: {draft.imageKey}</Text>
+          <Text style={styles.previewMeta}>
+            {[draft.brand, draft.category, draft.primaryColor].filter(Boolean).join(' · ')}
+          </Text>
         </View>
       </View>
       <View style={styles.details}>
@@ -96,8 +107,24 @@ export function AddItemReviewScreen({ navigation, route }: Props) {
           title="Item not saved"
         />
       ) : null}
-      <ActionButton label="Edit details" onPress={navigation.goBack} variant="secondary" />
-      <ActionButton label="Add to wardrobe" loading={isSaving} onPress={() => void save()} />
+      <ActionButton
+        disabled={isSaving}
+        label="Edit details"
+        onPress={navigation.goBack}
+        variant="secondary"
+      />
+      <ActionButton
+        disabled={!user}
+        label="Add to wardrobe"
+        loading={isSaving}
+        onPress={() => void save()}
+      />
+      <ActionButton
+        disabled={isSaving}
+        label="Cancel"
+        onPress={navigation.popToTop}
+        variant="text"
+      />
     </AppScreen>
   );
 }
@@ -105,26 +132,34 @@ export function AddItemReviewScreen({ navigation, route }: Props) {
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
     preview: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.md },
+    imageFrame: {
+      aspectRatio: 4 / 5,
+      backgroundColor: theme.colors.surfaceMuted,
+      maxWidth: 280,
+      overflow: 'hidden',
+      width: '100%',
+    },
+    image: { height: '100%', width: '100%' },
     previewCopy: { flex: 1, justifyContent: 'flex-end', minWidth: 200 },
     itemName: {
       color: theme.colors.text,
-      fontSize: theme.typography.fontSize.xl,
-      fontWeight: theme.typography.fontWeight.bold,
+      fontFamily: theme.typography.fontFamily.editorial,
+      fontSize: theme.typography.fontSize.xxl,
+      lineHeight: theme.typography.lineHeight.xxl,
     },
-    imageKey: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.sm },
-    details: {
-      backgroundColor: theme.colors.surface,
-      borderColor: theme.colors.border,
-      borderRadius: theme.radii.lg,
-      borderWidth: 1,
-      overflow: 'hidden',
+    previewMeta: {
+      color: theme.colors.textMuted,
+      fontFamily: theme.typography.fontFamily.regular,
+      fontSize: theme.typography.fontSize.sm,
+      lineHeight: theme.typography.lineHeight.sm,
     },
+    details: { borderTopColor: theme.colors.border, borderTopWidth: 1 },
     detailRow: {
       borderBottomColor: theme.colors.border,
       borderBottomWidth: StyleSheet.hairlineWidth,
       flexDirection: 'row',
       gap: theme.spacing.md,
-      padding: theme.spacing.md,
+      paddingVertical: theme.spacing.md,
     },
     detailLabel: { color: theme.colors.textMuted, width: 120 },
     detailValue: { color: theme.colors.text, flex: 1, textAlign: 'right' },

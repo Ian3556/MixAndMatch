@@ -61,7 +61,6 @@ batch
 before
 behavior
 benchmark
-block
 blocked
 body
 bootstrap
@@ -116,7 +115,6 @@ columns
 comma
 command
 commit
-common
 communities
 compact
 compatibility
@@ -194,7 +192,6 @@ duplicate
 eas
 edge
 edit
-editor
 editorial
 either
 element
@@ -230,6 +227,7 @@ executive
 exempt
 existing
 expansion
+experience
 experiments
 expired
 explain
@@ -250,6 +248,7 @@ falkordb
 fashion
 featured
 feed
+feedback
 fetch
 fetched
 few
@@ -314,6 +313,7 @@ handler
 hash
 header
 headers
+headings
 health
 help
 hex
@@ -429,6 +429,7 @@ mcp
 measurement
 medium
 memory
+menu
 merge
 message
 meta
@@ -442,9 +443,9 @@ mix
 mjs
 mock
 modal
+mode
 model
 modified
-most
 mostly
 mts
 multi
@@ -457,6 +458,8 @@ navigator
 navigators
 need
 neo
+nes
+nested
 neutral
 next
 node
@@ -497,6 +500,7 @@ overlay
 overview
 package
 page
+pages
 pair
 panel
 parallel
@@ -570,6 +574,7 @@ react
 read
 readiness
 readme
+real
 recent
 recommendations
 recommended
@@ -629,7 +634,6 @@ route
 routes
 routing
 row
-rows
 rule
 rules
 run
@@ -673,6 +677,7 @@ signal
 signed
 silhouette
 similarity
+simple
 single
 skeleton
 skeletons
@@ -753,6 +758,8 @@ toggle
 token
 tokens
 tone
+tool
+toolbar
 tools
 total
 tracker
@@ -802,6 +809,7 @@ verification
 verified
 version
 video
+view
 views
 visible
 visual
@@ -822,5 +830,6 @@ with
 words
 work
 workflow
+working
 you
 zustand

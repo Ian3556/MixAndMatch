@@ -7,6 +7,7 @@ import type { ImportPreviewItem } from '@/features/wardrobe/import/importWorkflo
 import { useAppTheme, type AppTheme } from '@/theme';
 
 type Props = {
+  disabled: boolean;
   item: ImportPreviewItem;
   onEdit: () => void;
   onOpenSource: () => void;
@@ -14,7 +15,14 @@ type Props = {
   width: number;
 };
 
-export function ImportedProductCard({ item, onEdit, onOpenSource, onToggle, width }: Props) {
+export function ImportedProductCard({
+  disabled,
+  item,
+  onEdit,
+  onOpenSource,
+  onToggle,
+  width,
+}: Props) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const [imageFailed, setImageFailed] = useState(false);
@@ -39,8 +47,8 @@ export function ImportedProductCard({ item, onEdit, onOpenSource, onToggle, widt
       <Pressable
         accessibilityLabel={`${item.selected ? 'Deselect' : 'Select'} ${candidate.name}`}
         accessibilityRole="checkbox"
-        accessibilityState={{ checked: item.selected, disabled: item.duplicate }}
-        disabled={item.duplicate}
+        accessibilityState={{ checked: item.selected, disabled: item.duplicate || disabled }}
+        disabled={item.duplicate || disabled}
         onPress={onToggle}
         style={({ pressed }) => [
           styles.selection,
@@ -67,7 +75,7 @@ export function ImportedProductCard({ item, onEdit, onOpenSource, onToggle, widt
         {item.incomplete ? <Text style={styles.warning}>Incomplete details</Text> : null}
       </View>
       <View style={styles.actions}>
-        <ActionButton label="Edit" onPress={onEdit} variant="secondary" />
+        <ActionButton disabled={disabled} label="Edit" onPress={onEdit} variant="secondary" />
         <ActionButton label="Open source" onPress={onOpenSource} variant="text" />
       </View>
     </View>

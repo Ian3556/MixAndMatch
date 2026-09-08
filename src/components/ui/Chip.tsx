@@ -5,10 +5,11 @@ import { useAppTheme, type AppTheme } from '@/theme';
 type ChipProps = {
   label: string;
   selected?: boolean;
+  square?: boolean;
   onPress: () => void;
 };
 
-export function Chip({ label, selected = false, onPress }: ChipProps) {
+export function Chip({ label, selected = false, square = false, onPress }: ChipProps) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
@@ -19,6 +20,7 @@ export function Chip({ label, selected = false, onPress }: ChipProps) {
       onPress={onPress}
       style={({ pressed }) => [
         styles.chip,
+        square ? styles.square : null,
         selected ? styles.selected : null,
         pressed ? styles.pressed : null,
       ]}
@@ -46,6 +48,9 @@ function createStyles(theme: AppTheme) {
     selected: {
       backgroundColor: theme.colors.primarySoft,
       borderColor: theme.colors.primary,
+    },
+    square: {
+      borderRadius: theme.radii.none,
     },
     label: {
       color: theme.colors.textMuted,

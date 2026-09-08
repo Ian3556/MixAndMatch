@@ -2,9 +2,8 @@ import * as Clipboard from 'expo-clipboard';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { AppScreen } from '@/components/ui/AppScreen';
-import { LoadingState } from '@/components/ui/StateViews';
 import { ImportCompleteStep } from '@/features/wardrobe/components/ImportCompleteStep';
+import { ImportPreviewSkeleton } from '@/features/wardrobe/components/ImportPreviewSkeleton';
 import { ImportPreviewStep } from '@/features/wardrobe/components/ImportPreviewStep';
 import { ImportUrlInputStep } from '@/features/wardrobe/components/ImportUrlInputStep';
 import {
@@ -44,6 +43,7 @@ export function ImportWardrobeWebsiteScreen({ navigation }: Props) {
     null,
   );
   const importLock = useRef(false);
+  const importRequestVersion = useRef(0);
   const saveLock = useRef(false);
   const validation = useMemo(() => validateImportUrl(url), [url]);
 
@@ -60,6 +60,11 @@ export function ImportWardrobeWebsiteScreen({ navigation }: Props) {
   };
 
   const closeOrBack = () => {
+    if (isImporting) {
+      importRequestVersion.current += 1;
+      importLock.current = false;
+      setIsImporting(false);
+    }
     if (step === 'preview') {
       setStep('input');
       setError(null);
@@ -73,23 +78,28 @@ export function ImportWardrobeWebsiteScreen({ navigation }: Props) {
     setAttempted(true);
     if (!validation.ok || importLock.current) return;
     importLock.current = true;
+    const requestVersion = ++importRequestVersion.current;
     setIsImporting(true);
     setError(null);
     setSaveSummary(null);
     try {
       const imported = await importWardrobeUrl(validation.url.toString());
+      if (requestVersion !== importRequestVersion.current) return;
       setResponse(imported);
       setProducts(createImportPreview(imported.products, existingItems));
       setStep('preview');
     } catch (caught) {
+      if (requestVersion !== importRequestVersion.current) return;
       setError(
         caught instanceof WardrobeImportClientError
           ? caught
           : new WardrobeImportClientError('IMPORT_FAILED', 'The page could not be imported.'),
       );
     } finally {
-      importLock.current = false;
-      setIsImporting(false);
+      if (requestVersion === importRequestVersion.current) {
+        importLock.current = false;
+        setIsImporting(false);
+      }
     }
   };
 
@@ -140,16 +150,7 @@ export function ImportWardrobeWebsiteScreen({ navigation }: Props) {
     }
   };
 
-  if (isImporting) {
-    return (
-      <AppScreen onBack={closeOrBack} title="Import from website">
-        <LoadingState
-          message="Reading the retailer page, finding clothing items, and preparing your wardrobe preview."
-          title="Analysing the pageâ€¦"
-        />
-      </AppScreen>
-    );
-  }
+  if (isImporting) return <ImportPreviewSkeleton onBack={closeOrBack} />;
 
   if (step === 'complete' && saveSummary) {
     return (
@@ -178,7 +179,7 @@ export function ImportWardrobeWebsiteScreen({ navigation }: Props) {
         onClear={resetInput}
         onManual={() =>
           navigation.navigate(WARDROBE_ROUTES.ADD_ITEM_DETAILS, {
-            imageKey: 'placeholder-manual',
+            imageKey: 'manual',
           })
         }
         onPaste={() => void paste()}

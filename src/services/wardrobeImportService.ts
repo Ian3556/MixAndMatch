@@ -31,6 +31,12 @@ export async function importWardrobeUrl(input: string): Promise<WardrobeImportRe
       'The import service returned an invalid response.',
     );
   }
+  if (result.data.products.length === 0) {
+    throw new WardrobeImportClientError(
+      'NO_PRODUCTS_FOUND',
+      'No clothing products were found on this page. Try a direct product or collection URL.',
+    );
+  }
   return result.data;
 }
 

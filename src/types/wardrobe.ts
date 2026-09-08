@@ -1,5 +1,7 @@
 export type DraftWardrobeItem = {
+  deduplicationKey: string;
   imageKey: string;
+  imageUrl: string;
   name: string;
   category: string;
   subcategory: string;
@@ -11,6 +13,8 @@ export type DraftWardrobeItem = {
   season: string;
   occasion: string;
   notes: string;
+  price: string;
+  currency: string;
   isFavorite: boolean;
 };
 

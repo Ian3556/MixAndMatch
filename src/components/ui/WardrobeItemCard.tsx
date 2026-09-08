@@ -1,10 +1,10 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useAppTheme, type AppTheme } from '@/theme';
 import type { WardrobeItem } from '@/types/wardrobe';
 
-import { IconButton } from './IconButton';
 import { PlaceholderArtwork } from './PlaceholderArtwork';
 
 type WardrobeItemCardProps = {
@@ -27,20 +27,22 @@ export function WardrobeItemCard({ item, onOpen, onFavorite, width }: WardrobeIt
         onPress={onOpen}
         style={({ pressed }) => (pressed ? styles.pressed : null)}
       >
-        {item.imageUrl && !imageFailed ? (
-          <Image
-            accessibilityLabel={`${item.name} wardrobe image`}
-            onError={() => setImageFailed(true)}
-            resizeMode="cover"
-            source={{ uri: item.imageUrl }}
-            style={styles.image}
-          />
-        ) : (
-          <PlaceholderArtwork
-            colors={[theme.colors.primarySoft, theme.colors.surfaceMuted, theme.colors.surface]}
-            label={item.name}
-          />
-        )}
+        <View style={styles.imageFrame}>
+          {item.imageUrl && !imageFailed ? (
+            <Image
+              accessibilityLabel={`${item.name} wardrobe image`}
+              onError={() => setImageFailed(true)}
+              resizeMode="cover"
+              source={{ uri: item.imageUrl }}
+              style={styles.image}
+            />
+          ) : (
+            <PlaceholderArtwork
+              colors={[theme.colors.primarySoft, theme.colors.surfaceMuted, theme.colors.surface]}
+              label={item.name}
+            />
+          )}
+        </View>
       </Pressable>
       <View style={styles.heading}>
         <Pressable
@@ -53,15 +55,23 @@ export function WardrobeItemCard({ item, onOpen, onFavorite, width }: WardrobeIt
             {item.name}
           </Text>
           <Text numberOfLines={1} style={styles.meta}>
-            {[item.category, item.primaryColor].filter(Boolean).join(' Â· ')}
+            {[item.brand, item.category, item.primaryColor].filter(Boolean).join(' · ')}
           </Text>
         </Pressable>
-        <IconButton
-          label={`${item.isFavorite ? 'Remove' : 'Add'} ${item.name} ${item.isFavorite ? 'from' : 'to'} favourites`}
+        <Pressable
+          accessibilityLabel={`${item.isFavorite ? 'Remove' : 'Add'} ${item.name} ${item.isFavorite ? 'from' : 'to'} favourites`}
+          accessibilityRole="button"
+          accessibilityState={{ selected: item.isFavorite }}
+          hitSlop={4}
           onPress={onFavorite}
-          selected={item.isFavorite}
-          symbol={item.isFavorite ? 'â™¥' : 'â™¡'}
-        />
+          style={({ pressed }) => [styles.favoriteButton, pressed ? styles.pressed : null]}
+        >
+          <Ionicons
+            color={item.isFavorite ? theme.colors.primary : theme.colors.textMuted}
+            name={item.isFavorite ? 'heart' : 'heart-outline'}
+            size={21}
+          />
+        </Pressable>
       </View>
     </View>
   );
@@ -70,15 +80,22 @@ export function WardrobeItemCard({ item, onOpen, onFavorite, width }: WardrobeIt
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
     card: { gap: theme.spacing.sm },
-    image: {
+    imageFrame: {
       aspectRatio: 4 / 5,
       backgroundColor: theme.colors.surfaceMuted,
-      borderRadius: theme.radii.lg,
+      overflow: 'hidden',
       width: '100%',
     },
-    pressed: { opacity: 0.78 },
+    image: { height: '100%', width: '100%' },
+    pressed: { opacity: 0.7 },
     heading: { alignItems: 'center', flexDirection: 'row', gap: theme.spacing.xs },
     copy: { flex: 1, minWidth: 0 },
+    favoriteButton: {
+      alignItems: 'center',
+      height: 44,
+      justifyContent: 'center',
+      width: 44,
+    },
     title: {
       color: theme.colors.text,
       fontFamily: theme.typography.fontFamily.medium,

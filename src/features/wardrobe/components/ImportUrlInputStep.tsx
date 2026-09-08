@@ -1,11 +1,12 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { ActionButton } from '@/components/ActionButton';
 import { FormTextInput } from '@/components/FormTextInput';
 import { AppScreen } from '@/components/ui/AppScreen';
 import { WardrobeImportClientError } from '@/services/wardrobeImportService';
-import type { UrlValidationResult } from '@supabase/functions/_shared/wardrobe-import/validate-url';
 import { useAppTheme, type AppTheme } from '@/theme';
+import type { UrlValidationResult } from '@supabase/functions/_shared/wardrobe-import/validate-url';
 
 import { ImportErrorPanel } from './ImportErrorPanel';
 
@@ -23,6 +24,15 @@ type Props = {
   url: string;
   validation: UrlValidationResult;
 };
+
+const supportedPages = [
+  { supported: true, label: 'Public individual product pages' },
+  { supported: true, label: 'Public category or collection pages with product markup' },
+  { supported: true, label: 'Retailer or brand pages that expose product metadata' },
+  { supported: false, label: 'Homepages without product information' },
+  { supported: false, label: 'Login-only, private, or CAPTCHA-protected pages' },
+  { supported: false, label: 'JavaScript-only or access-blocked websites' },
+] as const;
 
 export function ImportUrlInputStep({
   attempted,
@@ -43,17 +53,23 @@ export function ImportUrlInputStep({
   const inputError = attempted && !validation.ok ? validation.message : undefined;
 
   return (
-    <AppScreen
-      onBack={onCancel}
-      subtitle="Import a public product, category, collection, or search-results page."
-      title="Import from website"
-    >
-      <View style={styles.notice}>
-        <Text style={styles.noticeTitle}>Supported pages</Text>
-        <Text style={styles.bodyText}>
-          Mix & Match reads public server-visible product metadata and HTML. Retailers that need
-          login, browser scripts, CAPTCHA, or block automated access may not work.
+    <AppScreen onBack={onCancel} title="Import from website">
+      <View style={styles.supportedSection}>
+        <Text accessibilityRole="header" style={styles.supportedTitle}>
+          Supported pages
         </Text>
+        <View>
+          {supportedPages.map((item) => (
+            <View key={item.label} style={styles.supportRow}>
+              <Ionicons
+                color={item.supported ? theme.colors.success : theme.colors.danger}
+                name={item.supported ? 'checkmark-outline' : 'close-outline'}
+                size={20}
+              />
+              <Text style={styles.supportLabel}>{item.label}</Text>
+            </View>
+          ))}
+        </View>
       </View>
       <FormTextInput
         autoCapitalize="none"
@@ -61,6 +77,7 @@ export function ImportUrlInputStep({
         error={inputError}
         keyboardType="url"
         label="Retailer URL"
+        maxLength={2048}
         onChangeText={onUrlChange}
         onSubmitEditing={onAnalyze}
         placeholder="https://shop.example.com/products/item"
@@ -81,12 +98,7 @@ export function ImportUrlInputStep({
           onRetry={error.code === 'NO_PRODUCTS_FOUND' ? onTryAnother : onAnalyze}
         />
       ) : null}
-      <ActionButton
-        disabled={!validation.ok}
-        label="Analyse URL"
-        loading={isImporting}
-        onPress={onAnalyze}
-      />
+      <ActionButton label="Analyse URL" loading={isImporting} onPress={onAnalyze} />
       <ActionButton label="Cancel" onPress={onCancel} variant="text" />
       {error?.code === 'NO_PRODUCTS_FOUND' || error?.code === 'ACCESS_DENIED' ? (
         <ActionButton label="Add item manually" onPress={onManual} variant="secondary" />
@@ -97,17 +109,25 @@ export function ImportUrlInputStep({
 
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
-    notice: {
-      backgroundColor: theme.colors.primarySoft,
-      borderColor: theme.colors.primary,
-      borderRadius: theme.radii.md,
-      borderWidth: 1,
-      gap: theme.spacing.xs,
-      padding: theme.spacing.md,
-    },
-    noticeTitle: { color: theme.colors.primary, fontWeight: theme.typography.fontWeight.bold },
-    bodyText: {
+    supportedSection: { gap: theme.spacing.sm },
+    supportedTitle: {
       color: theme.colors.text,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontSize: theme.typography.fontSize.sm,
+      fontWeight: theme.typography.fontWeight.semibold,
+      letterSpacing: 1.2,
+      textTransform: 'uppercase',
+    },
+    supportRow: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      gap: theme.spacing.sm,
+      minHeight: 36,
+    },
+    supportLabel: {
+      color: theme.colors.text,
+      flex: 1,
+      fontFamily: theme.typography.fontFamily.regular,
       fontSize: theme.typography.fontSize.sm,
       lineHeight: theme.typography.lineHeight.sm,
     },

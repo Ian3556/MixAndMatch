@@ -67,7 +67,7 @@ export function ImportPreviewStep({
 
   return (
     <AppScreen
-      onBack={onBack}
+      {...(isSaving ? {} : { onBack })}
       subtitle={`${response.sourceDomain} Â· ${response.pageType}`}
       title="Review imported products"
     >
@@ -95,6 +95,7 @@ export function ImportPreviewStep({
       <View style={styles.inlineActions}>
         <View style={styles.flexAction}>
           <ActionButton
+            disabled={isSaving}
             label="Select all"
             onPress={() => setProducts((current) => setAllSelected(current, true))}
             variant="secondary"
@@ -102,6 +103,7 @@ export function ImportPreviewStep({
         </View>
         <View style={styles.flexAction}>
           <ActionButton
+            disabled={isSaving}
             label="Deselect all"
             onPress={() => setProducts((current) => setAllSelected(current, false))}
             variant="secondary"
@@ -112,6 +114,7 @@ export function ImportPreviewStep({
         {products.map((item) => (
           <ImportedProductCard
             item={item}
+            disabled={isSaving}
             key={item.id}
             onEdit={() => setEditingId(item.id)}
             onOpenSource={() =>
@@ -135,8 +138,8 @@ export function ImportPreviewStep({
         loading={isSaving}
         onPress={onSave}
       />
-      <ActionButton label="Back" onPress={onBack} variant="secondary" />
-      <ActionButton label="Cancel" onPress={onCancel} variant="text" />
+      <ActionButton disabled={isSaving} label="Back" onPress={onBack} variant="secondary" />
+      <ActionButton disabled={isSaving} label="Cancel" onPress={onCancel} variant="text" />
       <EditImportedProductModal
         candidate={editingProduct}
         onCancel={() => setEditingId(null)}
