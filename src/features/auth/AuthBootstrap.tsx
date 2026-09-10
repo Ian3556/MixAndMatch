@@ -1,6 +1,7 @@
 import * as Linking from 'expo-linking';
 import { type PropsWithChildren, useEffect } from 'react';
 
+import { beginStartupProgress, markStartupStep } from '@/features/startup/startupProgress';
 import { useAuthStore } from '@/store/authStore';
 import { startSupabaseAutoRefresh } from '@supabase';
 
@@ -10,6 +11,7 @@ export function AuthBootstrap({ children }: PropsWithChildren) {
   const handleAuthUrl = useAuthStore((state) => state.handleAuthUrl);
 
   useEffect(() => {
+    beginStartupProgress();
     let stopAutoRefresh: () => void = () => undefined;
 
     try {
@@ -29,6 +31,7 @@ export function AuthBootstrap({ children }: PropsWithChildren) {
           await handleAuthUrl(url);
         }
       } finally {
+        markStartupStep('linking');
         await initialize();
       }
     };

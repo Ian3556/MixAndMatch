@@ -430,8 +430,8 @@
     "semantic_hash": ""
   },
   "src/navigation/MainAppNavigator.tsx": {
-    "mtime": 1789045693.8938556,
-    "ast_hash": "1e6b979de33cd5f8ab311b36557e1f44",
+    "mtime": 1788453579.879511,
+    "ast_hash": "d6d5ff98aeb2cfa9d04a67a3efeb2dbd",
     "semantic_hash": ""
   },
   "src/navigation/OnboardingNavigator.tsx": {
@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "src/navigation/TabBarIcon.tsx": {
-    "mtime": 1789045691.597813,
-    "ast_hash": "88d562d89e133d4e720ab26f37aac463",
+    "mtime": 1788453173.6630437,
+    "ast_hash": "8138bea63d40b63ad30ac740cd24cad3",
     "semantic_hash": ""
   },
   "src/navigation/TabNavigators.tsx": {
@@ -455,13 +455,13 @@
     "semantic_hash": ""
   },
   "src/navigation/interactionAudit.test.ts": {
-    "mtime": 1789045967.7106152,
-    "ast_hash": "751a6381da230e4912dda3e20a6f36bc",
+    "mtime": 1788616209.1265845,
+    "ast_hash": "009cccde9eabf7f823a350902ce415bf",
     "semantic_hash": ""
   },
   "src/navigation/navigationConfig.test.ts": {
-    "mtime": 1789045697.382094,
-    "ast_hash": "54efe31083feea8c7083c89d30d5dfb0",
+    "mtime": 1788453246.13623,
+    "ast_hash": "eb34b1437b6824f4ac4695e29f92fb4b",
     "semantic_hash": ""
   },
   "src/navigation/navigationConfig.ts": {
@@ -1270,8 +1270,8 @@
     "semantic_hash": ""
   },
   "src/navigation/FloatingTabBar.tsx": {
-    "mtime": 1789045755.6264522,
-    "ast_hash": "51b106b9248485cc7a33994cc63d5ef9",
+    "mtime": 1788453527.3083007,
+    "ast_hash": "c4f4a2d086900f11a4220ff6457d1052",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260903_161631_refine_the_explore_page_with_a_compact_search_firs.md": {
@@ -1445,8 +1445,8 @@
     "semantic_hash": ""
   },
   "src/components/branding/DoubleMLogo.tsx": {
-    "mtime": 1789046758.5165162,
-    "ast_hash": "434c304ec00afce7c4b08b5afa0a4019",
+    "mtime": 1789030320.6178195,
+    "ast_hash": "52a36c72df87d9afe9105e12d86d982a",
     "semantic_hash": ""
   },
   "src/components/branding/doubleMGeometry.test.ts": {
@@ -1455,8 +1455,8 @@
     "semantic_hash": ""
   },
   "src/components/branding/doubleMGeometry.ts": {
-    "mtime": 1789046544.053029,
-    "ast_hash": "46529d051a4ad2bd11ef9a2707282d19",
+    "mtime": 1789030317.9249854,
+    "ast_hash": "77c4a621e8c709623d2289714fe09529",
     "semantic_hash": ""
   },
   "src/features/startup/AppLoadingScreen.tsx": {
@@ -1510,33 +1510,33 @@
     "semantic_hash": ""
   },
   "assets/branding/adaptive-icon-foreground.png": {
-    "mtime": 1789045945.8873382,
-    "ast_hash": "92ea13d5c4a1640362e741365ffba9b6",
+    "mtime": 1789028105.8522174,
+    "ast_hash": "b227c2b8692987cf4be968719a012448",
     "semantic_hash": ""
   },
   "assets/branding/adaptive-icon-monochrome.png": {
-    "mtime": 1789045945.9038663,
-    "ast_hash": "92ea13d5c4a1640362e741365ffba9b6",
+    "mtime": 1789028105.8662524,
+    "ast_hash": "b227c2b8692987cf4be968719a012448",
     "semantic_hash": ""
   },
   "assets/branding/app-icon.png": {
-    "mtime": 1789045945.8682868,
-    "ast_hash": "76d6b2aa55f0e624b39ac742bfa131b5",
+    "mtime": 1789028105.8311677,
+    "ast_hash": "3e073ed5f8a8de5225d70c018ee1d50f",
     "semantic_hash": ""
   },
   "assets/branding/double-m.svg": {
-    "mtime": 1789046545.1968124,
-    "ast_hash": "456c78bb64013da4aee9f03becf84818",
+    "mtime": 1789027993.9855888,
+    "ast_hash": "4e3061631097e4948333c67de2b323d5",
     "semantic_hash": ""
   },
   "assets/branding/favicon.png": {
-    "mtime": 1789045945.9251993,
-    "ast_hash": "448b3856a4c3c1be92293e0443a4eaec",
+    "mtime": 1789028105.885306,
+    "ast_hash": "fac287d0f9b37be9527242357a852431",
     "semantic_hash": ""
   },
   "assets/branding/splash-icon.png": {
-    "mtime": 1789045945.9194727,
-    "ast_hash": "13226dfa829bcf4443f49ce3f7c85d5a",
+    "mtime": 1789028105.8817894,
+    "ast_hash": "9fc8db8dcf7ad109cffdccccb844cabf",
     "semantic_hash": ""
   }
 }

@@ -1,11 +1,11 @@
 # Graph Report - MixAndMatch  (2026-09-10)
 
 ## Corpus Check
-- 284 files · ~142,624 words
+- 284 files · ~142,948 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1620 nodes · 3923 edges · 95 communities (78 shown, 17 thin omitted)
+- 1618 nodes · 3926 edges · 109 communities (91 shown, 18 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
@@ -15,17 +15,17 @@
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- navigation/types.ts
+- useAuthStore
 - routes.ts
 - Build Phase 3 — Wardrobe Website URL Import
 - theme/index.ts
 - normalize-product.ts
 - devDependencies
 - dependencies
-- AppScreen.tsx
+- TabNavigators.tsx
 - ExploreOutfitDetailScreen.tsx
-- HomeScreen.tsx
-- StylistScreen.tsx
+- EditorialPrimitives.tsx
+- WardrobeItemDetailScreen.tsx
 - wardrobeService.ts
 - InMemoryCatalogClient
 - What You Must Do When Invoked
@@ -36,18 +36,18 @@
 - catalog-management/index.ts
 - compilerOptions
 - startupProgress.ts
-- AppTheme
+- StateViews.tsx
 - _shared/catalog/types.ts
 - Mix & Match catalogue database audit
 - BodyProfileScreen.tsx
 - wardrobeImportService.ts
 - normalize.ts
-- TabNavigators.tsx
-- CatalogDevelopmentScreen.tsx
+- ProfileScreen.tsx
+- management-actions.ts
 - ImportWardrobeWebsiteScreen.tsx
 - .prettierrc.json
 - graphify reference: extra exports and benchmark
-- getSupabaseClient
+- fixtures.test.ts
 - Supabase Phase 1, Phase 3, and catalogue operations
 - vercel.json
 - graphify reference: query, path, explain
@@ -70,23 +70,24 @@
 - Mix & Match
 - scripts
 - validate.ts
-- @expo/vector-icons
-- SearchResultsScreen.tsx
+- editorial.ts
+- WardrobeScreen.tsx
 - README.md
 - package.json
 - Phase 1 architecture
 - validate-url.ts
 - Q: Understand the ERR_CONNECTION_REFUSED asset-loading error from React Native Web ImageLoader.
-- AddItemReviewScreen.tsx
-- ImportPreviewStep.tsx
+- useAppTheme
+- AppTheme
 - profileService.ts
-- AddItemEntryScreen.tsx
+- navigation/types.ts
 - authErrors.ts
 - AddItemDetailsScreen.tsx
 - Q: How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?
 - react-native
+- WardrobeToolbar.tsx
 - pipeline.ts
-- authState.ts
+- authStore.ts
 - authService.ts
 - react
 - Q: How does the development catalogue integrate with the existing Mix and Match wardrobe flow?
@@ -94,25 +95,38 @@
 - Q: Mix & Match — Image Detail Back Button + Bottom Navigation Remake
 - generic-structured-data.ts
 - Q: Remake the Mix & Match Profile experience with nested Style Profile screens, simple headings, real data, persistence, loading states, and working navigation.
+- types/discovery.ts
 - Q: Refine the Explore page with a compact search-first layout, bottom-sheet filters, image-first outfit details, related-item stack navigation, and preserved Explore state.
 - expo-clipboard
 - wardrobe-import/types.ts
+- ExploreScreen.tsx
 - Q: Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back.
-- EditImportedProductModal.tsx
-- WardrobeItemDetailScreen.tsx
+- ProfileSettingsDirectory.tsx
+- WardrobeSummary.tsx
+- ImportPreviewStep.tsx
+- wardrobeStore.ts
+- IconButton.tsx
+- utils/discovery.ts
 - ActivitySummary.tsx
-- useAppTheme
+- HomeEditorialSkeleton.tsx
+- AddWardrobeItemMenu.tsx
+- authAccountActions.ts
 - Q: Wardrobe Page Update - Remove the "Wardrobe" heading - "Categories" section - "All" "Tops" ... remove the border radius
 - Q: How should the Double M startup loader integrate with the existing app?
+- ToggleRow.tsx
+- ProfileIdentity.tsx
+- interactionAudit.test.ts
+- typography.ts
 - expo-splash-screen
 - react-native-safe-area-context
+- react-native-screens
 - react-native-url-polyfill
 - @react-navigation/native-stack
 - zustand
 
 ## God Nodes (most connected - your core abstractions)
-1. `useAppTheme()` - 184 edges
-2. `AppTheme` - 84 edges
+1. `useAppTheme()` - 186 edges
+2. `AppTheme` - 85 edges
 3. `useAuthStore` - 41 edges
 4. `ActionButton()` - 38 edges
 5. `AppScreen()` - 37 edges
@@ -123,12 +137,12 @@
 10. `getGridColumnCount()` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `loadCatalogDashboard()` --calls--> `getSupabaseClient()`  [EXTRACTED]
-  src/catalog/services/catalogAdminService.ts → supabase/client.ts
-- `invokeCatalogManagement()` --calls--> `getSupabaseClient()`  [EXTRACTED]
-  src/catalog/services/catalogAdminService.ts → supabase/client.ts
+- `AuthBootstrap()` --calls--> `startSupabaseAutoRefresh()`  [EXTRACTED]
+  src/features/auth/AuthBootstrap.tsx → supabase/client.ts
 - `createImportDeduplicationKey()` --calls--> `normalizeUrl()`  [EXTRACTED]
   src/features/wardrobe/import/importWorkflow.ts → supabase/functions/_shared/wardrobe-import/normalize-product.ts
+- `ImportWardrobeWebsiteScreen()` --calls--> `validateImportUrl()`  [EXTRACTED]
+  src/features/wardrobe/screens/ImportWardrobeWebsiteScreen.tsx → supabase/functions/_shared/wardrobe-import/validate-url.ts
 - `createAuthService()` --calls--> `getSupabaseClient()`  [EXTRACTED]
   src/services/authService.ts → supabase/client.ts
 - `createSupabaseProfileGateway()` --calls--> `getSupabaseClient()`  [EXTRACTED]
@@ -137,23 +151,23 @@
 ## Import Cycles
 - None detected.
 
-## Communities (95 total, 17 thin omitted)
+## Communities (109 total, 18 thin omitted)
 
-### Community 0 - "navigation/types.ts"
-Cohesion: 0.06
-Nodes (71): ActionButton(), ActionButtonProps, createStyles(), createStyles(), ErrorBanner(), ErrorBannerProps, FormTextInput, FormTextInputProps (+63 more)
+### Community 0 - "useAuthStore"
+Cohesion: 0.07
+Nodes (58): createStyles(), ErrorBanner(), ErrorBannerProps, FormTextInput, FormTextInputProps, createStyles(), ScreenContainer(), ScreenContainerProps (+50 more)
 
 ### Community 1 - "routes.ts"
-Cohesion: 0.06
-Nodes (40): createStyles(), DirectoryRow(), DirectoryStyles, IconName, ProfileDirectoryRow(), ProfileSettingsDirectory(), ProfileSettingsDirectoryProps, createStyles() (+32 more)
+Cohesion: 0.12
+Nodes (25): createStyles(), FloatingTabBar(), VisibleFloatingTabBar(), MainAppNavigator(), Tabs, getTabConfig(), isMainTabRootRoute(), MAIN_TAB_CONFIG (+17 more)
 
 ### Community 2 - "Build Phase 3 — Wardrobe Website URL Import"
 Cohesion: 0.14
 Nodes (14): Build Phase 3 — Wardrobe Website URL Import, Deployment and manual verification, Duplicate strategy, Extraction pipeline, Final architecture, Functional interaction audit, Import UI states and behavior, Known limitations and intentionally deferred work (+6 more)
 
 ### Community 3 - "theme/index.ts"
-Cohesion: 0.17
-Nodes (16): darkColors, lightColors, ThemeColors, Radii, Shadows, Spacing, darkTheme, lightTheme (+8 more)
+Cohesion: 0.21
+Nodes (13): darkColors, lightColors, ThemeColors, Radii, Shadows, Spacing, darkTheme, lightTheme (+5 more)
 
 ### Community 4 - "normalize-product.ts"
 Cohesion: 0.10
@@ -165,27 +179,27 @@ Nodes (19): eslint, eslint-config-expo, eslint-config-prettier, eslint-plugin-pr
 
 ### Community 6 - "dependencies"
 Cohesion: 0.09
-Nodes (23): expo, expo-dev-client, expo-linking, dependencies, expo, expo-dev-client, expo-linking, react-dom (+15 more)
+Nodes (23): expo, expo-dev-client, expo-linking, @expo/vector-icons, dependencies, expo, expo-dev-client, expo-linking (+15 more)
 
-### Community 7 - "AppScreen.tsx"
-Cohesion: 0.14
-Nodes (19): AppScreen(), AppScreenProps, createStyles(), createStyles(), SettingRow(), SettingRowProps, createStyles(), SettingsGroup() (+11 more)
+### Community 7 - "TabNavigators.tsx"
+Cohesion: 0.11
+Nodes (30): AppScreen(), AppScreenProps, createStyles(), createStyles(), SettingRow(), SettingRowProps, createStyles(), SettingsGroup() (+22 more)
 
 ### Community 8 - "ExploreOutfitDetailScreen.tsx"
-Cohesion: 0.08
-Nodes (37): createStyles(), ExploreFeedSkeleton(), SKELETON_ITEMS, createStyles(), ExploreFilterPanel(), FilterSection(), Props, createStyles() (+29 more)
+Cohesion: 0.18
+Nodes (12): createStyles(), ExploreFeedSkeleton(), SKELETON_ITEMS, createStyles(), ExploreFeedCard, ExploreMasonryFeed(), Props, CATEGORY_LABELS (+4 more)
 
-### Community 9 - "HomeScreen.tsx"
-Cohesion: 0.07
-Nodes (42): DetailImage(), editorialAssets, resolveEditorialImageSource(), createStyles(), EditorialAction(), EditorialActionProps, EditorialEmptyState(), EditorialEmptyStateProps (+34 more)
+### Community 9 - "EditorialPrimitives.tsx"
+Cohesion: 0.14
+Nodes (21): DetailImage(), resolveEditorialImageSource(), createStyles(), EditorialAction(), EditorialActionProps, EditorialEmptyState(), EditorialEmptyStateProps, EditorialImage() (+13 more)
 
-### Community 10 - "StylistScreen.tsx"
-Cohesion: 0.12
-Nodes (19): { testTheme, useAppThemeMock }, createStyles(), OutfitCard(), OutfitCardProps, createStyles(), SectionHeader(), SectionHeaderProps, createStyles() (+11 more)
+### Community 10 - "WardrobeItemDetailScreen.tsx"
+Cohesion: 0.14
+Nodes (19): { testTheme, useAppThemeMock }, createStyles(), OutfitCard(), OutfitCardProps, EmptyState(), ExploreOutfitDetailScreen(), createStyles(), OutfitDetailScreen() (+11 more)
 
 ### Community 11 - "wardrobeService.ts"
-Cohesion: 0.10
-Nodes (23): createStyles(), Props, ToolButtonProps, WardrobeToolbar(), createSupabaseWardrobeGateway(), createWardrobeService(), mapWardrobeRow(), normalizeWardrobeError() (+15 more)
+Cohesion: 0.17
+Nodes (13): mapWardrobeRow(), normalizeWardrobeError(), nullable(), readStringProperty(), row, toWardrobeInsert(), WardrobeGateway, WardrobeGatewayResult (+5 more)
 
 ### Community 13 - "What You Must Do When Invoked"
 Cohesion: 0.08
@@ -196,11 +210,11 @@ Cohesion: 0.08
 Nodes (23): Added, Component inventory, Created: development authentication testing, Created: fixtures, navigation, types, utilities, and documentation, Created: Home and Explore, Created: Profile and Settings, Created: shared UI, Created: Stylist (+15 more)
 
 ### Community 15 - "authStoreRuntime.ts"
-Cohesion: 0.16
-Nodes (30): markStartupComplete(), markStartupStep(), AuthService, createAuthService(), isEmailVerified(), createProfileService(), createSupabaseProfileGateway(), AccountActions (+22 more)
+Cohesion: 0.26
+Nodes (20): markStartupComplete(), markStartupStep(), createAuthService(), isEmailVerified(), createProfileService(), createSupabaseProfileGateway(), FlowActions, asInitializationError() (+12 more)
 
 ### Community 16 - "expo"
-Cohesion: 0.07
+Cohesion: 0.06
 Nodes (30): backgroundColor, foregroundImage, monochromeImage, adaptiveIcon, icon, package, projectId, tsconfigPaths (+22 more)
 
 ### Community 17 - "fetch-page.ts"
@@ -208,8 +222,8 @@ Cohesion: 0.22
 Nodes (12): assertHttpStatus(), assertPublicResolution(), FetchedHtmlPage, fetchHtmlPage(), FetchPageDependencies, IMPORT_FETCH_TIMEOUT_MS, IMPORT_MAX_REDIRECTS, IMPORT_MAX_RESPONSE_BYTES (+4 more)
 
 ### Community 18 - "catalog-management/index.ts"
-Cohesion: 0.05
-Nodes (64): appendCheckpointId(), appendManualCheckpoint(), authenticateCatalogDeveloper(), BrandRow, BrandSourceRow, canPersistRejectedProduct(), CatalogManagementError, CategoryRow (+56 more)
+Cohesion: 0.06
+Nodes (62): appendCheckpointId(), appendManualCheckpoint(), authenticateCatalogDeveloper(), BrandRow, BrandSourceRow, canPersistRejectedProduct(), CatalogManagementError, CategoryRow (+54 more)
 
 ### Community 19 - "compilerOptions"
 Cohesion: 0.10
@@ -217,11 +231,11 @@ Nodes (20): ./*, expo/tsconfig.base, node, ./supabase/*, supabase/functions/cata
 
 ### Community 20 - "startupProgress.ts"
 Cohesion: 0.08
-Nodes (34): AppNavigation(), AppRoot(), calculateDoubleMFillBounds(), DOUBLE_M_BOTTOM, DOUBLE_M_PATHS, DOUBLE_M_TOP, DOUBLE_M_VIEWBOX_SIZE, DoubleMLoader() (+26 more)
+Nodes (36): AppNavigation(), AppRoot(), calculateDoubleMFillBounds(), DOUBLE_M_BOTTOM, DOUBLE_M_PATHS, DOUBLE_M_TOP, DOUBLE_M_VIEWBOX_SIZE, DoubleMLoader() (+28 more)
 
-### Community 21 - "AppTheme"
-Cohesion: 0.16
-Nodes (14): Chip(), ChipProps, createStyles(), createStyles(), OptionSheet(), OptionSheetProps, createStyles(), SelectField() (+6 more)
+### Community 21 - "StateViews.tsx"
+Cohesion: 0.09
+Nodes (26): Chip(), ChipProps, createStyles(), createStyles(), OptionSheet(), OptionSheetProps, createStyles(), SelectField() (+18 more)
 
 ### Community 22 - "_shared/catalog/types.ts"
 Cohesion: 0.13
@@ -243,17 +257,17 @@ Nodes (7): importWardrobeUrl(), isErrorCode(), isImportResponse(), normalizeFunc
 Cohesion: 0.20
 Nodes (22): COLOR_RULES, createCatalogDeduplicationKey(), matchColor(), MATERIAL_RULES, normalizeCatalogProduct(), normalizeColor(), normalizeCurrency(), normalizeDomain() (+14 more)
 
-### Community 27 - "TabNavigators.tsx"
-Cohesion: 0.10
-Nodes (31): createStyles(), DeferredNotice(), LoadingState(), MessageState(), MessageStateProps, SkeletonCard(), StateAction, createStyles() (+23 more)
+### Community 27 - "ProfileScreen.tsx"
+Cohesion: 0.24
+Nodes (10): isCatalogDevToolsEnabled(), resolveCatalogDevToolsEnabled(), createStyles(), SignOutRow(), createStyles(), ProfileScreen(), Props, useSignOutAction() (+2 more)
 
-### Community 28 - "CatalogDevelopmentScreen.tsx"
+### Community 28 - "management-actions.ts"
 Cohesion: 0.05
-Nodes (67): CatalogBrandProgressCard(), createStyles(), formatSlug(), Props, CatalogImportControls(), createStyles(), Props, CatalogJobCard() (+59 more)
+Nodes (60): CatalogBrandProgressCard(), createStyles(), formatSlug(), Props, CatalogJobCard(), createStyles(), Props, CatalogAdminServiceError (+52 more)
 
 ### Community 29 - "ImportWardrobeWebsiteScreen.tsx"
-Cohesion: 0.24
-Nodes (15): applySaveResults(), buildWardrobeInputs(), createImportDeduplicationKey(), createImportPreview(), summarizeSaveResults(), candidate, updateImportCandidate(), ImportWardrobeWebsiteScreen() (+7 more)
+Cohesion: 0.25
+Nodes (16): ImportPreviewStep(), applySaveResults(), buildWardrobeInputs(), createImportDeduplicationKey(), createImportPreview(), ImportPreviewItem, setAllSelected(), summarizeSaveResults() (+8 more)
 
 ### Community 30 - ".prettierrc.json"
 Cohesion: 0.20
@@ -263,9 +277,9 @@ Nodes (9): arrowParens, bracketSpacing, endOfLine, printWidth, semi, singleQuote
 Cohesion: 0.22
 Nodes (8): graphify reference: extra exports and benchmark, Step 6b - Wiki (only if --wiki flag), Step 7 - Neo4j export (only if --neo4j or --neo4j-push flag), Step 7a - FalkorDB export (only if --falkordb or --falkordb-push flag), Step 7b - SVG export (only if --svg flag), Step 7c - GraphML export (only if --graphml flag), Step 7d - MCP server (only if --mcp flag), Step 8 - Token reduction benchmark (only if total_words > 5000)
 
-### Community 32 - "getSupabaseClient"
-Cohesion: 0.19
-Nodes (12): environment, isSupabaseConfigured(), PublicEnvironment, requireSupabaseEnvironment(), AuthBootstrap(), beginStartupProgress(), CatalogDatabaseEnums, CatalogDatabaseFunctions (+4 more)
+### Community 32 - "fixtures.test.ts"
+Cohesion: 0.23
+Nodes (8): CategoryFixture, exploreStyles, styleCategories, wardrobeCategories, quickStylingPrompts, stylingTips, WardrobeItemFixture, wardrobeItems
 
 ### Community 33 - "Supabase Phase 1, Phase 3, and catalogue operations"
 Cohesion: 0.25
@@ -296,8 +310,8 @@ Cohesion: 0.50
 Nodes (3): { defineConfig, globalIgnores }, eslintPluginPrettierRecommended, expoConfig
 
 ### Community 47 - "ImportUrlInputStep.tsx"
-Cohesion: 0.21
-Nodes (10): ErrorState(), errorTitle(), ImportErrorPanel(), Props, createStyles(), ImportUrlInputStep(), Props, supportedPages (+2 more)
+Cohesion: 0.23
+Nodes (9): errorTitle(), ImportErrorPanel(), Props, createStyles(), ImportUrlInputStep(), Props, supportedPages, WardrobeImportClientError (+1 more)
 
 ### Community 48 - "Mix & Match catalogue database"
 Cohesion: 0.11
@@ -331,9 +345,13 @@ Nodes (12): scripts, android, format, format:check, ios, lint, start, test (+4 m
 Cohesion: 0.18
 Nodes (15): CATALOG_TAXONOMY, CatalogCategoryDefinition, CatalogSubcategoryDefinition, isCatalogCategoryPair(), normalizeCatalogCategory(), normalizeSignal(), CatalogCategoryMatch, CatalogPipelineContext (+7 more)
 
-### Community 57 - "SearchResultsScreen.tsx"
-Cohesion: 0.15
-Nodes (19): createStyles(), InspirationCard(), InspirationCardProps, EmptyState(), createStyles(), Props, SearchResultsScreen(), createStyles() (+11 more)
+### Community 56 - "editorial.ts"
+Cohesion: 0.18
+Nodes (13): editorialAssets, homeEditorialContent, HomeEditorialState, useHomeEditorialContent(), getHomeEditorialContent(), EDITORIAL_IMAGE_KEYS, EditorialImageKey, EditorialImageSource (+5 more)
+
+### Community 57 - "WardrobeScreen.tsx"
+Cohesion: 0.10
+Nodes (28): createStyles(), InspirationCard(), InspirationCardProps, createStyles(), SearchBar(), SearchBarProps, createStyles(), Props (+20 more)
 
 ### Community 59 - "package.json"
 Cohesion: 0.29
@@ -344,48 +362,52 @@ Cohesion: 0.33
 Nodes (6): Application composition, Authentication boundary, Authentication-state lifecycle, Navigation protection, Phase 1 architecture, Profile strategy
 
 ### Community 61 - "validate-url.ts"
-Cohesion: 0.36
-Nodes (8): resolvePublicDns(), BLOCKED_HOSTNAMES, isUnsafeHostname(), isUnsafeIpAddress(), isUnsafeIpv4(), MAX_IMPORT_URL_LENGTH, parseIpv4(), stripIpv6Brackets()
+Cohesion: 0.27
+Nodes (12): ensureAllowedDomain(), validateSourceUrls(), resolvePublicDns(), BLOCKED_HOSTNAMES, failure(), isUnsafeHostname(), isUnsafeIpAddress(), isUnsafeIpv4() (+4 more)
 
 ### Community 62 - "Q: Understand the ERR_CONNECTION_REFUSED asset-loading error from React Native Web ImageLoader."
 Cohesion: 0.40
 Nodes (4): Answer, Outcome, Q: Understand the ERR_CONNECTION_REFUSED asset-loading error from React Native Web ImageLoader., Source Nodes
 
-### Community 63 - "AddItemReviewScreen.tsx"
+### Community 63 - "useAppTheme"
 Cohesion: 0.13
-Nodes (18): createStyles(), PlaceholderArtwork(), PlaceholderArtworkProps, createStyles(), WardrobeItemCard(), WardrobeItemCardProps, createStyles(), Props (+10 more)
+Nodes (25): createStyles(), PlaceholderArtwork(), PlaceholderArtworkProps, Avatar(), Badge(), createStyles(), StatCard(), createStyles() (+17 more)
 
-### Community 64 - "ImportPreviewStep.tsx"
-Cohesion: 0.17
-Nodes (15): createStyles(), ImportCompleteStep(), ImportSaveSummary, Props, createStyles(), formatPrice(), ImportedProductCard(), Props (+7 more)
+### Community 64 - "AppTheme"
+Cohesion: 0.11
+Nodes (28): CatalogImportControls(), createStyles(), Props, CatalogMetricCard(), createStyles(), CatalogReviewCard(), createStyles(), Props (+20 more)
 
 ### Community 65 - "profileService.ts"
-Cohesion: 0.10
-Nodes (26): isRecord(), mapProfileRow(), mapStyleProfile(), normalizeProfileError(), ProfileGateway, ProfileGatewayResult, ProfileService, readNullablePositiveNumber() (+18 more)
+Cohesion: 0.11
+Nodes (22): isRecord(), mapProfileRow(), mapStyleProfile(), normalizeProfileError(), ProfileGateway, ProfileGatewayResult, ProfileService, readNullablePositiveNumber() (+14 more)
 
-### Community 66 - "AddItemEntryScreen.tsx"
-Cohesion: 0.40
-Nodes (5): AddItemEntryScreen(), createStyles(), inputOptions, Props, WardrobeStackParamList
+### Community 66 - "navigation/types.ts"
+Cohesion: 0.13
+Nodes (17): ErrorState(), EditorialRule(), createStyles(), HomeScreen(), Props, AddItemEntryScreen(), createStyles(), inputOptions (+9 more)
 
 ### Community 67 - "authErrors.ts"
 Cohesion: 0.42
 Nodes (9): createAuthenticationError(), createInvalidSessionError(), createRecoveryExpiredError(), createSessionExpiredError(), createVerificationLinkError(), isAccountNotFoundError(), normalizeAuthenticationError(), readNumberProperty() (+1 more)
 
 ### Community 68 - "AddItemDetailsScreen.tsx"
-Cohesion: 0.20
-Nodes (14): createStyles(), ToggleRow(), ToggleRowProps, buildManualWardrobeInput(), createManualDeduplicationKey(), isPublicImageUrl(), ManualWardrobeItemErrors, optional() (+6 more)
+Cohesion: 0.22
+Nodes (14): buildManualWardrobeInput(), createManualDeduplicationKey(), isPublicImageUrl(), ManualWardrobeItemErrors, optional(), draft, validateManualWardrobeItem(), AddItemDetailsScreen() (+6 more)
 
 ### Community 69 - "Q: How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
 Cohesion: 0.40
 Nodes (4): Answer, Outcome, Q: How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?, Source Nodes
 
+### Community 71 - "WardrobeToolbar.tsx"
+Cohesion: 0.40
+Nodes (4): createStyles(), Props, ToolButtonProps, WardrobeToolbar()
+
 ### Community 72 - "pipeline.ts"
 Cohesion: 0.21
 Nodes (11): DEFINITIONS, phaseACatalogProducts, PhaseAFixtureDefinition, deduplicateCatalogProducts(), normalizeIdentity(), productsMatch(), processCatalogCandidates(), CatalogDuplicate (+3 more)
 
-### Community 73 - "authState.ts"
-Cohesion: 0.17
-Nodes (13): AuthFlow, AuthSnapshot, AuthStateError, createSignedOutSnapshot(), ProfileLoadStatus, authenticatedSnapshot(), incompleteProfile, session (+5 more)
+### Community 73 - "authStore.ts"
+Cohesion: 0.12
+Nodes (21): createAuthFlowActions(), AuthFlow, AuthSnapshot, AuthStateError, createSignedOutSnapshot(), ProfileLoadStatus, authenticatedSnapshot(), incompleteProfile (+13 more)
 
 ### Community 74 - "authService.ts"
 Cohesion: 0.17
@@ -411,6 +433,10 @@ Nodes (7): EXTRACTION_METHODS, GenericStructuredDataAdapter, fixtureDirectory, C
 Cohesion: 0.40
 Nodes (4): Answer, Outcome, Q: Remake the Mix & Match Profile experience with nested Style Profile screens, simple headings, real data, persistence, loading states, and working navigation., Source Nodes
 
+### Community 81 - "types/discovery.ts"
+Cohesion: 0.24
+Nodes (10): createStyles(), ExploreFilterPanel(), FilterSection(), Props, exploreDiscoveryContent, EXPLORE_CATEGORY_OPTIONS, EXPLORE_STYLE_OPTIONS, ExploreCategoryId (+2 more)
+
 ### Community 82 - "Q: Refine the Explore page with a compact search-first layout, bottom-sheet filters, image-first outfit details, related-item stack navigation, and preserved Explore state."
 Cohesion: 0.40
 Nodes (4): Answer, Outcome, Q: Refine the Explore page with a compact search-first layout, bottom-sheet filters, image-first outfit details, related-item stack navigation, and preserved Explore state., Source Nodes
@@ -419,25 +445,53 @@ Nodes (4): Answer, Outcome, Q: Refine the Explore page with a compact search-fir
 Cohesion: 0.21
 Nodes (8): corsHeaders, errorResponse(), jsonResponse(), rateWindows, WardrobeImportError, WardrobeImportErrorCode, WardrobeImportErrorResponse, WardrobeImportResponse
 
+### Community 85 - "ExploreScreen.tsx"
+Cohesion: 0.26
+Nodes (8): ExploreDiscoveryState, useExploreDiscoveryContent(), createStyles(), ExploreScreen(), Props, toggleSelection(), getExploreDiscoveryContent(), filterExploreItems()
+
 ### Community 86 - "Q: Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
 Cohesion: 0.40
 Nodes (4): Answer, Outcome, Q: Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back., Source Nodes
 
-### Community 89 - "EditImportedProductModal.tsx"
-Cohesion: 0.33
-Nodes (6): createStyles(), EditFields, EditImportedProductForm(), EditImportedProductModal(), Props, ImportedProductCandidate
+### Community 87 - "ProfileSettingsDirectory.tsx"
+Cohesion: 0.23
+Nodes (9): createStyles(), DirectoryRow(), DirectoryStyles, IconName, ProfileDirectoryRow(), ProfileSettingsDirectory(), ProfileSettingsDirectoryProps, createStyles() (+1 more)
 
-### Community 91 - "WardrobeItemDetailScreen.tsx"
-Cohesion: 0.24
-Nodes (9): AppHeader(), AppHeaderProps, createStyles(), createStyles(), IconButton(), IconButtonProps, createStyles(), Props (+1 more)
+### Community 88 - "WardrobeSummary.tsx"
+Cohesion: 0.67
+Nodes (3): createStyles(), Props, WardrobeSummary()
+
+### Community 89 - "ImportPreviewStep.tsx"
+Cohesion: 0.21
+Nodes (10): createStyles(), EditFields, EditImportedProductForm(), EditImportedProductModal(), Props, ImportSaveSummary, createStyles(), Metric() (+2 more)
+
+### Community 90 - "wardrobeStore.ts"
+Cohesion: 0.25
+Nodes (9): createStyles(), Props, WardrobeLoadingSkeleton(), createSupabaseWardrobeGateway(), createWardrobeService(), getService(), WardrobeStatus, WardrobeStore (+1 more)
+
+### Community 91 - "IconButton.tsx"
+Cohesion: 0.36
+Nodes (6): AppHeader(), AppHeaderProps, createStyles(), createStyles(), IconButton(), IconButtonProps
+
+### Community 92 - "utils/discovery.ts"
+Cohesion: 0.36
+Nodes (5): ExploreFilterCriteria, countSharedValues(), getRelatedExploreItems(), scoreExploreSimilarity(), selected
 
 ### Community 93 - "ActivitySummary.tsx"
 Cohesion: 0.33
 Nodes (5): ActivitySummary(), ActivitySummaryProps, createStyles(), MetricProps, unavailableMetrics
 
-### Community 95 - "useAppTheme"
-Cohesion: 0.09
-Nodes (31): CatalogMetricCard(), createStyles(), Avatar(), Badge(), createStyles(), StatCard(), createStyles(), SearchBar() (+23 more)
+### Community 94 - "HomeEditorialSkeleton.tsx"
+Cohesion: 0.40
+Nodes (4): createStyles(), HomeEditorialSkeleton(), HomeEditorialSkeletonProps, SkeletonStyles
+
+### Community 95 - "AddWardrobeItemMenu.tsx"
+Cohesion: 0.40
+Nodes (4): AddWardrobeItemMenu(), createStyles(), MenuOptionProps, Props
+
+### Community 96 - "authAccountActions.ts"
+Cohesion: 0.33
+Nodes (5): AuthService, AccountActions, createAuthAccountActions(), AuthActions, setIntentionalSignOut()
 
 ### Community 97 - "Q: Wardrobe Page Update - Remove the "Wardrobe" heading - "Categories" section - "All" "Tops" ... remove the border radius"
 Cohesion: 0.40
@@ -447,10 +501,22 @@ Nodes (4): Answer, Outcome, Q: Wardrobe Page Update - Remove the "Wardrobe" head
 Cohesion: 0.40
 Nodes (4): Answer, Outcome, Q: How should the Double M startup loader integrate with the existing app?, Source Nodes
 
+### Community 99 - "ToggleRow.tsx"
+Cohesion: 0.67
+Nodes (3): createStyles(), ToggleRow(), ToggleRowProps
+
+### Community 100 - "ProfileIdentity.tsx"
+Cohesion: 0.67
+Nodes (3): createStyles(), ProfileIdentity(), ProfileIdentityProps
+
+### Community 102 - "typography.ts"
+Cohesion: 0.50
+Nodes (3): editorialFont, systemFont, systemFontMedium
+
 ## Knowledge Gaps
-- **521 isolated node(s):** `arrowParens`, `bracketSpacing`, `endOfLine`, `printWidth`, `semi` (+516 more)
+- **518 isolated node(s):** `arrowParens`, `bracketSpacing`, `endOfLine`, `printWidth`, `semi` (+513 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
@@ -459,23 +525,23 @@ Nodes (4): Answer, Outcome, Q: How should the Double M startup loader integrate 
 - `TabNavigators.tsx` (3× useful, score=2.514567139)
 - `ExploreMasonryFeed.tsx` (3× useful, score=2.514181445)
 - `SearchResultsScreen.tsx` (2× useful, score=1.734156846)
-- `MainAppNavigator.tsx` (2× useful, score=1.695810222) _(code changed — re-verify)_
+- `MainAppNavigator.tsx` (2× useful, score=1.695810222)
 - `navigation/types.ts` (2× useful, score=1.695810222)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useAppTheme()` connect `useAppTheme` to `navigation/types.ts`, `routes.ts`, `theme/index.ts`, `AppScreen.tsx`, `ExploreOutfitDetailScreen.tsx`, `HomeScreen.tsx`, `StylistScreen.tsx`, `wardrobeService.ts`, `startupProgress.ts`, `AppTheme`, `BodyProfileScreen.tsx`, `TabNavigators.tsx`, `CatalogDevelopmentScreen.tsx`, `ImportUrlInputStep.tsx`, `SearchResultsScreen.tsx`, `AddItemReviewScreen.tsx`, `ImportPreviewStep.tsx`, `AddItemEntryScreen.tsx`, `AddItemDetailsScreen.tsx`, `EditImportedProductModal.tsx`, `WardrobeItemDetailScreen.tsx`, `ActivitySummary.tsx`?**
-  _High betweenness centrality (0.122) - this node is a cross-community bridge._
-- **Why does `AppTheme` connect `AppTheme` to `navigation/types.ts`, `routes.ts`, `theme/index.ts`, `AppScreen.tsx`, `ExploreOutfitDetailScreen.tsx`, `HomeScreen.tsx`, `StylistScreen.tsx`, `wardrobeService.ts`, `BodyProfileScreen.tsx`, `TabNavigators.tsx`, `CatalogDevelopmentScreen.tsx`, `ImportUrlInputStep.tsx`, `SearchResultsScreen.tsx`, `AddItemReviewScreen.tsx`, `ImportPreviewStep.tsx`, `AddItemEntryScreen.tsx`, `AddItemDetailsScreen.tsx`, `EditImportedProductModal.tsx`, `WardrobeItemDetailScreen.tsx`, `ActivitySummary.tsx`, `useAppTheme`?**
-  _High betweenness centrality (0.042) - this node is a cross-community bridge._
-- **Why does `CatalogManagementAction` connect `CatalogDevelopmentScreen.tsx` to `catalog-management/index.ts`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+- **Why does `useAppTheme()` connect `useAppTheme` to `useAuthStore`, `routes.ts`, `theme/index.ts`, `TabNavigators.tsx`, `ExploreOutfitDetailScreen.tsx`, `EditorialPrimitives.tsx`, `WardrobeItemDetailScreen.tsx`, `startupProgress.ts`, `StateViews.tsx`, `BodyProfileScreen.tsx`, `ProfileScreen.tsx`, `management-actions.ts`, `ImportWardrobeWebsiteScreen.tsx`, `ImportUrlInputStep.tsx`, `WardrobeScreen.tsx`, `AppTheme`, `navigation/types.ts`, `AddItemDetailsScreen.tsx`, `WardrobeToolbar.tsx`, `types/discovery.ts`, `ExploreScreen.tsx`, `ProfileSettingsDirectory.tsx`, `WardrobeSummary.tsx`, `ImportPreviewStep.tsx`, `wardrobeStore.ts`, `IconButton.tsx`, `ActivitySummary.tsx`, `HomeEditorialSkeleton.tsx`, `AddWardrobeItemMenu.tsx`, `ToggleRow.tsx`, `ProfileIdentity.tsx`?**
+  _High betweenness centrality (0.132) - this node is a cross-community bridge._
+- **Why does `AppTheme` connect `AppTheme` to `useAuthStore`, `routes.ts`, `theme/index.ts`, `TabNavigators.tsx`, `ExploreOutfitDetailScreen.tsx`, `EditorialPrimitives.tsx`, `WardrobeItemDetailScreen.tsx`, `StateViews.tsx`, `BodyProfileScreen.tsx`, `ProfileScreen.tsx`, `management-actions.ts`, `ImportUrlInputStep.tsx`, `WardrobeScreen.tsx`, `useAppTheme`, `navigation/types.ts`, `AddItemDetailsScreen.tsx`, `WardrobeToolbar.tsx`, `types/discovery.ts`, `ExploreScreen.tsx`, `ProfileSettingsDirectory.tsx`, `WardrobeSummary.tsx`, `ImportPreviewStep.tsx`, `wardrobeStore.ts`, `IconButton.tsx`, `ActivitySummary.tsx`, `HomeEditorialSkeleton.tsx`, `AddWardrobeItemMenu.tsx`, `ToggleRow.tsx`, `ProfileIdentity.tsx`?**
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
+- **Why does `CatalogManagementAction` connect `management-actions.ts` to `AppTheme`, `catalog-management/index.ts`?**
+  _High betweenness centrality (0.026) - this node is a cross-community bridge._
 - **What connects `arrowParens`, `bracketSpacing`, `endOfLine` to the rest of the system?**
-  _521 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `navigation/types.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.061211340206185565 - nodes in this community are weakly interconnected._
+  _518 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `useAuthStore` be split into smaller, more focused modules?**
+  _Cohesion score 0.06893106893106893 - nodes in this community are weakly interconnected._
 - **Should `routes.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.06313497822931785 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12298387096774194 - nodes in this community are weakly interconnected._
 - **Should `Build Phase 3 — Wardrobe Website URL Import` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._

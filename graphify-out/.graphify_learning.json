@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-08T16:21:35.922128+00:00",
+  "generated_at": "2026-09-10T07:40:35.938760+00:00",
   "nodes": {
     "react": {
       "code_fingerprint": "790dfe5e52e3096484dd1cfb30f965e64aa543c317ac62cb69b7ed13c41087d6",
@@ -12,8 +12,24 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 0.870233953,
+      "score": 0.837910887,
       "source_file": "package.json",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_components_ui_chip_chip": {
+      "code_fingerprint": "6e8a897774a20a65eada2c025c47f30272146e5e2a397afc60038a388b42e8ed",
+      "label": "Chip()",
+      "last": "2026-09-08T16:25:15.933639+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-08T16:25:15.933639+00:00",
+          "outcome": "useful",
+          "q": "Wardrobe Page Update - Remove the \"Wardrobe\" heading - \"Categories\" section - \"All\" \"Tops\" ... remove the border radius"
+        }
+      ],
+      "score": 0.962913689,
+      "source_file": "src/components/ui/Chip.tsx",
       "status": "tentative",
       "uses": 1
     },
@@ -28,7 +44,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.931003546,
+      "score": 0.896423317,
       "source_file": "src/components/ui/SearchBar.tsx",
       "status": "tentative",
       "uses": 1
@@ -44,7 +60,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.849799129,
+      "score": 0.818235073,
       "source_file": "src/components/ui/StateViews.tsx",
       "status": "tentative",
       "uses": 1
@@ -70,7 +86,7 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 2.611167958,
+      "score": 2.514181445,
       "source_file": "src/features/explore/components/ExploreMasonryFeed.tsx",
       "status": "preferred",
       "uses": 3
@@ -86,7 +102,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.931003546,
+      "score": 0.896423317,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -102,7 +118,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.931003546,
+      "score": 0.896423317,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -118,7 +134,7 @@
           "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
         }
       ],
-      "score": 0.891177671,
+      "score": 0.858076693,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -134,7 +150,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.931003546,
+      "score": 0.896423317,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -170,7 +186,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 4.412221258,
+      "score": 4.248338291,
       "source_file": "src/features/explore/screens/ExploreScreen.tsx",
       "status": "preferred",
       "uses": 5
@@ -191,7 +207,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.801053301,
+      "score": 1.734156846,
       "source_file": "src/features/explore/screens/SearchResultsScreen.tsx",
       "status": "preferred",
       "uses": 2
@@ -207,7 +223,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.849799129,
+      "score": 0.818235073,
       "source_file": "src/features/home/screens/HomeScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -223,8 +239,24 @@
           "q": "There are a few errors that need to be fix: Explore Page Image keeps on rendering, make the image to ONLY render when user either refresh or reopen the app; The Back button instead of going back to the home page, make it go back to its previous action."
         }
       ],
-      "score": 0.870591729,
+      "score": 0.838255373,
       "source_file": "src/features/home/screens/InspirationDetailScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_wardrobe_screens_wardrobescreen_wardrobescreen": {
+      "code_fingerprint": "2a2fd7e1c9180e0c1a7314555ac8f9c892ef093576e04e02726bfe9801ae998d",
+      "label": "WardrobeScreen()",
+      "last": "2026-09-08T16:25:15.933639+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-08T16:25:15.933639+00:00",
+          "outcome": "useful",
+          "q": "Wardrobe Page Update - Remove the \"Wardrobe\" heading - \"Categories\" section - \"All\" \"Tops\" ... remove the border radius"
+        }
+      ],
+      "score": 0.962913689,
+      "source_file": "src/features/wardrobe/screens/WardrobeScreen.tsx",
       "status": "tentative",
       "uses": 1
     },
@@ -244,7 +276,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.761227426,
+      "score": 1.695810222,
       "source_file": "src/navigation/MainAppNavigator.tsx",
       "status": "preferred",
       "uses": 2
@@ -270,7 +302,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 2.61156853,
+      "score": 2.514567139,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "preferred",
       "uses": 3
@@ -286,7 +318,7 @@
           "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
         }
       ],
-      "score": 0.891177671,
+      "score": 0.858076693,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "tentative",
       "uses": 1
@@ -307,7 +339,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.761227426,
+      "score": 1.695810222,
       "source_file": "src/navigation/types.ts",
       "status": "preferred",
       "uses": 2
@@ -323,7 +355,7 @@
           "q": "Remake the Mix & Match Profile experience with nested Style Profile screens, simple headings, real data, persistence, loading states, and working navigation."
         }
       ],
-      "score": 0.931982271,
+      "score": 0.897365689,
       "source_file": "src/navigation/types.ts",
       "status": "tentative",
       "uses": 1
@@ -339,7 +371,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.849799129,
+      "score": 0.818235073,
       "source_file": "src/theme/index.ts",
       "status": "tentative",
       "uses": 1

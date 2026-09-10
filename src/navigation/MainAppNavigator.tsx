@@ -22,15 +22,15 @@ export function MainAppNavigator() {
       tabBar={FloatingTabBar}
       screenOptions={({ route }) => {
         const config = getTabConfig(route.name);
-        const prominent = route.name === MAIN_ROUTES.STYLIST_TAB;
         return {
           headerShown: false,
-          tabBarAccessibilityLabel: `${config?.label ?? route.name} tab`,
+          tabBarAccessibilityLabel: config?.label ?? route.name,
           tabBarHideOnKeyboard: true,
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} icon={config?.icon ?? 'home'} prominent={prominent} />
+          tabBarIcon: ({ color, size }) => (
+            <TabBarIcon color={color} icon={config?.icon ?? 'home'} size={size} />
           ),
           tabBarLabel: config?.label ?? route.name,
+          tabBarShowLabel: false,
         };
       }}
     >

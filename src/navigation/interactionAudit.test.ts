@@ -112,21 +112,35 @@ describe('application interaction audit', () => {
     expect(detail.match(/borderRadius:/g)).toHaveLength(1);
   });
 
-  it('uses one route-driven, safe-area-aware floating tab bar', () => {
+  it('uses one route-driven, safe-area-aware, full-width bottom tab bar', () => {
     const navigator = readFileSync('src/navigation/MainAppNavigator.tsx', 'utf8');
-    const floatingTabBar = readFileSync('src/navigation/FloatingTabBar.tsx', 'utf8');
+    const bottomTabBar = readFileSync('src/navigation/FloatingTabBar.tsx', 'utf8');
+    const tabBarIcon = readFileSync('src/navigation/TabBarIcon.tsx', 'utf8');
 
     expect(navigator).toContain('tabBar={FloatingTabBar}');
+    expect(navigator).toContain('tabBarShowLabel: false');
     expect(navigator).not.toContain('tabBarStyle:');
-    expect(floatingTabBar).toContain('getFocusedRouteNameFromRoute');
-    expect(floatingTabBar).toContain('Animated.timing(activePosition');
-    expect(floatingTabBar).toContain('duration: TAB_TRANSITION_DURATION_MS');
-    expect(floatingTabBar).toContain('testID="main-navigation-active-indicator"');
-    expect(floatingTabBar).toContain('paddingBottom: insets.bottom + theme.spacing.sm');
-    expect(floatingTabBar).toContain('navigation.emit({');
-    expect(floatingTabBar).toContain('navigation.navigate(route.name, route.params)');
-    expect(floatingTabBar).toContain('aria-selected={focused}');
-    expect(floatingTabBar).not.toContain('borderRadius');
+    expect(bottomTabBar).toContain('getFocusedRouteNameFromRoute');
+    expect(bottomTabBar).toContain('testID="main-navigation-active-indicator"');
+    expect(bottomTabBar).toContain('paddingBottom: insets.bottom');
+    expect(bottomTabBar).toContain('paddingLeft: insets.left');
+    expect(bottomTabBar).toContain('paddingRight: insets.right');
+    expect(bottomTabBar).toContain('borderTopWidth: StyleSheet.hairlineWidth');
+    expect(bottomTabBar).toContain('backgroundColor: theme.colors.surface');
+    expect(bottomTabBar).toContain('navigation.emit({');
+    expect(bottomTabBar).toContain('navigation.navigate(route.name, route.params)');
+    expect(bottomTabBar).toContain('aria-selected={focused}');
+    expect(bottomTabBar).not.toContain('borderRadius');
+    expect(bottomTabBar).not.toContain('maxWidth');
+    expect(bottomTabBar).not.toContain('theme.shadows');
+    expect(tabBarIcon).toContain("home: 'home-outline'");
+    expect(tabBarIcon).toContain("explore: 'search-outline'");
+    expect(tabBarIcon).toContain("profile: 'person-outline'");
+    expect(tabBarIcon).toContain('stroke="currentColor"');
+    expect(tabBarIcon).toContain('fill="currentColor"');
+    expect(tabBarIcon).toContain(
+      'M6 2a2 2 0 0 0-2 2v15c0 1.11.89 2 2 2v1h2v-1h8v1h2v-1c1.11 0 2-.89 2-2V4a2 2 0 0 0-2-2z',
+    );
   });
 
   it('keeps the complete URL import control contract visible and guarded', () => {

@@ -66,7 +66,7 @@ describe('Phase 2 navigation configuration', () => {
     );
   });
 
-  it('shows the floating tab bar only at each tab stack root', () => {
+  it('shows the bottom tab bar only at each tab stack root', () => {
     expect(isMainTabRootRoute(MAIN_ROUTES.HOME_TAB)).toBe(true);
     expect(isMainTabRootRoute(MAIN_ROUTES.EXPLORE_TAB, EXPLORE_ROUTES.EXPLORE)).toBe(true);
     expect(isMainTabRootRoute(MAIN_ROUTES.EXPLORE_TAB, EXPLORE_ROUTES.INSPIRATION_DETAIL)).toBe(

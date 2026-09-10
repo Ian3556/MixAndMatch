@@ -1,6 +1,7 @@
 import type { AuthChangeEvent, Session, Subscription } from '@supabase/supabase-js';
 import type { StoreApi } from 'zustand';
 
+import { markStartupComplete, markStartupStep } from '@/features/startup/startupProgress';
 import { createAuthService, isEmailVerified, type AuthService } from '@/services/authService';
 import { createInvalidSessionError, normalizeAuthenticationError } from '@/services/authErrors';
 import {
@@ -41,6 +42,8 @@ export async function initializeAuth(store: AuthStoreAccess) {
       return;
     }
 
+    markStartupStep('session');
+
     if (!result.data) {
       const current = store.getState();
       store.setState({
@@ -48,6 +51,7 @@ export async function initializeAuth(store: AuthStoreAccess) {
         recoveryState: current.recoveryState,
         pendingVerificationEmail: current.pendingVerificationEmail,
       });
+      markStartupComplete();
       return;
     }
 
@@ -57,6 +61,8 @@ export async function initializeAuth(store: AuthStoreAccess) {
       store.setState(createSignedOutSnapshot(asInitializationError(userResult.error)));
       return;
     }
+
+    markStartupStep('user');
 
     await synchronizeSession(store, { ...result.data, user: userResult.data }, true);
   } catch (error) {
@@ -96,6 +102,7 @@ export async function synchronizeSession(
     pendingVerificationEmail: null,
     authError: null,
   });
+  markStartupStep('user');
 
   if (
     sameUser &&
@@ -104,7 +111,11 @@ export async function synchronizeSession(
       current.profileStatus === 'ready' ||
       current.profileStatus === 'missing')
   ) {
-    if (finishInitialization) store.setState({ isInitializing: false });
+    markStartupStep('profile');
+    if (finishInitialization) {
+      store.setState({ isInitializing: false });
+      markStartupComplete();
+    }
     return;
   }
 
@@ -138,6 +149,8 @@ export async function loadProfile(
       isInitializing: finishInitialization ? false : store.getState().isInitializing,
       authError: null,
     });
+    markStartupStep('profile');
+    if (finishInitialization) markStartupComplete();
     return { ok: true };
   } catch (error) {
     const profileError = asProfileError(error);
