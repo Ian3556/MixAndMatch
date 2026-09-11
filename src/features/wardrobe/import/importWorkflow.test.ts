@@ -51,10 +51,12 @@ describe('wardrobe import workflow', () => {
       ...candidate,
       name: 'Edited Shirt',
       category: 'Tops',
+      size: 'M',
     });
     expect(buildWardrobeInputs(edited)[0]).toMatchObject({
       name: 'Edited Shirt',
       category: 'Tops',
+      size: 'M',
       importMethod: 'website-url',
     });
   });

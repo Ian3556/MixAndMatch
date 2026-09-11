@@ -68,7 +68,7 @@ export function ImportPreviewStep({
   return (
     <AppScreen
       {...(isSaving ? {} : { onBack })}
-      subtitle={`${response.sourceDomain} Â· ${response.pageType}`}
+      subtitle={`${response.sourceDomain} · ${response.pageType}`}
       title="Review imported products"
     >
       <View accessibilityLiveRegion="polite" style={styles.metrics}>
@@ -86,7 +86,7 @@ export function ImportPreviewStep({
         <View style={styles.notice}>
           <Text style={styles.noticeTitle}>Latest save attempt</Text>
           <Text style={styles.bodyText}>
-            {saveSummary.added} added Â· {saveSummary.duplicate} duplicate Â· {saveSummary.failed}{' '}
+            {saveSummary.added} added · {saveSummary.duplicate} duplicate · {saveSummary.failed}{' '}
             failed
           </Text>
         </View>

@@ -5,6 +5,7 @@ import type {
   WardrobeItem,
   WardrobeItemSaveResult,
 } from '@/types/wardrobe';
+import { buildWardrobeInput } from '@/services/wardrobeNormalization';
 
 export type ImportPreviewItem = {
   id: string;
@@ -83,22 +84,32 @@ export function updateImportCandidate(
 export function buildWardrobeInputs(items: ImportPreviewItem[]): CreateWardrobeItemInput[] {
   return items
     .filter((item) => item.selected && !item.duplicate)
-    .map(({ candidate, deduplicationKey }) => ({
-      name: candidate.name.trim(),
-      category: candidate.category?.trim() || 'Uncategorised',
-      subcategory: candidate.subcategory ?? null,
-      primaryColor: candidate.color ?? null,
-      brand: candidate.brand ?? null,
-      notes: candidate.description ?? null,
-      imageUrl: candidate.imageUrl ?? null,
-      sourceUrl: candidate.canonicalUrl ?? candidate.productUrl,
-      sourceDomain: candidate.sourceDomain,
-      externalProductId: candidate.externalId ?? null,
-      price: candidate.price ?? null,
-      currency: candidate.currency ?? null,
-      importMethod: 'website-url',
-      deduplicationKey,
-    }));
+    .map(({ candidate, deduplicationKey }) =>
+      buildWardrobeInput(
+        {
+          sourceType: 'url_import',
+          sourceUrl: candidate.canonicalUrl ?? candidate.productUrl,
+          sourceDomain: candidate.sourceDomain,
+          externalProductId: candidate.externalId ?? null,
+          brand: candidate.brand ?? null,
+          name: candidate.name,
+          category: candidate.category?.trim() || 'Uncategorised',
+          subcategory: candidate.subcategory ?? null,
+          color: candidate.color ?? null,
+          size: candidate.size ?? null,
+          notes: candidate.description ?? null,
+          primaryImageUrl: candidate.imageUrl ?? null,
+          imageUrls: candidate.imageUrl ? [candidate.imageUrl] : [],
+          price: candidate.price ?? null,
+          currency: candidate.currency ?? null,
+          metadata: {
+            extractionMethod: candidate.extractionMethod,
+            confidence: candidate.confidence,
+          },
+        },
+        deduplicationKey,
+      ),
+    );
 }
 
 export function applySaveResults(

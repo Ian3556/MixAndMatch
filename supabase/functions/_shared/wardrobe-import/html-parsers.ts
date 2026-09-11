@@ -4,8 +4,8 @@ import {
   getMetaContent,
   readAttributes,
   stripTags,
-} from './html-utils';
-import type { RawProductCandidate } from './types';
+} from './html-utils.ts';
+import type { RawProductCandidate } from './types.ts';
 
 export function extractOpenGraphProduct(html: string, pageUrl: string): RawProductCandidate[] {
   const type = getMetaContent(html, 'og:type')?.toLowerCase();
@@ -23,6 +23,8 @@ export function extractOpenGraphProduct(html: string, pageUrl: string): RawProdu
       imageUrl: image,
       productUrl: getMetaContent(html, 'og:url') ?? getCanonicalUrl(html) ?? pageUrl,
       canonicalUrl: getCanonicalUrl(html),
+      color: getMetaContent(html, 'product:color'),
+      size: getMetaContent(html, 'product:size'),
       price,
       currency: getMetaContent(html, 'product:price:currency', 'og:price:currency'),
       availability: getMetaContent(html, 'product:availability'),
@@ -108,7 +110,7 @@ function mapAnchor(
   if (!name || !imageUrl || isDecorative(name, imageUrl, anchor.className)) return null;
 
   const priceText = anchor.body.match(
-    /(?:[$â‚¬Â£Â¥]\s*\d[\d,.]*|\d[\d,.]*\s*(?:USD|EUR|GBP|MYR|AUD|CAD))/i,
+    /(?:[$€£¥]\s*\d[\d,.]*|\d[\d,.]*\s*(?:USD|EUR|GBP|MYR|AUD|CAD))/i,
   )?.[0];
   return compact({
     name,

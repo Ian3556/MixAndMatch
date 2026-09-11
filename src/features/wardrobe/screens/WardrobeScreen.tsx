@@ -235,6 +235,7 @@ export function WardrobeScreen({ navigation, route }: Props) {
       </AppScreen>
 
       <AddWardrobeItemMenu
+        onBrowse={() => navigation.navigate(WARDROBE_ROUTES.BROWSE_BRANDS)}
         onDismiss={() => setAddMenuVisible(false)}
         onImport={() => navigation.navigate(WARDROBE_ROUTES.IMPORT_WEBSITE)}
         onManual={() =>

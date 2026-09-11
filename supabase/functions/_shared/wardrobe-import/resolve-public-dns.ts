@@ -1,5 +1,5 @@
-import { WardrobeImportError } from './fetch-page';
-import { isUnsafeIpAddress } from './validate-url';
+import { WardrobeImportError } from './fetch-page.ts';
+import { isUnsafeIpAddress } from './validate-url.ts';
 
 export async function resolvePublicDns(hostname: string): Promise<string[]> {
   const unwrapped = hostname.replace(/^\[|\]$/g, '');

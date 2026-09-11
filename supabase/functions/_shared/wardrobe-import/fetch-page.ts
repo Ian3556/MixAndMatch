@@ -1,5 +1,5 @@
-import { isUnsafeIpAddress, validateImportUrl } from './validate-url';
-import type { WardrobeImportErrorCode } from './types';
+import { isUnsafeIpAddress, validateImportUrl } from './validate-url.ts';
+import type { WardrobeImportErrorCode } from './types.ts';
 
 export const IMPORT_FETCH_TIMEOUT_MS = 12_000;
 export const IMPORT_MAX_RESPONSE_BYTES = 3 * 1024 * 1024;

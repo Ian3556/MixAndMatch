@@ -101,6 +101,7 @@ export function mapWardrobeRow(row: WardrobeRow): WardrobeItem {
     subcategory: row.subcategory,
     primaryColor: row.primary_color,
     secondaryColor: row.secondary_color,
+    size: row.size,
     pattern: row.pattern,
     material: row.material,
     brand: row.brand,
@@ -109,12 +110,15 @@ export function mapWardrobeRow(row: WardrobeRow): WardrobeItem {
     notes: row.notes,
     isFavorite: row.is_favorite,
     imageUrl: row.image_url,
+    imageUrls: row.image_urls,
     sourceUrl: row.source_url,
     sourceDomain: row.source_domain,
     externalProductId: row.external_product_id,
     price: row.price,
     currency: row.currency,
     importMethod: row.import_method,
+    sourceType: row.source_type,
+    metadata: asMetadata(row.metadata),
     deduplicationKey: row.deduplication_key,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
@@ -130,6 +134,7 @@ export function toWardrobeInsert(userId: string, input: CreateWardrobeItemInput)
     subcategory: nullable(input.subcategory),
     primary_color: nullable(input.primaryColor),
     secondary_color: nullable(input.secondaryColor),
+    size: nullable(input.size),
     pattern: nullable(input.pattern),
     material: nullable(input.material),
     brand: nullable(input.brand),
@@ -138,12 +143,15 @@ export function toWardrobeInsert(userId: string, input: CreateWardrobeItemInput)
     notes: nullable(input.notes),
     is_favorite: input.isFavorite ?? false,
     image_url: nullable(input.imageUrl),
+    image_urls: input.imageUrls ?? [],
     source_url: nullable(input.sourceUrl),
     source_domain: nullable(input.sourceDomain),
     external_product_id: nullable(input.externalProductId),
     price: input.price ?? null,
     currency: nullable(input.currency)?.toUpperCase() ?? null,
     import_method: input.importMethod,
+    source_type: input.sourceType,
+    metadata: input.metadata ?? {},
     deduplication_key: input.deduplicationKey,
   };
 }
@@ -179,4 +187,11 @@ function readStringProperty(value: unknown, key: string): string {
   if (typeof value !== 'object' || value === null || !(key in value)) return '';
   const property = Reflect.get(value, key);
   return typeof property === 'string' ? property : '';
+}
+
+function asMetadata(value: WardrobeRow['metadata']): WardrobeItem['metadata'] {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return {};
+  return Object.fromEntries(
+    Object.entries(value).filter((entry) => entry[1] !== undefined),
+  ) as WardrobeItem['metadata'];
 }

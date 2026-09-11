@@ -8,6 +8,7 @@ actions
 activity
 adapter
 adapters
+adaptive
 add
 added
 additive
@@ -23,6 +24,7 @@ anchor
 anchors
 and
 android
+animation
 answer
 app
 appearance
@@ -52,6 +54,7 @@ authentication
 auto
 avatar
 back
+background
 badge
 banner
 bar
@@ -59,16 +62,22 @@ base
 baseline
 batch
 before
+begin
 behavior
 benchmark
 blocked
 body
 bootstrap
+border
 bottom
 boundary
+bounds
 bracket
 brackets
 brand
+branding
+brands
+browse
 build
 bundle
 bundler
@@ -103,6 +112,8 @@ clean
 client
 clipboard
 clone
+clothes
+clothing
 cluster
 code
 collect
@@ -120,6 +131,7 @@ compact
 compatibility
 compiler
 complete
+completion
 component
 composition
 concepts
@@ -187,6 +199,7 @@ documentation
 does
 dom
 domain
+double
 draft
 duplicate
 eas
@@ -218,6 +231,7 @@ err
 erro
 error
 errors
+escape
 eslint
 establish
 exact
@@ -236,16 +250,20 @@ explore
 expo
 export
 exports
+extend
+extended
 extends
 external
 extra
 extract
 extraction
 face
+fade
 failure
 falkor
 falkordb
 fashion
+favicon
 featured
 feed
 feedback
@@ -255,6 +273,7 @@ few
 field
 fields
 files
+fill
 filter
 filters
 final
@@ -273,6 +292,7 @@ flow
 folder
 font
 for
+foreground
 forgot
 form
 formality
@@ -293,12 +313,12 @@ gender
 generate
 generating
 generic
+geometry
 get
 git
 github
 given
 global
-glyphs
 goal
 going
 governance
@@ -313,11 +333,14 @@ handler
 hash
 header
 headers
+headi
+heading
 headings
 health
 help
 hex
 hmr
+hold
 home
 honesty
 hook
@@ -328,6 +351,7 @@ how
 html
 http
 hub
+hydrate
 icon
 icons
 identifier
@@ -335,6 +359,7 @@ identity
 ignores
 image
 images
+imp
 implementation
 implemented
 import
@@ -347,6 +372,7 @@ incomplete
 incremental
 index
 indexed
+indicator
 infer
 info
 initial
@@ -358,6 +384,7 @@ insert
 inspection
 inspiration
 installed
+instance
 instead
 integrate
 integration
@@ -373,6 +400,7 @@ invalidate
 inventory
 invoke
 invoked
+ionicon
 ionicons
 ios
 ipv
@@ -392,10 +420,12 @@ label
 labels
 layer
 layout
+legacy
 length
 level
 lifecycle
 light
+like
 limit
 limitations
 limited
@@ -410,7 +440,9 @@ loader
 loadin
 loading
 local
+log
 login
+logo
 lookup
 main
 maintenance
@@ -419,6 +451,7 @@ management
 manifest
 manual
 map
+mark
 masonry
 match
 material
@@ -433,11 +466,13 @@ menu
 merge
 message
 meta
+metadata
 method
 methods
 metric
 metrics
 migration
+minimum
 missing
 mix
 mjs
@@ -446,12 +481,16 @@ modal
 mode
 model
 modified
+monochrome
+monotonic
 mostly
+motion
 mts
 multi
 must
 name
 named
+names
 native
 navigation
 navigator
@@ -527,12 +566,14 @@ plan
 platform
 plist
 plugin
+plugins
 policy
 polyfill
 positive
 preference
 preferences
 preferred
+prefill
 preserve
 preserved
 prettier
@@ -568,6 +609,7 @@ queue
 quick
 quote
 radii
+radius
 rate
 raw
 react
@@ -582,6 +624,7 @@ record
 recovery
 redirect
 redirects
+reduced
 reduction
 reference
 refine
@@ -617,6 +660,7 @@ resolver
 response
 responsive
 rest
+restart
 result
 results
 resumability
@@ -671,6 +715,7 @@ shadows
 shape
 shared
 sheet
+should
 show
 sign
 signal
@@ -679,6 +724,7 @@ silhouette
 similarity
 simple
 single
+size
 skeleton
 skeletons
 skill
@@ -689,9 +735,12 @@ snapshot
 source
 spacing
 spec
+splash
 src
 stack
+stage
 start
+startup
 stat
 state
 states
@@ -705,6 +754,7 @@ stored
 strategy
 strict
 string
+strings
 strip
 structural
 structure
@@ -720,6 +770,7 @@ subcategory
 subcommands
 submit
 success
+summaries
 summarize
 summary
 supabase
@@ -752,6 +803,7 @@ there
 this
 timed
 timeout
+timing
 tips
 title
 toggle
@@ -761,6 +813,8 @@ tone
 tool
 toolbar
 tools
+top
+tops
 total
 tracker
 tracking
@@ -781,6 +835,7 @@ unavailable
 unchecked
 understand
 undertone
+unified
 unique
 unsafe
 unsupported
@@ -810,6 +865,7 @@ verified
 version
 video
 view
+viewbox
 views
 visible
 visual

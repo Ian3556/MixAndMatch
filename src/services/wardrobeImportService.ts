@@ -20,23 +20,32 @@ export async function importWardrobeUrl(input: string): Promise<WardrobeImportRe
   const validation = validateImportUrl(input);
   if (!validation.ok) throw new WardrobeImportClientError(validation.code, validation.message);
 
+  logImportStage('request_started', { domain: validation.url.hostname.toLowerCase() });
+
   const result = await getSupabaseClient().functions.invoke<WardrobeImportResponse>(
     'import-wardrobe-url',
     { body: { url: validation.url.toString() } },
   );
-  if (result.error) throw await normalizeFunctionError(result.error);
+  if (result.error) {
+    const normalized = await normalizeFunctionError(result.error);
+    logImportStage('failed', { code: normalized.code, stage: 'function_invoke' });
+    throw normalized;
+  }
   if (!isImportResponse(result.data)) {
+    logImportStage('failed', { code: 'IMPORT_FAILED', stage: 'response_validation' });
     throw new WardrobeImportClientError(
       'IMPORT_FAILED',
       'The import service returned an invalid response.',
     );
   }
   if (result.data.products.length === 0) {
+    logImportStage('failed', { code: 'NO_PRODUCTS_FOUND', stage: 'product_normalization' });
     throw new WardrobeImportClientError(
       'NO_PRODUCTS_FOUND',
       'No clothing products were found on this page. Try a direct product or collection URL.',
     );
   }
+  logImportStage('request_completed', { products: result.data.products.length });
   return result.data;
 }
 
@@ -45,6 +54,16 @@ async function normalizeFunctionError(error: unknown): Promise<WardrobeImportCli
   if (context instanceof Response) {
     try {
       const body = (await context.json()) as Partial<WardrobeImportErrorResponse>;
+      if (
+        context.status === 404 &&
+        readProperty(body, 'code') === 'NOT_FOUND' &&
+        readProperty(body, 'message') === 'Requested function was not found'
+      ) {
+        return new WardrobeImportClientError(
+          'SERVICE_UNAVAILABLE',
+          'Product import is not available in this environment yet. Continue manually or try again after the service is deployed.',
+        );
+      }
       if (isErrorCode(body.code) && typeof body.message === 'string') {
         return new WardrobeImportClientError(body.code, body.message);
       }
@@ -96,8 +115,13 @@ function isErrorCode(value: unknown): value is WardrobeImportErrorCode {
     'NO_PRODUCTS_FOUND',
     'RATE_LIMITED',
     'NETWORK_ERROR',
+    'SERVICE_UNAVAILABLE',
     'IMPORT_FAILED',
   ].includes(String(value));
+}
+
+function logImportStage(stage: string, details: Record<string, string | number>) {
+  if (typeof __DEV__ !== 'undefined' && __DEV__) console.info(`[ProductImport] ${stage}`, details);
 }
 
 function readProperty(value: unknown, key: string): unknown {

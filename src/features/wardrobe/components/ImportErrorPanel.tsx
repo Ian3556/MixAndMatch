@@ -22,6 +22,7 @@ function errorTitle(code: WardrobeImportClientError['code']): string {
   if (code === 'RATE_LIMITED') return 'Please wait';
   if (code === 'IMPORT_TIMEOUT') return 'Import timed out';
   if (code === 'NETWORK_ERROR') return 'Connection problem';
+  if (code === 'SERVICE_UNAVAILABLE') return 'Import service unavailable';
   if (code === 'UNSAFE_URL' || code === 'INVALID_URL' || code === 'UNSUPPORTED_PROTOCOL') {
     return 'Check the URL';
   }

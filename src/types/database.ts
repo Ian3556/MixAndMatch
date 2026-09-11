@@ -56,9 +56,11 @@ export type Database = {
           external_product_id: string | null;
           id: string;
           image_url: string | null;
-          import_method: 'manual' | 'website-url';
+          image_urls: string[];
+          import_method: 'catalog' | 'manual' | 'website-url';
           is_favorite: boolean;
           material: string | null;
+          metadata: Json;
           name: string;
           notes: string | null;
           occasion: string | null;
@@ -67,7 +69,9 @@ export type Database = {
           primary_color: string | null;
           season: string | null;
           secondary_color: string | null;
+          size: string | null;
           source_domain: string | null;
+          source_type: 'catalog' | 'manual' | 'url_import';
           source_url: string | null;
           subcategory: string | null;
           updated_at: string;
@@ -83,9 +87,11 @@ export type Database = {
           external_product_id?: string | null;
           id?: string;
           image_url?: string | null;
-          import_method: 'manual' | 'website-url';
+          image_urls?: string[];
+          import_method: 'catalog' | 'manual' | 'website-url';
           is_favorite?: boolean;
           material?: string | null;
+          metadata?: Json;
           name: string;
           notes?: string | null;
           occasion?: string | null;
@@ -94,7 +100,9 @@ export type Database = {
           primary_color?: string | null;
           season?: string | null;
           secondary_color?: string | null;
+          size?: string | null;
           source_domain?: string | null;
+          source_type: 'catalog' | 'manual' | 'url_import';
           source_url?: string | null;
           subcategory?: string | null;
           updated_at?: string;
@@ -108,9 +116,11 @@ export type Database = {
           deduplication_key?: string;
           external_product_id?: string | null;
           image_url?: string | null;
-          import_method?: 'manual' | 'website-url';
+          image_urls?: string[];
+          import_method?: 'catalog' | 'manual' | 'website-url';
           is_favorite?: boolean;
           material?: string | null;
+          metadata?: Json;
           name?: string;
           notes?: string | null;
           occasion?: string | null;
@@ -119,7 +129,9 @@ export type Database = {
           primary_color?: string | null;
           season?: string | null;
           secondary_color?: string | null;
+          size?: string | null;
           source_domain?: string | null;
+          source_type?: 'catalog' | 'manual' | 'url_import';
           source_url?: string | null;
           subcategory?: string | null;
           updated_at?: string;

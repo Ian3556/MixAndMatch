@@ -12,6 +12,7 @@ export type WardrobeImportErrorCode =
   | 'NO_PRODUCTS_FOUND'
   | 'RATE_LIMITED'
   | 'NETWORK_ERROR'
+  | 'SERVICE_UNAVAILABLE'
   | 'IMPORT_FAILED';
 
 export type ExtractionMethod = 'json-ld' | 'open-graph' | 'platform-adapter' | 'html-heuristic';
@@ -27,6 +28,7 @@ export type ImportedProductCandidate = {
   category?: string;
   subcategory?: string;
   color?: string;
+  size?: string;
   price?: number;
   currency?: string;
   availability?: string;
@@ -59,6 +61,7 @@ export type RawProductCandidate = {
   category?: string | undefined;
   subcategory?: string | undefined;
   color?: string | undefined;
+  size?: string | undefined;
   price?: number | string | undefined;
   currency?: string | undefined;
   availability?: string | undefined;

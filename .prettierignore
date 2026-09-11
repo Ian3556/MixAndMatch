@@ -4,6 +4,7 @@ coverage
 dist
 graphify-out
 node_modules
+supabase/.temp
 package-lock.json
 AGENTS.md
 assets/branding/*.svg

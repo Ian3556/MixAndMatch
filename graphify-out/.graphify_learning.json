@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-10T07:40:35.938760+00:00",
+  "generated_at": "2026-09-11T06:01:12.502192+00:00",
   "nodes": {
     "react": {
-      "code_fingerprint": "790dfe5e52e3096484dd1cfb30f965e64aa543c317ac62cb69b7ed13c41087d6",
+      "code_fingerprint": "78948bf99423605e216f34ee23fa73fb5b69470b792c830e41224879bd0a5d4c",
       "label": "react",
       "last": "2026-09-02T15:58:55.671068+00:00",
       "provenance": [
@@ -12,7 +12,7 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 0.837910887,
+      "score": 0.820079739,
       "source_file": "package.json",
       "status": "tentative",
       "uses": 1
@@ -28,7 +28,7 @@
           "q": "Wardrobe Page Update - Remove the \"Wardrobe\" heading - \"Categories\" section - \"All\" \"Tops\" ... remove the border radius"
         }
       ],
-      "score": 0.962913689,
+      "score": 0.942422421,
       "source_file": "src/components/ui/Chip.tsx",
       "status": "tentative",
       "uses": 1
@@ -44,7 +44,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.896423317,
+      "score": 0.877346996,
       "source_file": "src/components/ui/SearchBar.tsx",
       "status": "tentative",
       "uses": 1
@@ -60,8 +60,24 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.818235073,
+      "score": 0.800822636,
       "source_file": "src/components/ui/StateViews.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_auth_authbootstrap": {
+      "code_fingerprint": "2c6118f3d41f3cc939583a97382b67c644f0550a45c3e4d1e7897c840200ea87",
+      "label": "AuthBootstrap.tsx",
+      "last": "2026-09-10T08:55:39.679976+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-10T08:55:39.679976+00:00",
+          "outcome": "useful",
+          "q": "How should the Double M startup loader integrate with the existing app?"
+        }
+      ],
+      "score": 0.979898979,
+      "source_file": "src/features/auth/AuthBootstrap.tsx",
       "status": "tentative",
       "uses": 1
     },
@@ -86,7 +102,7 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 2.514181445,
+      "score": 2.460678451,
       "source_file": "src/features/explore/components/ExploreMasonryFeed.tsx",
       "status": "preferred",
       "uses": 3
@@ -102,7 +118,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.896423317,
+      "score": 0.877346996,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -118,7 +134,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.896423317,
+      "score": 0.877346996,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -134,7 +150,7 @@
           "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
         }
       ],
-      "score": 0.858076693,
+      "score": 0.839816407,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -150,7 +166,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.896423317,
+      "score": 0.877346996,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -186,7 +202,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 4.248338291,
+      "score": 4.157931603,
       "source_file": "src/features/explore/screens/ExploreScreen.tsx",
       "status": "preferred",
       "uses": 5
@@ -207,7 +223,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.734156846,
+      "score": 1.697253152,
       "source_file": "src/features/explore/screens/SearchResultsScreen.tsx",
       "status": "preferred",
       "uses": 2
@@ -223,7 +239,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.818235073,
+      "score": 0.800822636,
       "source_file": "src/features/home/screens/HomeScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -239,13 +255,13 @@
           "q": "There are a few errors that need to be fix: Explore Page Image keeps on rendering, make the image to ONLY render when user either refresh or reopen the app; The Back button instead of going back to the home page, make it go back to its previous action."
         }
       ],
-      "score": 0.838255373,
+      "score": 0.820416895,
       "source_file": "src/features/home/screens/InspirationDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
     },
     "src_features_wardrobe_screens_wardrobescreen_wardrobescreen": {
-      "code_fingerprint": "2a2fd7e1c9180e0c1a7314555ac8f9c892ef093576e04e02726bfe9801ae998d",
+      "code_fingerprint": "e9efdfd2f03e7fd94c1ef6c207406f06b618571c7579b3d242f37365f07cb9b4",
       "label": "WardrobeScreen()",
       "last": "2026-09-08T16:25:15.933639+00:00",
       "provenance": [
@@ -255,13 +271,13 @@
           "q": "Wardrobe Page Update - Remove the \"Wardrobe\" heading - \"Categories\" section - \"All\" \"Tops\" ... remove the border radius"
         }
       ],
-      "score": 0.962913689,
+      "score": 0.942422421,
       "source_file": "src/features/wardrobe/screens/WardrobeScreen.tsx",
       "status": "tentative",
       "uses": 1
     },
     "src_navigation_mainappnavigator": {
-      "code_fingerprint": "cc8ab76e73d1a9b05c6cd11eff765d9cb85e93b3dd6cd157116fcdb440c0a5c6",
+      "code_fingerprint": "e2f05ce1723d9c9325fecc59483e094d07748bfd9176f7a19c86893e15821fc3",
       "label": "MainAppNavigator.tsx",
       "last": "2026-09-03T16:41:06.618740+00:00",
       "provenance": [
@@ -276,13 +292,29 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.695810222,
+      "score": 1.659722562,
       "source_file": "src/navigation/MainAppNavigator.tsx",
       "status": "preferred",
       "uses": 2
     },
+    "src_navigation_rootnavigator": {
+      "code_fingerprint": "10fbcf73f13859571317cc7825fc1f4b5c052342aa4aff09afddbed0238cb268",
+      "label": "RootNavigator.tsx",
+      "last": "2026-09-10T08:55:39.679976+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-10T08:55:39.679976+00:00",
+          "outcome": "useful",
+          "q": "How should the Double M startup loader integrate with the existing app?"
+        }
+      ],
+      "score": 0.979898979,
+      "source_file": "src/navigation/RootNavigator.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
     "src_navigation_tabnavigators": {
-      "code_fingerprint": "19774a8acdb96347128841f26e676cf21e1633de2080345d36de583e518a8432",
+      "code_fingerprint": "845dcfffa359966b7d976680aa9865b55420cef897280ffebe2b78f647ee1320",
       "label": "TabNavigators.tsx",
       "last": "2026-09-03T16:41:06.618740+00:00",
       "provenance": [
@@ -302,13 +334,13 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 2.514567139,
+      "score": 2.461055937,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "preferred",
       "uses": 3
     },
     "src_navigation_tabnavigators_exploretabnavigator": {
-      "code_fingerprint": "19774a8acdb96347128841f26e676cf21e1633de2080345d36de583e518a8432",
+      "code_fingerprint": "845dcfffa359966b7d976680aa9865b55420cef897280ffebe2b78f647ee1320",
       "label": "ExploreTabNavigator()",
       "last": "2026-09-03T16:41:06.618740+00:00",
       "provenance": [
@@ -318,13 +350,13 @@
           "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
         }
       ],
-      "score": 0.858076693,
+      "score": 0.839816407,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "tentative",
       "uses": 1
     },
     "src_navigation_types": {
-      "code_fingerprint": "3b7ecf2a5367095cf2d3567a033ade24d7e1dad6ce77eae5a0f918a8f11d13b7",
+      "code_fingerprint": "d15f790183c4abc7e7bb867e19db11b737cb87d5da535109ec07104678b86eb2",
       "label": "navigation/types.ts",
       "last": "2026-09-03T16:41:06.618740+00:00",
       "provenance": [
@@ -339,13 +371,13 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.695810222,
+      "score": 1.659722562,
       "source_file": "src/navigation/types.ts",
       "status": "preferred",
       "uses": 2
     },
     "src_navigation_types_profilestackparamlist": {
-      "code_fingerprint": "3b7ecf2a5367095cf2d3567a033ade24d7e1dad6ce77eae5a0f918a8f11d13b7",
+      "code_fingerprint": "d15f790183c4abc7e7bb867e19db11b737cb87d5da535109ec07104678b86eb2",
       "label": "ProfileStackParamList",
       "last": "2026-09-05T15:11:22.407163+00:00",
       "provenance": [
@@ -355,8 +387,40 @@
           "q": "Remake the Mix & Match Profile experience with nested Style Profile screens, simple headings, real data, persistence, loading states, and working navigation."
         }
       ],
-      "score": 0.897365689,
+      "score": 0.878269314,
       "source_file": "src/navigation/types.ts",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_screens_initializationscreen": {
+      "code_fingerprint": "a7576c07d39406c18a3f9b7af4ae793b704f2f7a1e8226163abf98cd5226c51c",
+      "label": "InitializationScreen.tsx",
+      "last": "2026-09-10T08:55:39.679976+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-10T08:55:39.679976+00:00",
+          "outcome": "useful",
+          "q": "How should the Double M startup loader integrate with the existing app?"
+        }
+      ],
+      "score": 0.979898979,
+      "source_file": "src/screens/InitializationScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_store_authstoreruntime": {
+      "code_fingerprint": "6fca4d60af3ae7b75226fe7816ccfcf82766dcd099523f0a023929d3f74908b0",
+      "label": "authStoreRuntime.ts",
+      "last": "2026-09-10T08:55:39.679976+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-10T08:55:39.679976+00:00",
+          "outcome": "useful",
+          "q": "How should the Double M startup loader integrate with the existing app?"
+        }
+      ],
+      "score": 0.979898979,
+      "source_file": "src/store/authStoreRuntime.ts",
       "status": "tentative",
       "uses": 1
     },
@@ -371,7 +435,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.818235073,
+      "score": 0.800822636,
       "source_file": "src/theme/index.ts",
       "status": "tentative",
       "uses": 1

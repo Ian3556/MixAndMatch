@@ -1,9 +1,9 @@
-import { cleanText } from './html-utils';
+import { cleanText } from './html-utils.ts';
 import {
   MAX_IMPORTED_PRODUCTS,
   type ImportedProductCandidate,
   type RawProductCandidate,
-} from './types';
+} from './types.ts';
 
 const TRACKING_PARAMETERS = new Set(['fbclid', 'gclid', 'mc_cid', 'mc_eid', 'ref', 'source']);
 
@@ -46,6 +46,7 @@ export function normalizeProduct(
   if (category) result.category = category;
   assignText(result, 'subcategory', candidate.subcategory, 100);
   assignText(result, 'color', candidate.color, 100);
+  assignText(result, 'size', candidate.size, 100);
   assignText(result, 'availability', candidate.availability, 160);
   if (canonicalUrl) result.canonicalUrl = canonicalUrl;
   if (imageUrl) result.imageUrl = imageUrl;

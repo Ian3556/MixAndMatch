@@ -57,7 +57,7 @@ export function ImportedProductCard({
           pressed ? styles.pressed : null,
         ]}
       >
-        <Text style={styles.checkmark}>{item.selected ? 'âœ“' : 'â—‹'}</Text>
+        <Text style={styles.checkmark}>{item.selected ? '✓' : '○'}</Text>
         <Text style={styles.selectionLabel}>
           {item.duplicate ? 'Already in wardrobe' : item.selected ? 'Selected' : 'Not selected'}
         </Text>
@@ -67,9 +67,15 @@ export function ImportedProductCard({
           {candidate.name}
         </Text>
         <Text style={styles.meta}>
-          {[candidate.brand, candidate.category, formatPrice(candidate.price, candidate.currency)]
+          {[
+            candidate.brand,
+            candidate.category,
+            candidate.color,
+            candidate.size,
+            formatPrice(candidate.price, candidate.currency),
+          ]
             .filter(Boolean)
-            .join(' Â· ') || 'Details need review'}
+            .join(' · ') || 'Details need review'}
         </Text>
         <Text style={styles.source}>{candidate.sourceDomain}</Text>
         {item.incomplete ? <Text style={styles.warning}>Incomplete details</Text> : null}

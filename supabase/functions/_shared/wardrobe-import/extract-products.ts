@@ -2,10 +2,10 @@ import {
   extractGenericHtmlProducts,
   extractOpenGraphProduct,
   extractPlatformProducts,
-} from './html-parsers';
-import { extractJsonLdProducts } from './json-ld';
-import { normalizeProducts } from './normalize-product';
-import type { WardrobeImportResponse } from './types';
+} from './html-parsers.ts';
+import { extractJsonLdProducts } from './json-ld.ts';
+import { normalizeProducts } from './normalize-product.ts';
+import type { WardrobeImportResponse } from './types.ts';
 
 export function extractProductsFromHtml(html: string, sourceUrl: string): WardrobeImportResponse {
   const structured = extractJsonLdProducts(html, sourceUrl);

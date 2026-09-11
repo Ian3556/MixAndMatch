@@ -22,6 +22,8 @@ describe('wardrobe import extraction pipeline', () => {
       name: 'Linen & Cotton Shirt',
       brand: 'Example',
       category: 'Tops',
+      color: 'Ivory',
+      size: 'M',
       imageUrl: 'https://shop.example/images/shirt.jpg',
       extractionMethod: 'json-ld',
       confidence: 'high',

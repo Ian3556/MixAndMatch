@@ -1,6 +1,7 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
-import type { DraftWardrobeItem } from '@/types/wardrobe';
+import type { DraftWardrobeItem, ManualWardrobeItemPrefill } from '@/types/wardrobe';
+import type { CatalogBrandSourceStatus } from '@/types/catalogDatabase';
 
 export type AuthStackParamList = {
   Welcome: undefined;
@@ -30,10 +31,13 @@ export type ExploreStackParamList = {
 
 export type WardrobeStackParamList = {
   Wardrobe: { notice?: string } | undefined;
+  BrowseBrands: undefined;
+  BrandProducts: { brandId: string; brandName: string; brandStatus: CatalogBrandSourceStatus };
+  CatalogProduct: { productId: string };
   ImportWardrobeWebsite: undefined;
   AddItemEntry: undefined;
   AddItemImage: { source: 'camera' | 'gallery' | 'online' | 'manual' };
-  AddItemDetails: { imageKey: string };
+  AddItemDetails: { imageKey: string; initialDraft?: ManualWardrobeItemPrefill };
   AddItemReview: { draft: DraftWardrobeItem };
   WardrobeItemDetail: { itemId: string };
 };

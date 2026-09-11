@@ -53,4 +53,20 @@ describe('wardrobe import client', () => {
 
     await expect(importWardrobeUrl(response.sourceUrl)).resolves.toEqual(response);
   });
+
+  it('reports the real missing deployment response instead of a generic import error', async () => {
+    invoke.mockResolvedValue({
+      data: null,
+      error: {
+        context: new Response(
+          JSON.stringify({ code: 'NOT_FOUND', message: 'Requested function was not found' }),
+          { status: 404, headers: { 'Content-Type': 'application/json' } },
+        ),
+      },
+    });
+
+    await expect(importWardrobeUrl('https://shop.example.com/product/shirt')).rejects.toMatchObject(
+      { code: 'SERVICE_UNAVAILABLE' },
+    );
+  });
 });

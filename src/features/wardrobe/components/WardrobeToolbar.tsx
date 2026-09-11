@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useAppTheme, type AppTheme } from '@/theme';
 import type { WardrobeViewMode } from '@/store/wardrobeStore';
@@ -68,7 +68,8 @@ export function WardrobeToolbar({
         onPress={onAdd}
         style={({ pressed }) => [styles.addButton, pressed ? styles.pressed : null]}
       >
-        <Ionicons color={theme.colors.surface} name="add-outline" size={28} />
+        <Ionicons color={theme.colors.surface} name="add-outline" size={24} />
+        <Text style={styles.addLabel}>Add clothes</Text>
       </Pressable>
     </View>
   );
@@ -128,10 +129,18 @@ function createStyles(theme: AppTheme) {
     addButton: {
       alignItems: 'center',
       backgroundColor: theme.colors.primary,
+      flexDirection: 'row',
+      gap: theme.spacing.xs,
       height: 48,
       justifyContent: 'center',
       marginLeft: theme.spacing.xs,
-      width: 48,
+      paddingHorizontal: theme.spacing.md,
+    },
+    addLabel: {
+      color: theme.colors.surface,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontSize: theme.typography.fontSize.sm,
+      fontWeight: theme.typography.fontWeight.semibold,
     },
     pressed: { opacity: 0.64 },
   });

@@ -180,6 +180,9 @@ export function ImportWardrobeWebsiteScreen({ navigation }: Props) {
         onManual={() =>
           navigation.navigate(WARDROBE_ROUTES.ADD_ITEM_DETAILS, {
             imageKey: 'manual',
+            initialDraft: validation.ok
+              ? { sourceType: 'url_import', sourceUrl: validation.url.toString() }
+              : { sourceType: 'manual' },
           })
         }
         onPaste={() => void paste()}

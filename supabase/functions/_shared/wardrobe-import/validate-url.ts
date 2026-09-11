@@ -1,4 +1,4 @@
-import type { WardrobeImportErrorCode } from './types';
+import type { WardrobeImportErrorCode } from './types.ts';
 
 export const MAX_IMPORT_URL_LENGTH = 2048;
 

@@ -31,6 +31,7 @@ export function AddItemReviewScreen({ navigation, route }: Props) {
     ['Subcategory', draft.subcategory],
     ['Primary colour', draft.primaryColor],
     ['Secondary colour', draft.secondaryColor],
+    ['Size', draft.size],
     ['Pattern', draft.pattern],
     ['Material', draft.material],
     ['Brand', draft.brand],
@@ -39,6 +40,7 @@ export function AddItemReviewScreen({ navigation, route }: Props) {
     ['Price', draft.price ? `${draft.currency} ${Number(draft.price).toFixed(2)}`.trim() : ''],
     ['Favourite', draft.isFavorite ? 'Yes' : 'No'],
     ['Notes', draft.notes],
+    ['Source', draft.sourceUrl],
   ] as const;
 
   const save = async () => {

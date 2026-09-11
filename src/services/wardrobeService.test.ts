@@ -11,6 +11,10 @@ import {
 
 const row: WardrobeRow = {
   catalog_product_id: null,
+  image_urls: ['https://shop.example/shirt.jpg'],
+  metadata: {},
+  size: 'M',
+  source_type: 'url_import',
   id: 'item-1',
   user_id: 'user-1',
   name: 'Linen Shirt',
@@ -63,6 +67,7 @@ describe('wardrobe service', () => {
       name: ' Shirt ',
       category: ' Tops ',
       importMethod: 'manual',
+      sourceType: 'manual',
       deduplicationKey: 'manual:1',
     });
     expect(testGateway.insert).toHaveBeenCalledWith(
@@ -84,6 +89,7 @@ describe('wardrobe service', () => {
         name: key,
         category: 'Tops',
         importMethod: 'manual' as const,
+        sourceType: 'manual' as const,
         deduplicationKey: key,
       })),
     );
@@ -106,6 +112,7 @@ describe('wardrobe service', () => {
         brand: '   ',
         currency: 'myr',
         importMethod: 'manual',
+        sourceType: 'manual',
         deduplicationKey: 'manual:1',
       }),
     ).toMatchObject({ brand: null, currency: 'MYR' });

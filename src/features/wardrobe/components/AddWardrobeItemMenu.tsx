@@ -7,11 +7,12 @@ import { useAppTheme, type AppTheme } from '@/theme';
 type Props = {
   visible: boolean;
   onDismiss: () => void;
+  onBrowse: () => void;
   onImport: () => void;
   onManual: () => void;
 };
 
-export function AddWardrobeItemMenu({ visible, onDismiss, onImport, onManual }: Props) {
+export function AddWardrobeItemMenu({ visible, onDismiss, onBrowse, onImport, onManual }: Props) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
@@ -53,6 +54,14 @@ export function AddWardrobeItemMenu({ visible, onDismiss, onImport, onManual }: 
               </View>
 
               <MenuOption
+                description="Browse verified products in the shared catalog"
+                icon="storefront-outline"
+                label="Browse brands"
+                onPress={() => choose(onBrowse)}
+                styles={styles}
+                theme={theme}
+              />
+              <MenuOption
                 description="Paste a public product or collection URL"
                 icon="link-outline"
                 label="Import from website"
@@ -78,7 +87,7 @@ export function AddWardrobeItemMenu({ visible, onDismiss, onImport, onManual }: 
 
 type MenuOptionProps = {
   description: string;
-  icon: 'link-outline' | 'create-outline';
+  icon: 'link-outline' | 'create-outline' | 'storefront-outline';
   label: string;
   onPress: () => void;
   styles: ReturnType<typeof createStyles>;

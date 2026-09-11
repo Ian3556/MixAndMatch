@@ -1,4 +1,5 @@
 import type { CreateWardrobeItemInput, DraftWardrobeItem } from '@/types/wardrobe';
+import { buildWardrobeInput } from '@/services/wardrobeNormalization';
 
 export type ManualWardrobeItemErrors = Partial<
   Record<'category' | 'currency' | 'imageUrl' | 'name' | 'price', string>
@@ -36,29 +37,33 @@ export function validateManualWardrobeItem(draft: DraftWardrobeItem): ManualWard
 }
 
 export function buildManualWardrobeInput(draft: DraftWardrobeItem): CreateWardrobeItemInput {
-  const normalized = {
-    name: draft.name.trim(),
-    category: draft.category.trim(),
-    subcategory: optional(draft.subcategory),
-    primaryColor: optional(draft.primaryColor),
-    secondaryColor: optional(draft.secondaryColor),
-    pattern: optional(draft.pattern),
-    material: optional(draft.material),
-    brand: optional(draft.brand),
-    season: optional(draft.season),
-    occasion: optional(draft.occasion),
-    notes: optional(draft.notes),
-    imageUrl: optional(draft.imageUrl),
-    price: draft.price.trim() ? Number(draft.price) : null,
-    currency: optional(draft.currency)?.toUpperCase() ?? null,
-  };
-
-  return {
-    ...normalized,
-    isFavorite: draft.isFavorite,
-    importMethod: 'manual',
-    deduplicationKey: draft.deduplicationKey,
-  };
+  return buildWardrobeInput(
+    {
+      sourceType: draft.sourceType,
+      sourceUrl: optional(draft.sourceUrl),
+      sourceDomain: hostname(draft.sourceUrl),
+      externalProductId: null,
+      catalogProductId: null,
+      name: draft.name,
+      category: draft.category,
+      subcategory: optional(draft.subcategory),
+      color: optional(draft.primaryColor),
+      secondaryColor: optional(draft.secondaryColor),
+      size: optional(draft.size),
+      pattern: optional(draft.pattern),
+      material: optional(draft.material),
+      brand: optional(draft.brand),
+      season: optional(draft.season),
+      occasion: optional(draft.occasion),
+      notes: optional(draft.notes),
+      primaryImageUrl: optional(draft.imageUrl),
+      price: draft.price.trim() ? Number(draft.price) : null,
+      currency: optional(draft.currency),
+      metadata: { entryMode: draft.sourceType === 'url_import' ? 'manual_fallback' : 'manual' },
+    },
+    draft.deduplicationKey,
+    draft.isFavorite,
+  );
 }
 
 export function createManualDeduplicationKey(): string {
@@ -77,4 +82,13 @@ function isPublicImageUrl(value: string): boolean {
 function optional(value: string): string | null {
   const normalized = value.trim();
   return normalized || null;
+}
+
+function hostname(value: string): string | null {
+  if (!value.trim()) return null;
+  try {
+    return new URL(value).hostname.toLowerCase();
+  } catch {
+    return null;
+  }
 }

@@ -21,6 +21,106 @@ export type CatalogProductStatus =
 export type CatalogImportJobStatus =
   'queued' | 'running' | 'paused' | 'completed' | 'completed_with_errors' | 'failed' | 'stopped';
 
+export type CatalogBrandRow = {
+  id: string;
+  name: string;
+  slug: string;
+  brand_group: string;
+  website_url: string | null;
+  logo_url: string | null;
+  source_status: CatalogBrandSourceStatus;
+  enabled: boolean;
+  featured: boolean;
+  last_synced_at: string | null;
+  target_validated_count: number;
+  category_targets: CatalogJson;
+  source_status_reason: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CatalogCategoryRow = {
+  id: string;
+  parent_id: string | null;
+  name: string;
+  slug: string;
+  level: number;
+  sort_order: number;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CatalogProductRow = {
+  id: string;
+  brand_id: string;
+  external_product_id: string | null;
+  external_style_id: string | null;
+  external_sku: string | null;
+  name: string;
+  slug: string;
+  description: string | null;
+  category_id: string;
+  subcategory_id: string | null;
+  raw_category: string | null;
+  raw_subcategory: string | null;
+  gender: string;
+  primary_color: string | null;
+  color_family: string | null;
+  material_summary: string | null;
+  current_price: number | null;
+  original_price: number | null;
+  currency: string | null;
+  price_unavailable: boolean;
+  availability: string | null;
+  source_url: string;
+  canonical_url: string;
+  source_domain: string;
+  deduplication_key: string;
+  status: CatalogProductStatus;
+  validation_errors: string[];
+  validation_warnings: string[];
+  overall_confidence: number;
+  normalization_version: string;
+  imported_at: string;
+  last_checked_at: string | null;
+  created_at: string;
+  updated_at: string;
+  search_document: unknown;
+};
+
+export type CatalogProductVariantRow = {
+  id: string;
+  product_id: string;
+  external_variant_id: string | null;
+  sku: string | null;
+  variant_key: string;
+  size: string | null;
+  color: string | null;
+  price: number | null;
+  currency: string | null;
+  availability: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CatalogProductImageRow = {
+  id: string;
+  product_id: string;
+  image_url: string;
+  source_url: string;
+  position: number;
+  image_type: string;
+  created_at: string;
+};
+
+export type CatalogBrandCategoryRow = {
+  category_id: string;
+  category_name: string;
+  category_slug: string;
+  product_count: number;
+};
+
 type ReadMostlyTable<Row> = {
   Row: Row;
   Insert: Partial<Row>;
@@ -111,21 +211,7 @@ export type CatalogDatabaseTables = {
     note: string | null;
     created_at: string;
   }>;
-  catalog_brands: ReadMostlyTable<{
-    id: string;
-    name: string;
-    slug: string;
-    brand_group: string;
-    website_url: string | null;
-    logo_url: string | null;
-    source_status: CatalogBrandSourceStatus;
-    enabled: boolean;
-    target_validated_count: number;
-    category_targets: CatalogJson;
-    source_status_reason: string | null;
-    created_at: string;
-    updated_at: string;
-  }>;
+  catalog_brands: ReadMostlyTable<CatalogBrandRow>;
   catalog_brand_sources: ReadMostlyTable<{
     id: string;
     brand_id: string;
@@ -148,56 +234,10 @@ export type CatalogDatabaseTables = {
     created_at: string;
     updated_at: string;
   }>;
-  catalog_categories: ReadMostlyTable<{
-    id: string;
-    parent_id: string | null;
-    name: string;
-    slug: string;
-    level: number;
-    sort_order: number;
-    enabled: boolean;
-    created_at: string;
-    updated_at: string;
-  }>;
-  catalog_products: ReadMostlyTable<{
-    id: string;
-    brand_id: string;
-    external_product_id: string | null;
-    external_style_id: string | null;
-    external_sku: string | null;
-    name: string;
-    slug: string;
-    description: string | null;
-    category_id: string;
-    subcategory_id: string | null;
-    raw_category: string | null;
-    raw_subcategory: string | null;
-    gender: string;
-    primary_color: string | null;
-    color_family: string | null;
-    material_summary: string | null;
-    current_price: number | null;
-    original_price: number | null;
-    currency: string | null;
-    price_unavailable: boolean;
-    availability: string | null;
-    source_url: string;
-    canonical_url: string;
-    source_domain: string;
-    deduplication_key: string;
-    status: CatalogProductStatus;
-    validation_errors: string[];
-    validation_warnings: string[];
-    overall_confidence: number;
-    normalization_version: string;
-    imported_at: string;
-    last_checked_at: string | null;
-    created_at: string;
-    updated_at: string;
-    search_document: unknown;
-  }>;
-  catalog_product_variants: ReadMostlyTable<Record<string, unknown>>;
-  catalog_product_images: ReadMostlyTable<Record<string, unknown>>;
+  catalog_categories: ReadMostlyTable<CatalogCategoryRow>;
+  catalog_products: ReadMostlyTable<CatalogProductRow>;
+  catalog_product_variants: ReadMostlyTable<CatalogProductVariantRow>;
+  catalog_product_images: ReadMostlyTable<CatalogProductImageRow>;
   catalog_style_tags: ReadMostlyTable<Record<string, unknown>>;
   catalog_product_style_tags: ReadMostlyTable<Record<string, unknown>>;
   catalog_product_style_profiles: ReadMostlyTable<Record<string, unknown>>;
@@ -228,6 +268,10 @@ export type CatalogDatabaseFunctions = {
   catalog_admin_import_errors: {
     Args: { p_job_id?: string | null; p_limit?: number };
     Returns: CatalogImportErrorRow[];
+  };
+  catalog_browse_brand_categories: {
+    Args: { p_brand_id: string };
+    Returns: CatalogBrandCategoryRow[];
   };
 };
 

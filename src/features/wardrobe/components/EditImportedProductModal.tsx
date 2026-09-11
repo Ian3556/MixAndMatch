@@ -20,6 +20,7 @@ type EditFields = {
   subcategory: string;
   brand: string;
   color: string;
+  size: string;
   imageUrl: string;
   notes: string;
 };
@@ -52,6 +53,7 @@ function EditImportedProductForm({
     subcategory: candidate.subcategory ?? '',
     brand: candidate.brand ?? '',
     color: candidate.color ?? '',
+    size: candidate.size ?? '',
     imageUrl: candidate.imageUrl ?? '',
     notes: candidate.description ?? '',
   }));
@@ -72,6 +74,7 @@ function EditImportedProductForm({
       subcategory: fields.subcategory.trim(),
       brand: fields.brand.trim(),
       color: fields.color.trim(),
+      size: fields.size.trim(),
       imageUrl: fields.imageUrl.trim(),
       description: fields.notes.trim(),
     });
@@ -127,6 +130,11 @@ function EditImportedProductForm({
               label="Colour"
               onChangeText={(value) => update('color', value)}
               value={fields.color}
+            />
+            <FormTextInput
+              label="Size"
+              onChangeText={(value) => update('size', value)}
+              value={fields.size}
             />
             <FormTextInput
               autoCapitalize="none"

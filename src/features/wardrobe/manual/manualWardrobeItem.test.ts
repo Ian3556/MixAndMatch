@@ -13,6 +13,7 @@ const draft: DraftWardrobeItem = {
   subcategory: 'Tailored',
   primaryColor: 'Navy',
   secondaryColor: '',
+  size: 'M',
   pattern: 'Solid',
   material: 'Wool',
   brand: 'Example',
@@ -22,6 +23,8 @@ const draft: DraftWardrobeItem = {
   price: '249.90',
   currency: 'myr',
   isFavorite: false,
+  sourceType: 'manual',
+  sourceUrl: '',
 };
 
 describe('manual wardrobe item workflow', () => {
@@ -52,6 +55,7 @@ describe('manual wardrobe item workflow', () => {
       price: 249.9,
       currency: 'MYR',
       importMethod: 'manual',
+      sourceType: 'manual',
     });
   });
 

@@ -13,6 +13,11 @@ own-row `SELECT`, `INSERT`, `UPDATE`, and `DELETE` RLS policies.
 developer-only management RPCs, validated consumer reads, and an optional wardrobe provenance link.
 It does not seed retailer products or enable a source automatically.
 
+`migrations/20260911000100_unify_wardrobe_sources_and_catalog_browse.sql` adds consumer Browse Brands
+metadata, the validated-product category RPC, source-aware wardrobe fields, and catalog-item indexes.
+Apply it before testing catalog-to-wardrobe saves. Existing manual and website-import rows are
+backfilled non-destructively.
+
 Review the target project before applying migrations:
 
 ```powershell

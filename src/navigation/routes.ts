@@ -41,6 +41,9 @@ export const EXPLORE_ROUTES = {
 
 export const WARDROBE_ROUTES = {
   WARDROBE: 'Wardrobe',
+  BROWSE_BRANDS: 'BrowseBrands',
+  BRAND_PRODUCTS: 'BrandProducts',
+  CATALOG_PRODUCT: 'CatalogProduct',
   IMPORT_WEBSITE: 'ImportWardrobeWebsite',
   ADD_ITEM_ENTRY: 'AddItemEntry',
   ADD_ITEM_IMAGE: 'AddItemImage',

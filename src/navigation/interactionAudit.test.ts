@@ -154,7 +154,7 @@ describe('application interaction audit', () => {
     for (const label of [
       'Paste',
       'Clear',
-      'Analyse URL',
+      'Import product',
       'Select all',
       'Deselect all',
       'Add selected to wardrobe',

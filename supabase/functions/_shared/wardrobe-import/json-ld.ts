@@ -1,5 +1,5 @@
-import { getCanonicalUrl } from './html-utils';
-import type { RawProductCandidate } from './types';
+import { getCanonicalUrl } from './html-utils.ts';
+import type { RawProductCandidate } from './types.ts';
 
 type JsonRecord = Record<string, unknown>;
 
@@ -72,6 +72,7 @@ function mapProduct(
     canonicalUrl: pageCanonical ?? readString(product.url),
     category: readString(product.category),
     color: readString(product.color),
+    size: readString(product.size),
     price: typeof price === 'number' || typeof price === 'string' ? price : undefined,
     currency: readString(currency),
     availability: readString(offers?.availability),

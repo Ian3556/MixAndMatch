@@ -32,6 +32,7 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
     subcategory: '',
     primaryColor: '',
     secondaryColor: '',
+    size: '',
     pattern: '',
     material: '',
     brand: '',
@@ -41,6 +42,9 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
     price: '',
     currency: '',
     isFavorite: false,
+    sourceType: 'manual',
+    sourceUrl: '',
+    ...route.params.initialDraft,
   }));
   const [errors, setErrors] = useState<ManualWardrobeItemErrors>({});
 
@@ -121,6 +125,14 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
         </View>
       </View>
 
+      <FormTextInput
+        label="Size"
+        maxLength={100}
+        onChangeText={(value) => updateDraft('size', value)}
+        placeholder="Optional"
+        value={draft.size}
+      />
+
       <View style={styles.twoColumn}>
         <View style={styles.fieldColumn}>
           <SelectField
@@ -190,6 +202,9 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
       <Text accessibilityRole="header" style={styles.groupHeading}>
         Purchase information
       </Text>
+      {draft.sourceUrl ? (
+        <Text style={styles.sourceNote}>Source retained from {draft.sourceUrl}</Text>
+      ) : null}
       <View style={styles.twoColumn}>
         <View style={styles.fieldColumn}>
           <FormTextInput
@@ -241,6 +256,12 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
     requiredNote: {
+      color: theme.colors.textMuted,
+      fontFamily: theme.typography.fontFamily.regular,
+      fontSize: theme.typography.fontSize.xs,
+      lineHeight: theme.typography.lineHeight.xs,
+    },
+    sourceNote: {
       color: theme.colors.textMuted,
       fontFamily: theme.typography.fontFamily.regular,
       fontSize: theme.typography.fontSize.xs,

@@ -1,6 +1,7 @@
 import { extractProductsFromHtml } from '../_shared/wardrobe-import/extract-products.ts';
 import { fetchHtmlPage, WardrobeImportError } from '../_shared/wardrobe-import/fetch-page.ts';
 import { resolvePublicDns } from '../_shared/wardrobe-import/resolve-public-dns.ts';
+import { validateImportUrl } from '../_shared/wardrobe-import/validate-url.ts';
 import type {
   WardrobeImportErrorResponse,
   WardrobeImportResponse,
@@ -22,9 +23,12 @@ Deno.serve(async (request: Request) => {
     return new Response(null, { status: 204, headers: corsHeaders });
   if (request.method !== 'POST') return errorResponse('IMPORT_FAILED', 'Method not allowed.', 405);
 
+  let stage = 'request_started';
+  logStage('request_started');
   try {
     const userId = await authenticateRequest(request);
     enforceRateLimit(userId);
+    stage = 'request_parsing';
     const rawBody = await request.text();
     if (rawBody.length > 4096) {
       throw new WardrobeImportError('INVALID_URL', 'The request body is too large.', 413);
@@ -34,10 +38,20 @@ Deno.serve(async (request: Request) => {
       throw new WardrobeImportError('INVALID_URL', 'Enter a public product or collection URL.');
     }
 
-    const page = await fetchHtmlPage(body.url, {
+    stage = 'url_validation';
+    const validation = validateImportUrl(body.url);
+    if (!validation.ok) {
+      throw new WardrobeImportError(validation.code, validation.message);
+    }
+    logStage('url_validated', { domain: validation.url.hostname.toLowerCase() });
+
+    stage = 'page_fetch';
+    const page = await fetchHtmlPage(validation.url.toString(), {
       fetch,
       resolveHostname: resolvePublicDns,
     });
+    logStage('page_fetched', { domain: new URL(page.finalUrl).hostname.toLowerCase() });
+    stage = 'product_extraction';
     const result = extractProductsFromHtml(page.html, page.finalUrl);
     if (result.products.length === 0) {
       throw new WardrobeImportError(
@@ -47,14 +61,20 @@ Deno.serve(async (request: Request) => {
       );
     }
 
+    logStage('product_normalized', { products: result.products.length });
+    logStage('request_completed', { products: result.products.length });
+
     return jsonResponse<WardrobeImportResponse>(result, 200);
   } catch (error) {
     if (error instanceof WardrobeImportError) {
+      logStage('failed', { stage, code: error.code });
       return errorResponse(error.code, error.message, error.status);
     }
     if (error instanceof SyntaxError) {
+      logStage('failed', { stage, code: 'INVALID_URL' });
       return errorResponse('INVALID_URL', 'The request body is invalid.', 400);
     }
+    logStage('failed', { stage, code: 'IMPORT_FAILED' });
     return errorResponse('IMPORT_FAILED', 'The page could not be imported. Try again later.', 500);
   }
 });
@@ -105,4 +125,8 @@ function errorResponse(code: WardrobeImportErrorResponse['code'], message: strin
 
 function jsonResponse<T>(body: T, status: number) {
   return new Response(JSON.stringify(body), { status, headers: corsHeaders });
+}
+
+function logStage(stage: string, details: Record<string, string | number> = {}) {
+  console.info(`[ProductImport] ${stage}`, details);
 }

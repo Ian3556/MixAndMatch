@@ -26,12 +26,14 @@ type Props = {
 };
 
 const supportedPages = [
-  { supported: true, label: 'Public individual product pages' },
-  { supported: true, label: 'Public category or collection pages with product markup' },
-  { supported: true, label: 'Retailer or brand pages that expose product metadata' },
-  { supported: false, label: 'Homepages without product information' },
-  { supported: false, label: 'Login-only, private, or CAPTCHA-protected pages' },
-  { supported: false, label: 'JavaScript-only or access-blocked websites' },
+  'Individual product pages',
+  'Public fashion product pages',
+  'Pages with structured product data',
+] as const;
+const unsupportedPages = [
+  'Home or search pages',
+  'Shopping carts',
+  'Login-protected or private pages',
 ] as const;
 
 export function ImportUrlInputStep({
@@ -58,16 +60,16 @@ export function ImportUrlInputStep({
         <Text accessibilityRole="header" style={styles.supportedTitle}>
           Supported pages
         </Text>
-        <View>
-          {supportedPages.map((item) => (
-            <View key={item.label} style={styles.supportRow}>
-              <Ionicons
-                color={item.supported ? theme.colors.success : theme.colors.danger}
-                name={item.supported ? 'checkmark-outline' : 'close-outline'}
-                size={20}
-              />
-              <Text style={styles.supportLabel}>{item.label}</Text>
-            </View>
+        <View style={styles.indicatorGroup}>
+          <Text style={styles.indicatorHeading}>Supported</Text>
+          {supportedPages.map((label) => (
+            <SupportIndicator key={label} label={label} supported />
+          ))}
+        </View>
+        <View style={styles.indicatorGroup}>
+          <Text style={styles.indicatorHeading}>Not supported</Text>
+          {unsupportedPages.map((label) => (
+            <SupportIndicator key={label} label={label} supported={false} />
           ))}
         </View>
       </View>
@@ -76,7 +78,7 @@ export function ImportUrlInputStep({
         autoCorrect={false}
         error={inputError}
         keyboardType="url"
-        label="Retailer URL"
+        label="Paste product URL"
         maxLength={2048}
         onChangeText={onUrlChange}
         onSubmitEditing={onAnalyze}
@@ -98,12 +100,27 @@ export function ImportUrlInputStep({
           onRetry={error.code === 'NO_PRODUCTS_FOUND' ? onTryAnother : onAnalyze}
         />
       ) : null}
-      <ActionButton label="Analyse URL" loading={isImporting} onPress={onAnalyze} />
+      <ActionButton label="Import product" loading={isImporting} onPress={onAnalyze} />
       <ActionButton label="Cancel" onPress={onCancel} variant="text" />
-      {error?.code === 'NO_PRODUCTS_FOUND' || error?.code === 'ACCESS_DENIED' ? (
-        <ActionButton label="Add item manually" onPress={onManual} variant="secondary" />
+      {error ? (
+        <ActionButton label="Continue manually" onPress={onManual} variant="secondary" />
       ) : null}
     </AppScreen>
+  );
+}
+
+function SupportIndicator({ label, supported }: { label: string; supported: boolean }) {
+  const theme = useAppTheme();
+  const styles = createStyles(theme);
+  return (
+    <View style={styles.supportRow}>
+      <Ionicons
+        color={supported ? theme.colors.success : theme.colors.danger}
+        name={supported ? 'checkmark-outline' : 'close-outline'}
+        size={20}
+      />
+      <Text style={styles.supportLabel}>{label}</Text>
+    </View>
   );
 }
 
@@ -116,6 +133,14 @@ function createStyles(theme: AppTheme) {
       fontSize: theme.typography.fontSize.sm,
       fontWeight: theme.typography.fontWeight.semibold,
       letterSpacing: 1.2,
+      textTransform: 'uppercase',
+    },
+    indicatorGroup: { gap: theme.spacing.xs },
+    indicatorHeading: {
+      color: theme.colors.textMuted,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontSize: theme.typography.fontSize.xs,
+      letterSpacing: 1,
       textTransform: 'uppercase',
     },
     supportRow: {
