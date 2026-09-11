@@ -1,3 +1,5 @@
+/// <reference path="../_shared/deno-runtime.d.ts" />
+
 import { extractProductsFromHtml } from '../_shared/wardrobe-import/extract-products.ts';
 import { fetchHtmlPage, WardrobeImportError } from '../_shared/wardrobe-import/fetch-page.ts';
 import { resolvePublicDns } from '../_shared/wardrobe-import/resolve-public-dns.ts';

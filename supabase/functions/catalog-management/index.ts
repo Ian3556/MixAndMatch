@@ -1,3 +1,5 @@
+/// <reference path="../_shared/deno-runtime.d.ts" />
+
 import { GenericStructuredDataAdapter } from '../_shared/catalog/adapters/generic-structured-data.ts';
 import { selectNextCatalogJobEntries } from '../_shared/catalog/job-state.ts';
 import {

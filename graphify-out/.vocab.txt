@@ -17,6 +17,7 @@ admin
 affected
 agents
 all
+allow
 allowed
 amendment
 analyze
@@ -253,6 +254,7 @@ exports
 extend
 extended
 extends
+extensions
 external
 extra
 extract
@@ -365,6 +367,7 @@ implemented
 import
 imported
 importer
+importing
 include
 includin
 including
@@ -481,6 +484,7 @@ modal
 mode
 model
 modified
+module
 monochrome
 monotonic
 mostly

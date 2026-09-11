@@ -690,8 +690,8 @@
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/extract-products.ts": {
-    "mtime": 1785941287.5030441,
-    "ast_hash": "783127791f79959b2b8822894cf17351",
+    "mtime": 1789106579.766013,
+    "ast_hash": "96be58c777534903fc69795ca7a8cc8d",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/fetch-page.test.ts": {
@@ -700,13 +700,13 @@
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/fetch-page.ts": {
-    "mtime": 1786120413.683813,
-    "ast_hash": "022aaab2df654a6535bb5981f9682bbb",
+    "mtime": 1789106581.033719,
+    "ast_hash": "e2b7a09e6262be3b6fadccd430e6ca3b",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/html-parsers.ts": {
-    "mtime": 1789105708.590603,
-    "ast_hash": "466616f2554e467452c81a6fd5126bd0",
+    "mtime": 1789106582.3879476,
+    "ast_hash": "60e633244daeaf3a8523a13512bdf6f9",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/html-utils.ts": {
@@ -715,13 +715,13 @@
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/json-ld.ts": {
-    "mtime": 1789105707.3819518,
-    "ast_hash": "632dc2cefbeeafc5838b09d4a8f0d211",
+    "mtime": 1789106583.5383317,
+    "ast_hash": "7712c52dc0ff0089b76e9542261a8e7d",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/normalize-product.ts": {
-    "mtime": 1789105706.1879249,
-    "ast_hash": "7957a145935ee60b66c0f983d9fe6642",
+    "mtime": 1789106584.7569978,
+    "ast_hash": "64d2e77d2ae2887ad73a1432c0b52465",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/types.ts": {
@@ -735,8 +735,8 @@
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/validate-url.ts": {
-    "mtime": 1785941287.6009,
-    "ast_hash": "4e68d05af939a4d5cb6f8d64a26263e9",
+    "mtime": 1789106587.297402,
+    "ast_hash": "6d88c5a07ea66e2594c56ab408d0d632",
     "semantic_hash": ""
   },
   "supabase/functions/import-wardrobe-url/index.ts": {
@@ -760,8 +760,8 @@
     "semantic_hash": ""
   },
   "tsconfig.json": {
-    "mtime": 1786120443.4109502,
-    "ast_hash": "7ad9f0c71fab694850c02467d7d05e26",
+    "mtime": 1789106643.034246,
+    "ast_hash": "d2ca40499d8172dc98cad0f49e59b937",
     "semantic_hash": ""
   },
   "vercel.json": {
@@ -1070,8 +1070,8 @@
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/resolve-public-dns.ts": {
-    "mtime": 1786120044.9399424,
-    "ast_hash": "80de30aee1e48cfbc29ba62fec0a249c",
+    "mtime": 1789106586.0115714,
+    "ast_hash": "8f32f67e45940504077c4c948c18569d",
     "semantic_hash": ""
   },
   "supabase/functions/catalog-management/index.ts": {
@@ -1607,6 +1607,11 @@
   "graphify-out/memory/query_20260911_054602_how_should_the_existing_wardrobe__catalog__url_imp.md": {
     "mtime": 1789105562.674069,
     "ast_hash": "158853d1afcadf174232d8834df00f12",
+    "semantic_hash": ""
+  },
+  "supabase/functions/import-wardrobe-url/module-resolution.test.ts": {
+    "mtime": 1789106662.7836869,
+    "ast_hash": "957914734bbb7d85ec3b89c4af71a44e",
     "semantic_hash": ""
   }
 }

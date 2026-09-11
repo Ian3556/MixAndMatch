@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-11T06:01:12.502192+00:00",
+  "generated_at": "2026-09-11T06:22:24.210064+00:00",
   "nodes": {
     "react": {
       "code_fingerprint": "78948bf99423605e216f34ee23fa73fb5b69470b792c830e41224879bd0a5d4c",
@@ -12,8 +12,24 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 0.820079739,
+      "score": 0.819800896,
       "source_file": "package.json",
+      "status": "tentative",
+      "uses": 1
+    },
+    "ref_supabase_functions_import_wardrobe_url_index_ts": {
+      "code_fingerprint": "9b186f423ebce1c7eaac219d9a2f4878c7143e421406f996bc6f39b4887c32b5",
+      "label": "supabase/functions/import-wardrobe-url/index.ts",
+      "last": "2026-09-11T06:09:37.575702+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-11T06:09:37.575702+00:00",
+          "outcome": "useful",
+          "q": "unexpected deploy status 400: Failed to bundle import-wardrobe-url because html-parsers module was not found"
+        }
+      ],
+      "score": 0.999795009,
+      "source_file": "tsconfig.json",
       "status": "tentative",
       "uses": 1
     },
@@ -28,7 +44,7 @@
           "q": "Wardrobe Page Update - Remove the \"Wardrobe\" heading - \"Categories\" section - \"All\" \"Tops\" ... remove the border radius"
         }
       ],
-      "score": 0.942422421,
+      "score": 0.942101979,
       "source_file": "src/components/ui/Chip.tsx",
       "status": "tentative",
       "uses": 1
@@ -44,7 +60,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.877346996,
+      "score": 0.877048681,
       "source_file": "src/components/ui/SearchBar.tsx",
       "status": "tentative",
       "uses": 1
@@ -60,7 +76,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.800822636,
+      "score": 0.80055034,
       "source_file": "src/components/ui/StateViews.tsx",
       "status": "tentative",
       "uses": 1
@@ -76,7 +92,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.979898979,
+      "score": 0.979565794,
       "source_file": "src/features/auth/AuthBootstrap.tsx",
       "status": "tentative",
       "uses": 1
@@ -102,7 +118,7 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 2.460678451,
+      "score": 2.459841772,
       "source_file": "src/features/explore/components/ExploreMasonryFeed.tsx",
       "status": "preferred",
       "uses": 3
@@ -118,7 +134,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.877346996,
+      "score": 0.877048681,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -134,7 +150,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.877346996,
+      "score": 0.877048681,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -150,7 +166,7 @@
           "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
         }
       ],
-      "score": 0.839816407,
+      "score": 0.839530853,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -166,7 +182,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.877346996,
+      "score": 0.877048681,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -202,7 +218,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 4.157931603,
+      "score": 4.156517825,
       "source_file": "src/features/explore/screens/ExploreScreen.tsx",
       "status": "preferred",
       "uses": 5
@@ -223,7 +239,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.697253152,
+      "score": 1.696676053,
       "source_file": "src/features/explore/screens/SearchResultsScreen.tsx",
       "status": "preferred",
       "uses": 2
@@ -239,7 +255,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.800822636,
+      "score": 0.80055034,
       "source_file": "src/features/home/screens/HomeScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -255,7 +271,7 @@
           "q": "There are a few errors that need to be fix: Explore Page Image keeps on rendering, make the image to ONLY render when user either refresh or reopen the app; The Back button instead of going back to the home page, make it go back to its previous action."
         }
       ],
-      "score": 0.820416895,
+      "score": 0.820137937,
       "source_file": "src/features/home/screens/InspirationDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -271,7 +287,7 @@
           "q": "Wardrobe Page Update - Remove the \"Wardrobe\" heading - \"Categories\" section - \"All\" \"Tops\" ... remove the border radius"
         }
       ],
-      "score": 0.942422421,
+      "score": 0.942101979,
       "source_file": "src/features/wardrobe/screens/WardrobeScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -292,7 +308,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.659722562,
+      "score": 1.659158224,
       "source_file": "src/navigation/MainAppNavigator.tsx",
       "status": "preferred",
       "uses": 2
@@ -308,7 +324,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.979898979,
+      "score": 0.979565794,
       "source_file": "src/navigation/RootNavigator.tsx",
       "status": "tentative",
       "uses": 1
@@ -334,7 +350,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 2.461055937,
+      "score": 2.46021913,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "preferred",
       "uses": 3
@@ -350,7 +366,7 @@
           "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
         }
       ],
-      "score": 0.839816407,
+      "score": 0.839530853,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "tentative",
       "uses": 1
@@ -371,7 +387,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.659722562,
+      "score": 1.659158224,
       "source_file": "src/navigation/types.ts",
       "status": "preferred",
       "uses": 2
@@ -387,7 +403,7 @@
           "q": "Remake the Mix & Match Profile experience with nested Style Profile screens, simple headings, real data, persistence, loading states, and working navigation."
         }
       ],
-      "score": 0.878269314,
+      "score": 0.877970685,
       "source_file": "src/navigation/types.ts",
       "status": "tentative",
       "uses": 1
@@ -403,7 +419,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.979898979,
+      "score": 0.979565794,
       "source_file": "src/screens/InitializationScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -419,7 +435,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.979898979,
+      "score": 0.979565794,
       "source_file": "src/store/authStoreRuntime.ts",
       "status": "tentative",
       "uses": 1
@@ -435,8 +451,40 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.800822636,
+      "score": 0.80055034,
       "source_file": "src/theme/index.ts",
+      "status": "tentative",
+      "uses": 1
+    },
+    "supabase_functions_shared_wardrobe_import_extract_products": {
+      "code_fingerprint": "dd71355c5c4f36b7cd766f7b70a0cf3f648ad26fb2b8128d1fb1c69c13b387a8",
+      "label": "extract-products.ts",
+      "last": "2026-09-11T06:09:37.575702+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-11T06:09:37.575702+00:00",
+          "outcome": "useful",
+          "q": "unexpected deploy status 400: Failed to bundle import-wardrobe-url because html-parsers module was not found"
+        }
+      ],
+      "score": 0.999795009,
+      "source_file": "supabase/functions/_shared/wardrobe-import/extract-products.ts",
+      "status": "tentative",
+      "uses": 1
+    },
+    "supabase_functions_shared_wardrobe_import_html_parsers": {
+      "code_fingerprint": "33125478785f7b8d60188e3b40e9f6cc08839f63f68c8de06531be937f5453d6",
+      "label": "html-parsers.ts",
+      "last": "2026-09-11T06:09:37.575702+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-11T06:09:37.575702+00:00",
+          "outcome": "useful",
+          "q": "unexpected deploy status 400: Failed to bundle import-wardrobe-url because html-parsers module was not found"
+        }
+      ],
+      "score": 0.999795009,
+      "source_file": "supabase/functions/_shared/wardrobe-import/html-parsers.ts",
       "status": "tentative",
       "uses": 1
     }

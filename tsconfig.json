@@ -15,6 +15,7 @@
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": [
+    "supabase/functions/_shared/deno-runtime.d.ts",
     "supabase/functions/import-wardrobe-url/index.ts",
     "supabase/functions/catalog-management/index.ts"
   ]
