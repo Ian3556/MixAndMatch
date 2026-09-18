@@ -4,6 +4,10 @@ This document describes the development catalogue architecture introduced on 202
 local implementation contract, not evidence that a remote Supabase project was migrated or that
 retailer sources were approved.
 
+The deterministic, development-only 1,000-product dataset is documented separately in
+`docs/synthetic-catalogue.md`. Synthetic availability does not change a brand's live-source review
+status and must never be presented as retailer-supplied data.
+
 ## What this system is
 
 The catalogue is a normalized, global product domain for brand discovery, search, wardrobe import,
@@ -154,6 +158,11 @@ model or claim AI-derived facts.
 
 ## Validation
 
+The evidence rules in this section apply to real-source ingestion. The synthetic development seed is
+a separate, guarded path: it requires `source_type = synthetic`, `is_demo = true`, an invalid reserved
+source domain, and application-owned placeholder artwork. It cannot be promoted into real-source
+data by changing a status field.
+
 A product is never counted toward a brand's target until its status is `validated`.
 
 Required evidence includes:
@@ -296,6 +305,9 @@ The dashboard shows:
 Manual seeds still use the canonical pipeline and validation. They do not bypass required source and
 image evidence.
 
+Synthetic development generation is not manual real-product seeding. Its explicit demo markers and
+validation rules are documented in `docs/synthetic-catalogue.md`.
+
 From trusted development code with a signed-in allowlisted user:
 
 ```ts
@@ -408,4 +420,8 @@ Live source, migration, RLS, and device checks are separate deployment verificat
 - remote image availability and licensing remain source responsibilities;
 - Home, Explore, and Stylist still use their existing presentation fixtures until a separate
   consumer integration task is approved;
-- the 4,500-product target remains unpopulated.
+- the live-source 4,500-product target remains unpopulated;
+- the synthetic catalogue migration and seed are local implementation artifacts until explicitly
+  applied to a development Supabase project;
+- synthetic prices, availability, names, descriptions, and placeholder artwork are test data, not
+  real retailer evidence.

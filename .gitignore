@@ -18,6 +18,7 @@ ios/
 
 # Test and tooling output
 coverage/
+.catalog/
 supabase/.temp/
 *.log
 npm-debug.log*

@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1789027209.0042255,
-    "ast_hash": "2d1fa0be97eea460fc667003a99bdc4f",
+    "mtime": 1789718208.2083232,
+    "ast_hash": "525ae922ea03335abb339e4e82b9eacc",
     "semantic_hash": ""
   },
   "scripts/validate.mjs": {
@@ -290,33 +290,33 @@
     "semantic_hash": ""
   },
   "src/features/stylist/screens/OutfitDetailScreen.tsx": {
-    "mtime": 1785940982.5900626,
-    "ast_hash": "0a87c7fa3c810e23f791ff51fe42d1dd",
+    "mtime": 1789653355.2619364,
+    "ast_hash": "2521f085eedd8480ef66af6556fe67ed",
     "semantic_hash": ""
   },
   "src/features/stylist/screens/OutfitGeneratingScreen.tsx": {
-    "mtime": 1785853393.7949188,
-    "ast_hash": "93baddea2cbbc886b135c854f87e4a74",
+    "mtime": 1789653246.7220669,
+    "ast_hash": "becc496e3869aa39d4a2a42c1d96e8ff",
     "semantic_hash": ""
   },
   "src/features/stylist/screens/OutfitGoalScreen.tsx": {
-    "mtime": 1785853393.808952,
-    "ast_hash": "bcb099013dcf1b6d3139a4da7e203327",
+    "mtime": 1789653401.9066837,
+    "ast_hash": "f651637af06f499fa1bb45187c3dfdd1",
     "semantic_hash": ""
   },
   "src/features/stylist/screens/OutfitPreferencesScreen.tsx": {
-    "mtime": 1785852790.101939,
-    "ast_hash": "b20f7c9590110d5515cd05fb458aa02a",
+    "mtime": 1789653175.9115055,
+    "ast_hash": "afd68016d9f187c7f6956e1e03c98208",
     "semantic_hash": ""
   },
   "src/features/stylist/screens/OutfitResultScreen.tsx": {
-    "mtime": 1785940983.55713,
-    "ast_hash": "4aa40412b2d3b5d7649ab057c146f0bf",
+    "mtime": 1789653354.1305652,
+    "ast_hash": "b7dcb13dc0164a3cce2936458dfc6ab6",
     "semantic_hash": ""
   },
   "src/features/stylist/screens/StylistScreen.tsx": {
-    "mtime": 1785853393.853283,
-    "ast_hash": "778264e6969267bf2fa0059ad3f37514",
+    "mtime": 1789653410.943937,
+    "ast_hash": "53dfa02959fce670cc7b6e01e7af8c83",
     "semantic_hash": ""
   },
   "src/features/wardrobe/components/EditImportedProductModal.tsx": {
@@ -385,8 +385,8 @@
     "semantic_hash": ""
   },
   "src/features/wardrobe/screens/WardrobeItemDetailScreen.tsx": {
-    "mtime": 1785941271.6579773,
-    "ast_hash": "25f4013f974cd346e5bb1920e2f0e4f5",
+    "mtime": 1789653114.5896797,
+    "ast_hash": "43900ed5d660caa6311e59e1bea2d16e",
     "semantic_hash": ""
   },
   "src/features/wardrobe/screens/WardrobeScreen.tsx": {
@@ -475,8 +475,8 @@
     "semantic_hash": ""
   },
   "src/navigation/types.ts": {
-    "mtime": 1789104783.639824,
-    "ast_hash": "6f96c0409d170e4d846b16c8a377c832",
+    "mtime": 1789652767.8546686,
+    "ast_hash": "269de7dd9a18ddd4cdf238f73fa0c208",
     "semantic_hash": ""
   },
   "src/screens/AuthStateErrorScreen.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "supabase/README.md": {
-    "mtime": 1789105734.2966828,
-    "ast_hash": "eb083c6b9931f8a742195da0c96a449b",
+    "mtime": 1789718358.2412922,
+    "ast_hash": "27e246a05680b2730137e488bf684cb5",
     "semantic_hash": ""
   },
   "src/catalog/components/CatalogBrandProgressCard.tsx": {
@@ -975,8 +975,8 @@
     "semantic_hash": ""
   },
   "src/types/catalogDatabase.ts": {
-    "mtime": 1789104226.870931,
-    "ast_hash": "ab6a646af101e02deb8fa92310097ce4",
+    "mtime": 1789718131.8586636,
+    "ast_hash": "d62ded000b1424409bcf67ff82c9bd29",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/catalog/adapters/generic-structured-data.test.ts": {
@@ -1090,8 +1090,8 @@
     "semantic_hash": ""
   },
   "docs/catalog-database.md": {
-    "mtime": 1786121349.300598,
-    "ast_hash": "685f57fca9ddfd8e2ab9f6829aa8e89d",
+    "mtime": 1789718437.5543463,
+    "ast_hash": "916bd302acd31f8bef2b6b5174da8322",
     "semantic_hash": ""
   },
   "docs/catalog-source-status.md": {
@@ -1540,28 +1540,28 @@
     "semantic_hash": ""
   },
   "src/catalog/browseTypes.ts": {
-    "mtime": 1789104929.3225608,
-    "ast_hash": "255a373c5ad3e6909fa3e861d86db1bb",
+    "mtime": 1789717729.703382,
+    "ast_hash": "73adc8da6bad1038320f2dd3b1359bff",
     "semantic_hash": ""
   },
   "src/catalog/services/catalogBrowseService.ts": {
-    "mtime": 1789105068.3658824,
-    "ast_hash": "7cd175f7e46cfe6e06da0dbd4cffb6cc",
+    "mtime": 1789718131.894223,
+    "ast_hash": "c51f7e93ab5bf7e44de0c99db00082d5",
     "semantic_hash": ""
   },
   "src/features/wardrobe/catalog/catalogWardrobeItem.test.ts": {
-    "mtime": 1789104737.2614915,
-    "ast_hash": "a56ed6e889c2e1203a53163247caf4e7",
+    "mtime": 1789718075.0356574,
+    "ast_hash": "7d38c83a86e8bd5cc859ca324ec6b50d",
     "semantic_hash": ""
   },
   "src/features/wardrobe/catalog/catalogWardrobeItem.ts": {
-    "mtime": 1789104995.5775933,
-    "ast_hash": "22d1eb771afa9056ceb273e234b6d57a",
+    "mtime": 1789718021.3548186,
+    "ast_hash": "fe7077ca6bbbd7491fc4d88290de770b",
     "semantic_hash": ""
   },
   "src/features/wardrobe/components/CatalogBrandRow.tsx": {
-    "mtime": 1789105235.3626566,
-    "ast_hash": "a8542f27900e04e090aeb78dd942d2af",
+    "mtime": 1789717956.3018837,
+    "ast_hash": "b8c1116783ac18d858477402cc3b4e97",
     "semantic_hash": ""
   },
   "src/features/wardrobe/components/CatalogBrowseSkeleton.tsx": {
@@ -1570,13 +1570,13 @@
     "semantic_hash": ""
   },
   "src/features/wardrobe/components/CatalogProductCard.tsx": {
-    "mtime": 1789104929.449276,
-    "ast_hash": "38c038f35cb7cadf4992d4f713536886",
+    "mtime": 1789717957.9066129,
+    "ast_hash": "48c6ff8d8f0104c2544b70b95ebbf6c4",
     "semantic_hash": ""
   },
   "src/features/wardrobe/screens/BrandProductsScreen.tsx": {
-    "mtime": 1789105069.5310385,
-    "ast_hash": "554111d2448b78ff03e47175ac457466",
+    "mtime": 1789717991.600507,
+    "ast_hash": "8069892d3cec8b1fcce410848c1b0ce5",
     "semantic_hash": ""
   },
   "src/features/wardrobe/screens/BrowseBrandsScreen.tsx": {
@@ -1585,8 +1585,8 @@
     "semantic_hash": ""
   },
   "src/features/wardrobe/screens/CatalogProductDetailScreen.tsx": {
-    "mtime": 1789105225.5534585,
-    "ast_hash": "03221dedacffaae7f3991bb2df4c38f4",
+    "mtime": 1789718022.993822,
+    "ast_hash": "feee88e12761a66162fd9313a423317a",
     "semantic_hash": ""
   },
   "src/services/wardrobeNormalization.test.ts": {
@@ -1627,6 +1627,301 @@
   "graphify-out/memory/query_20260911_062609_vs_code_reports_cannot_find_name_deno_in_supabase.md": {
     "mtime": 1789107969.257028,
     "ast_hash": "f4efd98745eca4fa2b1c7bf727621fb8",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/components/StylingRecommendationCard.tsx": {
+    "mtime": 1789653218.4755206,
+    "ast_hash": "8640da0208b5e66cb1feb7a8567691c1",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/data/categoryRules.ts": {
+    "mtime": 1789653230.2554376,
+    "ast_hash": "e037e66fb7b439ee9d4fcc50962b4d4d",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/data/colorRules.ts": {
+    "mtime": 1789653218.4973512,
+    "ast_hash": "69cd8662eb747e37c60b8864e8c0ddfc",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/data/occasionRules.ts": {
+    "mtime": 1789651942.2894912,
+    "ast_hash": "af4daf4332e6109f9f69e40c67dd6a0e",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/data/silhouetteRules.ts": {
+    "mtime": 1789652091.7744782,
+    "ast_hash": "d580c351d9ca352b842ac1e1b93295f7",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/data/styleRules.ts": {
+    "mtime": 1789653230.2554376,
+    "ast_hash": "06eb4d21b989ac988cb30f8e1400c449",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/data/stylingWeights.ts": {
+    "mtime": 1789651943.413463,
+    "ast_hash": "7f75a717512269b156a91fb7cad6fd8c",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/candidateGenerator.ts": {
+    "mtime": 1789653230.2554376,
+    "ast_hash": "99b27fc5e3e199f7e399b5eca390d60e",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/colorEngine.ts": {
+    "mtime": 1789653218.552437,
+    "ast_hash": "0860285d958fe7f8aea2c64b12165877",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/compatibilityEngine.ts": {
+    "mtime": 1789653218.5567026,
+    "ast_hash": "6e91d90a93a44ae5d54952ceca318b87",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/debugDiagnostics.ts": {
+    "mtime": 1789653218.5650282,
+    "ast_hash": "c87e2824a4af98e9de906219bfb94fcb",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/diversityEngine.ts": {
+    "mtime": 1789652346.3346088,
+    "ast_hash": "35c575ee52a386a1b78538b53065eebc",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/index.ts": {
+    "mtime": 1789652311.6135106,
+    "ast_hash": "b62163bb15331dd033f7c48f256ce074",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/normalizeClothingItem.ts": {
+    "mtime": 1789653230.2554376,
+    "ast_hash": "87a41844e73a49fc2e8d56c43a1544b8",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/normalizeStyleProfile.ts": {
+    "mtime": 1789653218.5973668,
+    "ast_hash": "25756cbf68df7af0626c84a71d7bae9a",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/normalizeStylingRequest.ts": {
+    "mtime": 1789652002.074597,
+    "ast_hash": "205e7a51c3abcf0dc2a695cce67dfb4b",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/occasionEngine.ts": {
+    "mtime": 1789653218.6066606,
+    "ast_hash": "47ec1e97e19ecf03e749c445737c54c4",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/recommendationEngine.ts": {
+    "mtime": 1789653218.6150527,
+    "ast_hash": "7ec44382c882852f288c4cf57b1fd82c",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/scoringEngine.ts": {
+    "mtime": 1789653230.256432,
+    "ast_hash": "23fcd1b10a22bb2d9192d0af3fe61fea",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/silhouetteEngine.ts": {
+    "mtime": 1789653218.6307762,
+    "ast_hash": "ae5db43b1f375766cd3c6cf7f381d41b",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/styleCompatibilityEngine.ts": {
+    "mtime": 1789653218.6370528,
+    "ast_hash": "1efc833ec94341b7a7267ab193336f4a",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/engine/weatherEngine.ts": {
+    "mtime": 1789652236.4551837,
+    "ast_hash": "923a522e59a3c2e017f0718049b6fe7c",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/explanations/outfitExplanation.ts": {
+    "mtime": 1789653432.3605487,
+    "ast_hash": "50b7dd0e57f271cda82ec521189b656a",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/personalization/feedbackEngine.ts": {
+    "mtime": 1789653218.6537437,
+    "ast_hash": "d9fbfc12b8c4f8da89fed04057b33771",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/personalization/preferenceModel.ts": {
+    "mtime": 1789653353.0202272,
+    "ast_hash": "6a6c0d7df096ad4d2ea69e25cca0748b",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/personalization/wardrobeHistory.ts": {
+    "mtime": 1789653218.6807802,
+    "ast_hash": "3a600080482932e8fa5331c1c3ce3ac0",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/tests/candidateGenerator.test.ts": {
+    "mtime": 1789653218.762033,
+    "ast_hash": "20ad91373d5f308fa0108b3c80b45142",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/tests/recommendationEngine.test.ts": {
+    "mtime": 1789653463.7953825,
+    "ast_hash": "dfa02b1ef0d84d5d14bd8663f460bbea",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/tests/scoringEngine.test.ts": {
+    "mtime": 1789653464.943571,
+    "ast_hash": "9accd4343951f47d4265f358b964205e",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/types/ClothingItem.ts": {
+    "mtime": 1789653218.7850397,
+    "ast_hash": "427b546cb1ea51cb083f4d72f291e16a",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/types/Outfit.ts": {
+    "mtime": 1789651934.9131937,
+    "ast_hash": "f4d7dc342d9a1b6cd96f99712864ce54",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/types/Recommendation.ts": {
+    "mtime": 1789653230.256432,
+    "ast_hash": "ed5d535d1e8795da8ee4bb909c268db0",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/types/StyleProfile.ts": {
+    "mtime": 1789651932.7169464,
+    "ast_hash": "51f09110a1220cf398f114f84f567482",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/types/StylingRequest.ts": {
+    "mtime": 1789651933.8190606,
+    "ast_hash": "228d58279ad10ceb0f223237bac2465a",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/types/index.ts": {
+    "mtime": 1789651937.1504474,
+    "ast_hash": "24a8c1c63f46cf186d84be8d4fbade97",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/useStylistData.ts": {
+    "mtime": 1789652766.6625326,
+    "ast_hash": "8ec6945a2408493c7770f400c993a3bf",
+    "semantic_hash": ""
+  },
+  "src/services/stylistPersistence.ts": {
+    "mtime": 1789653218.823422,
+    "ast_hash": "871928d621b33849eee869d008cb8321",
+    "semantic_hash": ""
+  },
+  "src/store/stylistStore.ts": {
+    "mtime": 1789653218.8400269,
+    "ast_hash": "ba1a666ff01e3159879be582415c8fe6",
+    "semantic_hash": ""
+  },
+  "scripts/catalog/cli.ts": {
+    "mtime": 1789718300.4216228,
+    "ast_hash": "b450937d1088b77fac5ae57a691f969d",
+    "semantic_hash": ""
+  },
+  "scripts/catalog/generateCatalog.ts": {
+    "mtime": 1789717588.860242,
+    "ast_hash": "8ffd97fbf44642d445ec06a064d9ae81",
+    "semantic_hash": ""
+  },
+  "scripts/catalog/seedCatalog.ts": {
+    "mtime": 1789741961.5673213,
+    "ast_hash": "62092a67f66aba80cc9f483fd3f47157",
+    "semantic_hash": ""
+  },
+  "scripts/catalog/validateCatalog.ts": {
+    "mtime": 1789717590.5883713,
+    "ast_hash": "9a845d8ef04610030a86ee184ee6d4fd",
+    "semantic_hash": ""
+  },
+  "src/data/catalog/attributes.ts": {
+    "mtime": 1789717341.0762746,
+    "ast_hash": "7d9545e727b95d6d85476a0704e3d52a",
+    "semantic_hash": ""
+  },
+  "src/data/catalog/brandProfiles.ts": {
+    "mtime": 1789718131.7240481,
+    "ast_hash": "a087622815197cd5f491ba71c8ec3e01",
+    "semantic_hash": ""
+  },
+  "src/data/catalog/brands.ts": {
+    "mtime": 1789718131.7335577,
+    "ast_hash": "39cd12d8ac52d82b645fde1e31f13abc",
+    "semantic_hash": ""
+  },
+  "src/data/catalog/catalogGenerator.test.ts": {
+    "mtime": 1789718460.8063798,
+    "ast_hash": "39be2ff94acca5c81996dd739a4f94d2",
+    "semantic_hash": ""
+  },
+  "src/data/catalog/categories.ts": {
+    "mtime": 1789718499.2858377,
+    "ast_hash": "7c2aca6fd0736705330729293d0d0ac6",
+    "semantic_hash": ""
+  },
+  "src/data/catalog/generator.ts": {
+    "mtime": 1789718131.8052351,
+    "ast_hash": "53f4646ac1d6bc776b6a0b073e972a3b",
+    "semantic_hash": ""
+  },
+  "src/data/catalog/types.ts": {
+    "mtime": 1789718140.7410192,
+    "ast_hash": "917dd33b70c8e92d184676814995dfff",
+    "semantic_hash": ""
+  },
+  "src/data/catalog/validator.ts": {
+    "mtime": 1789718206.464959,
+    "ast_hash": "88e0e5ef5f9721939d85cecdac967383",
+    "semantic_hash": ""
+  },
+  "src/features/wardrobe/components/CatalogFilterPanel.tsx": {
+    "mtime": 1789718142.3944414,
+    "ast_hash": "17b89aadb83e338a8520c80ad4d07f32",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20260918000100_add_synthetic_catalogue.sql": {
+    "mtime": 1789718284.7204876,
+    "ast_hash": "375c54f95cf998cd6ec72207e5058499",
+    "semantic_hash": ""
+  },
+  "docs/synthetic-catalogue.md": {
+    "mtime": 1789718461.101907,
+    "ast_hash": "b262a997df268b52bc9382c92ccd3a1e",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260918_080505_inspect_the_existing_catalog_supabase_schema__brow.md": {
+    "mtime": 1789718705.4244363,
+    "ast_hash": "884123a33b7e8b672b1a168b92876cd2",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260918_134947_how_to_seed_remote_supabase_project.md": {
+    "mtime": 1789739387.6615858,
+    "ast_hash": "7b0b23d754c9813c5758e06b42797efb",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260918_140121_why_did_npm_run_catalog_seed_fail_with_typeerror.md": {
+    "mtime": 1789740081.9207306,
+    "ast_hash": "c98b3901767c5ad96cbcb5466d2e975c",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260918_141123_why_does_catalog_seed_still_report_typeerror_fetch.md": {
+    "mtime": 1789740683.6225963,
+    "ast_hash": "d937f6906c41bc5f4a1d4790b43f859a",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260918_141404_what_should_be_tested_after_the_supabase_health_en.md": {
+    "mtime": 1789740844.156582,
+    "ast_hash": "50b2dd0fbad8f10977c0a46aa6d25926",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260918_142117_why_does_catalog_seed_still_report_typeerror_fetch.md": {
+    "mtime": 1789741277.082925,
+    "ast_hash": "b4f5647f73bf2df42a1585cbb7fdfa77",
     "semantic_hash": ""
   }
 }

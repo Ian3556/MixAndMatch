@@ -1,21 +1,25 @@
 import { getSupabaseClient } from '@supabase';
 
-import type {
-  CatalogBrand,
-  CatalogCategory,
-  CatalogPage,
-  CatalogProductDetail,
-  CatalogProductSummary,
+import {
+  EMPTY_CATALOG_FILTERS,
+  type CatalogBrand,
+  type CatalogCategory,
+  type CatalogFilterOptions,
+  type CatalogPage,
+  type CatalogProductDetail,
+  type CatalogProductFilters,
+  type CatalogProductSummary,
 } from '@/catalog/browseTypes';
 import type {
-  CatalogBrandRow,
+  CatalogBrowseBrandRow,
+  CatalogFilterOptionsRow,
   CatalogProductImageRow,
   CatalogProductRow,
+  CatalogSearchProductRow,
 } from '@/types/catalogDatabase';
 
-const BRAND_COLUMNS = 'id, name, slug, logo_url, website_url, source_status, enabled';
 const PRODUCT_COLUMNS =
-  'id, brand_id, external_product_id, name, description, category_id, subcategory_id, primary_color, material_summary, current_price, currency, availability, source_url, canonical_url, source_domain, status, created_at';
+  'id, brand_id, external_product_id, name, description, category_id, subcategory_id, raw_category, raw_subcategory, primary_color, color_family, material_summary, current_price, currency, availability, source_url, canonical_url, source_domain, status, source_type, is_demo, image_source_type, created_at';
 const DEFAULT_PAGE_SIZE = 20;
 
 export class CatalogBrowseServiceError extends Error {
@@ -30,16 +34,8 @@ export class CatalogBrowseServiceError extends Error {
 }
 
 export async function loadFeaturedBrands(limit = 6): Promise<CatalogBrand[]> {
-  const result = await getSupabaseClient()
-    .from('catalog_brands')
-    .select(`${BRAND_COLUMNS}, featured, last_synced_at`)
-    .eq('enabled', true)
-    .eq('featured', true)
-    .order('name')
-    .limit(limit);
-  if (result.error && ['42703', 'PGRST204'].includes(result.error.code)) return [];
-  if (result.error) throw normalizeCatalogBrowseError(result.error);
-  return (result.data ?? []).map(mapBrand);
+  const page = await loadBrands({ pageSize: 100 });
+  return page.items.filter((brand) => brand.featured).slice(0, limit);
 }
 
 export async function loadBrands(options?: {
@@ -50,18 +46,16 @@ export async function loadBrands(options?: {
   const page = options?.page ?? 0;
   const pageSize = options?.pageSize ?? DEFAULT_PAGE_SIZE;
   const search = options?.query?.trim().slice(0, 120) ?? '';
-  let request = getSupabaseClient()
-    .from('catalog_brands')
-    .select(BRAND_COLUMNS, { count: 'exact' })
-    .eq('enabled', true)
-    .order('name')
-    .range(page * pageSize, page * pageSize + pageSize - 1);
-  if (search) request = request.ilike('name', `%${escapeLike(search)}%`);
-  const result = await request;
+  const result = await getSupabaseClient().rpc('catalog_browse_brands', {
+    p_query: search || null,
+    p_offset: page * pageSize,
+    p_limit: pageSize,
+  });
   if (result.error) throw normalizeCatalogBrowseError(result.error);
-  const total = result.count ?? 0;
+  const rows = result.data ?? [];
+  const total = Number(rows[0]?.total_count ?? 0);
   return {
-    items: (result.data ?? []).map(mapBrand),
+    items: rows.map(mapBrowseBrand),
     page,
     pageSize,
     total,
@@ -71,37 +65,48 @@ export async function loadBrands(options?: {
 
 export async function searchCatalogProducts(
   query: string,
-  options?: { page?: number; pageSize?: number; brandId?: string; categoryId?: string | null },
+  options?: {
+    page?: number;
+    pageSize?: number;
+    brandId?: string;
+    categoryId?: string | null;
+    filters?: CatalogProductFilters;
+  },
 ): Promise<CatalogPage<CatalogProductSummary>> {
   const page = options?.page ?? 0;
   const pageSize = options?.pageSize ?? 12;
-  const search = query.trim().slice(0, 180);
-  let request = getSupabaseClient()
-    .from('catalog_products')
-    .select(PRODUCT_COLUMNS, { count: 'exact' })
-    .eq('status', 'validated')
-    .order('created_at', { ascending: false })
-    .range(page * pageSize, page * pageSize + pageSize - 1);
-  if (options?.brandId) request = request.eq('brand_id', options.brandId);
-  if (options?.categoryId) request = request.eq('category_id', options.categoryId);
-  if (search) {
-    request = request.textSearch('search_document', search, {
-      type: 'websearch',
-      config: 'simple',
-    });
-  }
-  const result = await request;
+  const filters = options?.filters ?? EMPTY_CATALOG_FILTERS;
+  const result = await getSupabaseClient().rpc('catalog_search_products', {
+    p_query: query.trim().slice(0, 180) || null,
+    p_brand_id: options?.brandId ?? null,
+    p_category_id: options?.categoryId ?? null,
+    p_gender: filters.gender,
+    p_color_family: filters.colorFamily,
+    p_size: filters.size,
+    p_min_price: filters.minimumPrice,
+    p_max_price: filters.maximumPrice,
+    p_style_tags: filters.styleTags,
+    p_sort: filters.sort,
+    p_offset: page * pageSize,
+    p_limit: pageSize,
+  });
   if (result.error) throw normalizeCatalogBrowseError(result.error);
-  const rows = (result.data ?? []) as CatalogProductRow[];
-  const items = await hydrateProductSummaries(rows);
-  const total = result.count ?? 0;
-  return { items, page, pageSize, total, hasMore: (page + 1) * pageSize < total };
+  const rows = result.data ?? [];
+  const total = Number(rows[0]?.total_count ?? 0);
+  return {
+    items: rows.map(mapSearchProduct),
+    page,
+    pageSize,
+    total,
+    hasMore: (page + 1) * pageSize < total,
+  };
 }
 
 export async function loadBrandProducts(options: {
   brandId: string;
   query?: string;
   categoryId?: string | null;
+  filters?: CatalogProductFilters;
   page?: number;
   pageSize?: number;
 }): Promise<CatalogPage<CatalogProductSummary>> {
@@ -109,25 +114,9 @@ export async function loadBrandProducts(options: {
 }
 
 export async function loadBrandCategories(brandId: string): Promise<CatalogCategory[]> {
-  const client = getSupabaseClient();
-  const result = await client.rpc('catalog_browse_brand_categories', {
+  const result = await getSupabaseClient().rpc('catalog_browse_brand_categories', {
     p_brand_id: brandId,
   });
-  if (result.error && result.error.code === 'PGRST202') {
-    const fallback = await client
-      .from('catalog_categories')
-      .select('id, name, slug')
-      .eq('enabled', true)
-      .eq('level', 1)
-      .order('sort_order');
-    if (fallback.error) throw normalizeCatalogBrowseError(fallback.error);
-    return (fallback.data ?? []).map((row) => ({
-      id: row.id,
-      name: row.name,
-      slug: row.slug,
-      productCount: 0,
-    }));
-  }
   if (result.error) throw normalizeCatalogBrowseError(result.error);
   return (result.data ?? []).map((row) => ({
     id: row.category_id,
@@ -135,6 +124,14 @@ export async function loadBrandCategories(brandId: string): Promise<CatalogCateg
     slug: row.category_slug,
     productCount: Number(row.product_count),
   }));
+}
+
+export async function loadBrandFilterOptions(brandId: string): Promise<CatalogFilterOptions> {
+  const result = await getSupabaseClient().rpc('catalog_browse_filter_options', {
+    p_brand_id: brandId,
+  });
+  if (result.error) throw normalizeCatalogBrowseError(result.error);
+  return mapFilterOptions(result.data?.[0]);
 }
 
 export async function loadCatalogProduct(productId: string): Promise<CatalogProductDetail> {
@@ -150,44 +147,78 @@ export async function loadCatalogProduct(productId: string): Promise<CatalogProd
     throw new CatalogBrowseServiceError('not-found', 'This catalog product is unavailable.');
   }
   const product = productResult.data as CatalogProductRow;
-  const [brandResult, categoryResult, subcategoryResult, imageResult, variantResult] =
-    await Promise.all([
-      client.from('catalog_brands').select('id, name').eq('id', product.brand_id).maybeSingle(),
-      client
-        .from('catalog_categories')
-        .select('id, name')
-        .eq('id', product.category_id)
-        .maybeSingle(),
-      product.subcategory_id
-        ? client
-            .from('catalog_categories')
-            .select('id, name')
-            .eq('id', product.subcategory_id)
-            .maybeSingle()
-        : Promise.resolve({ data: null, error: null }),
-      client
-        .from('catalog_product_images')
-        .select('id, product_id, image_url, source_url, position, image_type, created_at')
-        .eq('product_id', product.id)
-        .order('position'),
-      client
-        .from('catalog_product_variants')
-        .select(
-          'id, product_id, external_variant_id, sku, variant_key, size, color, price, currency, availability, created_at, updated_at',
-        )
-        .eq('product_id', product.id)
-        .order('color')
-        .order('size'),
-    ]);
+  const [
+    brandResult,
+    categoryResult,
+    subcategoryResult,
+    imageResult,
+    variantResult,
+    profileResult,
+    productStyleResult,
+  ] = await Promise.all([
+    client.from('catalog_brands').select('id, name').eq('id', product.brand_id).maybeSingle(),
+    client
+      .from('catalog_categories')
+      .select('id, name')
+      .eq('id', product.category_id)
+      .maybeSingle(),
+    product.subcategory_id
+      ? client
+          .from('catalog_categories')
+          .select('id, name')
+          .eq('id', product.subcategory_id)
+          .maybeSingle()
+      : Promise.resolve({ data: null, error: null }),
+    client
+      .from('catalog_product_images')
+      .select(
+        'id, product_id, image_url, source_url, position, image_type, source_type, is_demo, created_at',
+      )
+      .eq('product_id', product.id)
+      .order('position'),
+    client
+      .from('catalog_product_variants')
+      .select(
+        'id, product_id, external_variant_id, sku, variant_key, size, color, price, currency, availability, created_at, updated_at',
+      )
+      .eq('product_id', product.id)
+      .order('color')
+      .order('size'),
+    client
+      .from('catalog_product_style_profiles')
+      .select(
+        'fit, silhouette, pattern, length, formality_score, warmth_score, season_tags, occasion_tags',
+      )
+      .eq('product_id', product.id)
+      .maybeSingle(),
+    client.from('catalog_product_style_tags').select('style_tag_id').eq('product_id', product.id),
+  ]);
   const error =
     brandResult.error ??
     categoryResult.error ??
     subcategoryResult.error ??
     imageResult.error ??
-    variantResult.error;
+    variantResult.error ??
+    profileResult.error ??
+    productStyleResult.error;
   if (error) throw normalizeCatalogBrowseError(error);
 
-  const imageUrls = (imageResult.data ?? []).map((image) => image.image_url);
+  const styleTagIds = (productStyleResult.data ?? [])
+    .map((row) => readString(row, 'style_tag_id'))
+    .filter(Boolean);
+  const styleTagResult =
+    styleTagIds.length > 0
+      ? await client
+          .from('catalog_style_tags')
+          .select('id, name')
+          .in('id', styleTagIds)
+          .order('name')
+      : { data: [], error: null };
+  if (styleTagResult.error) throw normalizeCatalogBrowseError(styleTagResult.error);
+
+  const imageRows = (imageResult.data ?? []) as CatalogProductImageRow[];
+  const imageUrls = imageRows.map((image) => image.image_url);
+  const profile = profileResult.data;
   return {
     id: product.id,
     brandId: product.brand_id,
@@ -196,10 +227,15 @@ export async function loadCatalogProduct(productId: string): Promise<CatalogProd
     categoryId: product.category_id,
     categoryName: categoryResult.data?.name ?? product.raw_category ?? 'Other',
     primaryColor: product.primary_color,
+    colorFamily: product.color_family,
+    gender: product.gender,
     imageUrl: imageUrls[0] ?? null,
+    imageSourceType: imageRows[0]?.source_type ?? product.image_source_type,
     price: product.current_price,
     currency: product.currency,
     availability: product.availability,
+    sourceType: product.source_type,
+    isDemo: product.is_demo,
     externalProductId: product.external_product_id,
     description: product.description,
     subcategoryName: subcategoryResult.data?.name ?? product.raw_subcategory,
@@ -208,85 +244,63 @@ export async function loadCatalogProduct(productId: string): Promise<CatalogProd
     sourceDomain: product.source_domain,
     imageUrls,
     variants: variantResult.data ?? [],
+    styleTags: (styleTagResult.data ?? []).map((row) => readString(row, 'name')).filter(Boolean),
+    occasionTags: readStringArray(profile, 'occasion_tags'),
+    seasonTags: readStringArray(profile, 'season_tags'),
+    fit: readNullableString(profile, 'fit'),
+    silhouette: readNullableString(profile, 'silhouette'),
+    pattern: readNullableString(profile, 'pattern'),
+    length: readNullableString(profile, 'length'),
+    formalityLevel: readNullableNumber(profile, 'formality_score'),
+    warmthLevel: readNullableNumber(profile, 'warmth_score'),
   };
 }
 
-async function hydrateProductSummaries(
-  products: CatalogProductRow[],
-): Promise<CatalogProductSummary[]> {
-  if (products.length === 0) return [];
-  const client = getSupabaseClient();
-  const brandIds = unique(products.map((product) => product.brand_id));
-  const categoryIds = unique(products.map((product) => product.category_id));
-  const productIds = products.map((product) => product.id);
-  const [brandResult, categoryResult, imageResult] = await Promise.all([
-    client.from('catalog_brands').select('id, name').in('id', brandIds),
-    client.from('catalog_categories').select('id, name').in('id', categoryIds),
-    client
-      .from('catalog_product_images')
-      .select('product_id, image_url, position')
-      .in('product_id', productIds)
-      .order('position'),
-  ]);
-  const error = brandResult.error ?? categoryResult.error ?? imageResult.error;
-  if (error) throw normalizeCatalogBrowseError(error);
-
-  const brands = new Map((brandResult.data ?? []).map((brand) => [brand.id, brand.name]));
-  const categories = new Map(
-    (categoryResult.data ?? []).map((category) => [category.id, category.name]),
-  );
-  const images = firstImageByProduct(imageResult.data ?? []);
-
-  return products.map((product) => ({
-    id: product.id,
-    brandId: product.brand_id,
-    brandName: brands.get(product.brand_id) ?? 'Unknown brand',
-    name: product.name,
-    categoryId: product.category_id,
-    categoryName: categories.get(product.category_id) ?? product.raw_category ?? 'Other',
-    primaryColor: product.primary_color,
-    imageUrl: images.get(product.id) ?? null,
-    price: product.current_price,
-    currency: product.currency,
-    availability: product.availability,
-  }));
-}
-
-function mapBrand(
-  row: Pick<
-    CatalogBrandRow,
-    'id' | 'name' | 'slug' | 'logo_url' | 'website_url' | 'source_status'
-  > &
-    Partial<Pick<CatalogBrandRow, 'featured' | 'last_synced_at'>>,
-): CatalogBrand {
+function mapBrowseBrand(row: CatalogBrowseBrandRow): CatalogBrand {
   return {
-    id: row.id,
-    name: row.name,
-    slug: row.slug,
+    id: row.brand_id,
+    name: row.brand_name,
+    slug: row.brand_slug,
     logoUrl: row.logo_url,
     websiteUrl: row.website_url,
     status: row.source_status,
-    featured: row.featured ?? false,
-    lastSyncedAt: row.last_synced_at ?? null,
+    featured: row.featured,
+    lastSyncedAt: row.last_synced_at,
+    hasDemoCatalog: row.has_demo_catalog,
+    productCount: Number(row.product_count),
   };
 }
 
-function firstImageByProduct(
-  rows: Pick<CatalogProductImageRow, 'product_id' | 'image_url' | 'position'>[],
-): Map<string, string> {
-  const images = new Map<string, string>();
-  for (const row of rows) {
-    if (!images.has(row.product_id)) images.set(row.product_id, row.image_url);
-  }
-  return images;
+function mapSearchProduct(row: CatalogSearchProductRow): CatalogProductSummary {
+  return {
+    id: row.product_id,
+    brandId: row.brand_id,
+    brandName: row.brand_name,
+    name: row.product_name,
+    categoryId: row.category_id,
+    categoryName: row.category_name,
+    primaryColor: row.primary_color,
+    colorFamily: row.color_family,
+    gender: row.gender,
+    imageUrl: row.image_url,
+    imageSourceType: row.image_source_type,
+    price: row.current_price,
+    currency: row.currency,
+    availability: row.availability,
+    sourceType: row.source_type,
+    isDemo: row.is_demo,
+  };
 }
 
-function unique(values: string[]): string[] {
-  return [...new Set(values)];
-}
-
-function escapeLike(value: string): string {
-  return value.replace(/[\\%_]/g, (character) => `\\${character}`);
+function mapFilterOptions(row: CatalogFilterOptionsRow | undefined): CatalogFilterOptions {
+  return {
+    genders: row?.genders ?? [],
+    colorFamilies: row?.color_families ?? [],
+    sizes: row?.sizes ?? [],
+    styleTags: row?.style_tags ?? [],
+    minimumPrice: row?.minimum_price ?? null,
+    maximumPrice: row?.maximum_price ?? null,
+  };
 }
 
 function normalizeCatalogBrowseError(error: unknown): CatalogBrowseServiceError {
@@ -300,10 +314,15 @@ function normalizeCatalogBrowseError(error: unknown): CatalogBrowseServiceError 
       error,
     );
   }
-  if (code === 'PGRST202' || code === 'PGRST205' || normalized.includes('schema cache')) {
+  if (
+    code === 'PGRST202' ||
+    code === 'PGRST205' ||
+    code === '42883' ||
+    normalized.includes('schema cache')
+  ) {
     return new CatalogBrowseServiceError(
       'not-configured',
-      'The catalog update has not been applied to this environment yet.',
+      'The synthetic catalog migration and seed have not been applied to this environment yet.',
       error,
     );
   }
@@ -329,4 +348,23 @@ function readString(value: unknown, key: string): string {
   if (typeof value !== 'object' || value === null || !(key in value)) return '';
   const property = Reflect.get(value, key);
   return typeof property === 'string' ? property : '';
+}
+
+function readNullableString(value: unknown, key: string): string | null {
+  const result = readString(value, key);
+  return result || null;
+}
+
+function readNullableNumber(value: unknown, key: string): number | null {
+  if (typeof value !== 'object' || value === null || !(key in value)) return null;
+  const property = Reflect.get(value, key);
+  return typeof property === 'number' ? property : null;
+}
+
+function readStringArray(value: unknown, key: string): string[] {
+  if (typeof value !== 'object' || value === null || !(key in value)) return [];
+  const property = Reflect.get(value, key);
+  return Array.isArray(property)
+    ? property.filter((entry): entry is string => typeof entry === 'string')
+    : [];
 }

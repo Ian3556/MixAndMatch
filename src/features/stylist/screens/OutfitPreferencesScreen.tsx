@@ -6,89 +6,86 @@ import { ActionButton } from '@/components/ActionButton';
 import { AppScreen } from '@/components/ui/AppScreen';
 import { Chip } from '@/components/ui/Chip';
 import { SelectField } from '@/components/ui/SelectField';
-import { DeferredNotice } from '@/components/ui/StateViews';
+import { preferredStyleOptions } from '@/features/profile/styleProfileOptions';
 import { STYLIST_ROUTES } from '@/navigation/routes';
 import type { StylistStackParamList } from '@/navigation/types';
 import { useAppTheme, type AppTheme } from '@/theme';
 
+import { useStylistData } from '../useStylistData';
+
 type Props = NativeStackScreenProps<StylistStackParamList, 'OutfitPreferences'>;
+const formalityOptions = ['Relaxed', 'Balanced', 'Polished', 'Formal'] as const;
+const formalityScores: Record<(typeof formalityOptions)[number], number> = {
+  Relaxed: 2,
+  Balanced: 5,
+  Polished: 7,
+  Formal: 10,
+};
 
 export function OutfitPreferencesScreen({ navigation, route }: Props) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
-  const [colors, setColors] = useState<string[]>(['Neutrals']);
-  const [include, setInclude] = useState<string[]>([]);
-  const [avoid, setAvoid] = useState<string[]>([]);
-  const [formality, setFormality] = useState('Balanced');
-  const [layering, setLayering] = useState('Optional');
-  const [footwear, setFootwear] = useState('Any');
-  const [accessories, setAccessories] = useState('Minimal');
+  const { wardrobe } = useStylistData();
+  const [stylesWanted, setStylesWanted] = useState<string[]>(
+    route.params.request.desiredStyle ?? [],
+  );
+  const [excludedItems, setExcludedItems] = useState<string[]>(
+    route.params.request.excludedItems ?? [],
+  );
+  const [formality, setFormality] = useState<(typeof formalityOptions)[number]>(() =>
+    initialFormality(route.params.request.occasion),
+  );
+  const selectedIds = new Set(route.params.request.selectedItems ?? []);
 
   const toggle = (value: string, values: string[], setter: (next: string[]) => void) =>
     setter(values.includes(value) ? values.filter((item) => item !== value) : [...values, value]);
 
+  const request = {
+    ...route.params.request,
+    desiredStyle: stylesWanted,
+    formality: formalityScores[formality],
+    ...(excludedItems.length > 0 ? { excludedItems } : {}),
+  };
+
   return (
     <AppScreen
       onBack={navigation.goBack}
-      subtitle={`${route.params.occasion} · ${route.params.style}`}
+      subtitle={`${route.params.request.occasion ?? 'Any occasion'} · ${route.params.request.weather ?? 'Any weather'}`}
       title="Refine the outfit"
     >
-      <DeferredNotice>
-        Preferences remain on this screen only and are not interpreted by a recommendation engine.
-      </DeferredNotice>
       <PreferenceChips
-        label="Preferred colours"
-        onPress={(value) => toggle(value, colors, setColors)}
-        options={['Neutrals', 'Black', 'Blue', 'Green', 'Warm tones', 'Bright accent']}
-        selected={colors}
-        styles={styles}
-      />
-      <PreferenceChips
-        label="Items to include"
-        onPress={(value) => toggle(value, include, setInclude)}
-        options={['Favourite jacket', 'Wide trousers', 'Loafers', 'Statement bag']}
-        selected={include}
-        styles={styles}
-      />
-      <PreferenceChips
-        label="Items to avoid"
-        onPress={(value) => toggle(value, avoid, setAvoid)}
-        options={['Heels', 'Heavy layers', 'Bright colours', 'Formal tailoring']}
-        selected={avoid}
+        label="Style signals"
+        onPress={(value) => toggle(value, stylesWanted, setStylesWanted)}
+        options={preferredStyleOptions}
+        selected={stylesWanted}
         styles={styles}
       />
       <SelectField
         label="Formality"
-        onChange={setFormality}
-        options={['Relaxed', 'Balanced', 'Polished']}
+        onChange={(value) => setFormality(value as (typeof formalityOptions)[number])}
+        options={formalityOptions}
         value={formality}
       />
-      <SelectField
-        label="Layering"
-        onChange={setLayering}
-        options={['Avoid', 'Optional', 'Preferred']}
-        value={layering}
-      />
-      <SelectField
-        label="Footwear"
-        onChange={setFootwear}
-        options={['Any', 'Trainers', 'Flats', 'Loafers', 'Boots', 'Heels']}
-        value={footwear}
-      />
-      <SelectField
-        label="Accessories"
-        onChange={setAccessories}
-        options={['None', 'Minimal', 'One statement piece', 'Layered']}
-        value={accessories}
-      />
+      <View style={styles.group}>
+        <Text style={styles.label}>Exclude items from this request</Text>
+        <Text style={styles.helper}>Explicit exclusions are hard constraints.</Text>
+        <View style={styles.chips}>
+          {wardrobe
+            .filter((item) => !selectedIds.has(item.id))
+            .slice(0, 30)
+            .map((item) => (
+              <Chip
+                key={item.id}
+                label={item.name}
+                onPress={() => toggle(item.id, excludedItems, setExcludedItems)}
+                selected={excludedItems.includes(item.id)}
+              />
+            ))}
+        </View>
+      </View>
       <ActionButton
-        label="Preview generation state"
-        onPress={() =>
-          navigation.navigate(STYLIST_ROUTES.OUTFIT_GENERATING, {
-            occasion: route.params.occasion,
-            style: route.params.style,
-          })
-        }
+        label="Generate looks"
+        onPress={() => navigation.navigate(STYLIST_ROUTES.OUTFIT_GENERATING, { request })}
       />
     </AppScreen>
   );
@@ -134,6 +131,17 @@ function createStyles(theme: AppTheme) {
       fontSize: theme.typography.fontSize.sm,
       fontWeight: theme.typography.fontWeight.semibold,
     },
+    helper: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.xs },
     chips: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm },
   });
+}
+
+function initialFormality(occasion: string | undefined): (typeof formalityOptions)[number] {
+  const normalized = occasion?.toLowerCase();
+  if (normalized === 'formal' || normalized === 'events') return 'Formal';
+  if (normalized === 'work' || normalized === 'dinner' || normalized === 'party') return 'Polished';
+  if (normalized === 'everyday' || normalized === 'university' || normalized === 'travel') {
+    return 'Relaxed';
+  }
+  return 'Balanced';
 }

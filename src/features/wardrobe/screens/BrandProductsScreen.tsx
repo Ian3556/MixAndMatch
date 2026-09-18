@@ -1,16 +1,27 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
-import type { CatalogCategory, CatalogProductSummary } from '@/catalog/browseTypes';
-import { loadBrandCategories, loadBrandProducts } from '@/catalog/services/catalogBrowseService';
+import {
+  EMPTY_CATALOG_FILTERS,
+  type CatalogCategory,
+  type CatalogFilterOptions,
+  type CatalogProductFilters,
+  type CatalogProductSummary,
+} from '@/catalog/browseTypes';
+import {
+  loadBrandCategories,
+  loadBrandFilterOptions,
+  loadBrandProducts,
+} from '@/catalog/services/catalogBrowseService';
 import { ActionButton } from '@/components/ActionButton';
 import { AppScreen } from '@/components/ui/AppScreen';
 import { Chip } from '@/components/ui/Chip';
 import { SearchBar } from '@/components/ui/SearchBar';
 import { EmptyState, ErrorState } from '@/components/ui/StateViews';
 import { CatalogBrowseSkeleton } from '@/features/wardrobe/components/CatalogBrowseSkeleton';
+import { CatalogFilterPanel } from '@/features/wardrobe/components/CatalogFilterPanel';
 import { CatalogProductCard } from '@/features/wardrobe/components/CatalogProductCard';
 import { WARDROBE_ROUTES } from '@/navigation/routes';
 import type { WardrobeStackParamList } from '@/navigation/types';
@@ -20,6 +31,15 @@ import { getGridColumnCount, getGridItemWidth } from '@/utils/layout';
 
 type Props = NativeStackScreenProps<WardrobeStackParamList, 'BrandProducts'>;
 
+const EMPTY_FILTER_OPTIONS: CatalogFilterOptions = {
+  genders: [],
+  colorFamilies: [],
+  sizes: [],
+  styleTags: [],
+  minimumPrice: null,
+  maximumPrice: null,
+};
+
 export function BrandProductsScreen({ navigation, route }: Props) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -28,6 +48,9 @@ export function BrandProductsScreen({ navigation, route }: Props) {
   const [submittedQuery, setSubmittedQuery] = useState('');
   const [categoryId, setCategoryId] = useState<string | null>(null);
   const [categories, setCategories] = useState<CatalogCategory[]>([]);
+  const [filterOptions, setFilterOptions] = useState<CatalogFilterOptions>(EMPTY_FILTER_OPTIONS);
+  const [filters, setFilters] = useState<CatalogProductFilters>({ ...EMPTY_CATALOG_FILTERS });
+  const [filtersVisible, setFiltersVisible] = useState(false);
   const [products, setProducts] = useState<CatalogProductSummary[]>([]);
   const [viewMode, setViewMode] = useState<WardrobeViewMode>('grid');
   const [page, setPage] = useState(0);
@@ -38,12 +61,19 @@ export function BrandProductsScreen({ navigation, route }: Props) {
 
   useEffect(() => {
     let active = true;
-    void loadBrandCategories(route.params.brandId)
-      .then((result) => {
-        if (active) setCategories(result);
+    void Promise.all([
+      loadBrandCategories(route.params.brandId),
+      loadBrandFilterOptions(route.params.brandId),
+    ])
+      .then(([categoryResult, optionResult]) => {
+        if (!active) return;
+        setCategories(categoryResult);
+        setFilterOptions(optionResult);
       })
       .catch(() => {
-        if (active) setCategories([]);
+        if (!active) return;
+        setCategories([]);
+        setFilterOptions(EMPTY_FILTER_OPTIONS);
       });
     return () => {
       active = false;
@@ -56,6 +86,7 @@ export function BrandProductsScreen({ navigation, route }: Props) {
       brandId: route.params.brandId,
       query: submittedQuery,
       categoryId,
+      filters,
       page,
     })
       .then((result) => {
@@ -73,7 +104,7 @@ export function BrandProductsScreen({ navigation, route }: Props) {
     return () => {
       active = false;
     };
-  }, [categoryId, page, requestKey, route.params.brandId, submittedQuery]);
+  }, [categoryId, filters, page, requestKey, route.params.brandId, submittedQuery]);
 
   const reloadFromStart = () => {
     setProducts([]);
@@ -94,12 +125,18 @@ export function BrandProductsScreen({ navigation, route }: Props) {
     if (nextCategoryId === categoryId) setRequestKey((current) => current + 1);
   };
 
+  const changeFilters = (nextFilters: CatalogProductFilters) => {
+    reloadFromStart();
+    setFilters(nextFilters);
+  };
+
   const contentWidth = Math.min(width, 900);
   const columns = getGridColumnCount(contentWidth);
   const itemWidth = getGridItemWidth(contentWidth, columns, theme.spacing.md, theme.spacing.md);
   const unsupported = ['blocked', 'unavailable', 'manual_seed_required'].includes(
     route.params.brandStatus,
   );
+  const activeFilterCount = countActiveFilters(filters);
 
   return (
     <AppScreen onBack={navigation.goBack} title={route.params.brandName}>
@@ -136,14 +173,35 @@ export function BrandProductsScreen({ navigation, route }: Props) {
             </Pressable>
           ))}
         </View>
+        <Pressable
+          accessibilityLabel="Toggle product filters"
+          accessibilityRole="button"
+          accessibilityState={{ expanded: filtersVisible }}
+          onPress={() => setFiltersVisible((current) => !current)}
+          style={({ pressed }) => [styles.filterButton, pressed ? styles.pressed : null]}
+        >
+          <Ionicons color={theme.colors.textMuted} name="options-outline" size={20} />
+          <Text style={styles.filterLabel}>
+            Filters{activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
+          </Text>
+        </Pressable>
       </View>
+
+      {filtersVisible ? (
+        <CatalogFilterPanel
+          filters={filters}
+          onChange={changeFilters}
+          onClear={() => changeFilters({ ...EMPTY_CATALOG_FILTERS })}
+          options={filterOptions}
+        />
+      ) : null}
 
       <View style={styles.categories}>
         <Chip label="All" onPress={() => chooseCategory(null)} selected={!categoryId} square />
         {categories.map((category) => (
           <Chip
             key={category.id}
-            label={category.name}
+            label={`${category.name} ${category.productCount}`}
             onPress={() => chooseCategory(category.id)}
             selected={categoryId === category.id}
             square
@@ -235,10 +293,36 @@ function createStyles(theme: AppTheme) {
     viewToggle: { borderColor: theme.colors.border, borderWidth: 1, flexDirection: 'row' },
     modeButton: { alignItems: 'center', height: 50, justifyContent: 'center', width: 50 },
     modeButtonSelected: { backgroundColor: theme.colors.primarySoft },
+    filterButton: {
+      alignItems: 'center',
+      borderColor: theme.colors.border,
+      borderWidth: 1,
+      flexDirection: 'row',
+      gap: theme.spacing.xs,
+      minHeight: 50,
+      paddingHorizontal: theme.spacing.md,
+    },
+    filterLabel: {
+      color: theme.colors.textMuted,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontSize: theme.typography.fontSize.sm,
+    },
     categories: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm },
     grid: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.md },
     list: { gap: theme.spacing.sm },
     emptyActions: { gap: theme.spacing.sm },
     pressed: { opacity: 0.68 },
   });
+}
+
+function countActiveFilters(filters: CatalogProductFilters): number {
+  return [
+    filters.gender,
+    filters.colorFamily,
+    filters.size,
+    filters.minimumPrice,
+    filters.maximumPrice,
+    ...filters.styleTags,
+    filters.sort === 'newest' ? null : filters.sort,
+  ].filter((value) => value !== null).length;
 }

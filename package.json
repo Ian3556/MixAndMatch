@@ -14,7 +14,11 @@
     "test:watch": "vitest",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "catalog:generate": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/catalog/generateCatalog.ts",
+    "catalog:validate": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/catalog/validateCatalog.ts",
+    "catalog:seed": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/catalog/seedCatalog.ts --apply",
+    "catalog:reset-demo": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/catalog/seedCatalog.ts --apply --reset-only"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",

@@ -1,5 +1,6 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
+import type { StylingRequest } from '@/features/stylist/types';
 import type { DraftWardrobeItem, ManualWardrobeItemPrefill } from '@/types/wardrobe';
 import type { CatalogBrandSourceStatus } from '@/types/catalogDatabase';
 
@@ -44,10 +45,16 @@ export type WardrobeStackParamList = {
 
 export type StylistStackParamList = {
   Stylist: undefined;
-  OutfitGoal: undefined;
-  OutfitPreferences: { occasion: string; style: string };
-  OutfitGenerating: { occasion: string; style: string };
-  OutfitResult: { outfitId: string };
+  OutfitGoal:
+    | {
+        selectedItemId?: string;
+        occasion?: string;
+        desiredStyle?: string;
+      }
+    | undefined;
+  OutfitPreferences: { request: StylingRequest };
+  OutfitGenerating: { request: StylingRequest };
+  OutfitResult: { generationId: string };
   OutfitDetail: { outfitId: string };
 };
 

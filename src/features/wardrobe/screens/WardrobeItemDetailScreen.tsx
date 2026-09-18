@@ -7,10 +7,8 @@ import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 import { ActionButton } from '@/components/ActionButton';
 import { AppScreen } from '@/components/ui/AppScreen';
 import { IconButton } from '@/components/ui/IconButton';
-import { OutfitCard } from '@/components/ui/OutfitCard';
 import { PlaceholderArtwork } from '@/components/ui/PlaceholderArtwork';
-import { EmptyState, ErrorState, LoadingState } from '@/components/ui/StateViews';
-import { outfitConcepts } from '@/fixtures/outfits';
+import { ErrorState, LoadingState } from '@/components/ui/StateViews';
 import { MAIN_ROUTES, STYLIST_ROUTES } from '@/navigation/routes';
 import type { MainTabParamList, WardrobeStackParamList } from '@/navigation/types';
 import { useAuthStore } from '@/store/authStore';
@@ -80,7 +78,10 @@ export function WardrobeItemDetailScreen({ navigation, route }: Props) {
   const styleItem = () =>
     navigation
       .getParent<BottomTabNavigationProp<MainTabParamList>>()
-      ?.navigate(MAIN_ROUTES.STYLIST_TAB, { screen: STYLIST_ROUTES.OUTFIT_GOAL });
+      ?.navigate(MAIN_ROUTES.STYLIST_TAB, {
+        screen: STYLIST_ROUTES.OUTFIT_GOAL,
+        params: { selectedItemId: item.id },
+      });
 
   const confirmDelete = () => {
     Alert.alert('Delete wardrobe item?', `${item.name} will be permanently removed.`, [
@@ -171,30 +172,6 @@ export function WardrobeItemDetailScreen({ navigation, route }: Props) {
         />
         <ActionButton label="Delete item" onPress={confirmDelete} variant="text" />
       </View>
-      <View style={styles.section}>
-        <Text accessibilityRole="header" style={styles.sectionTitle}>
-          Related outfit concept
-        </Text>
-        {outfitConcepts[0] ? (
-          <OutfitCard
-            compact
-            onPress={() =>
-              navigation
-                .getParent<BottomTabNavigationProp<MainTabParamList>>()
-                ?.navigate(MAIN_ROUTES.STYLIST_TAB, {
-                  screen: STYLIST_ROUTES.OUTFIT_DETAIL,
-                  params: { outfitId: outfitConcepts[0]!.id },
-                })
-            }
-            outfit={outfitConcepts[0]}
-          />
-        ) : null}
-      </View>
-      <EmptyState
-        message="Wear tracking remains outside Phase 3 and no history is fabricated."
-        symbol="â†»"
-        title="No usage history yet"
-      />
     </AppScreen>
   );
 }
@@ -224,11 +201,5 @@ function createStyles(theme: AppTheme) {
     detailLabel: { color: theme.colors.textMuted, width: 100 },
     detailValue: { color: theme.colors.text, flex: 1, textAlign: 'right' },
     actions: { gap: theme.spacing.sm },
-    section: { gap: theme.spacing.md },
-    sectionTitle: {
-      color: theme.colors.text,
-      fontSize: theme.typography.fontSize.lg,
-      fontWeight: theme.typography.fontWeight.bold,
-    },
   });
 }

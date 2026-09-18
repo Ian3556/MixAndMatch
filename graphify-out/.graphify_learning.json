@@ -1,8 +1,72 @@
 {
-  "generated_at": "2026-09-11T06:22:24.210064+00:00",
+  "generated_at": "2026-09-18T14:29:05.610172+00:00",
   "nodes": {
+    "docs_catalog_database_mix_match_catalogue_database": {
+      "code_fingerprint": "0e74de6c2758fdda9986ad12deab8924a9419093c8afab5a0a68dd9852e78304",
+      "label": "Mix & Match catalogue database",
+      "last": "2026-09-18T08:05:05.424554+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T08:05:05.424554+00:00",
+          "outcome": "useful",
+          "q": "Inspect the existing catalog Supabase schema, Browse Brands flow, and Wardrobe persistence before implementing the synthetic catalogue."
+        }
+      ],
+      "score": 0.993857584,
+      "source_file": "docs/catalog-database.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "docs_synthetic_catalogue_development_synthetic_catalogue": {
+      "code_fingerprint": "86786a28dd280a3a22eeb91f0f5d016c3d3a04d0afd9256d3805a8ddb8ff2768",
+      "label": "Development synthetic catalogue",
+      "last": "2026-09-18T13:49:47.661155+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T13:49:47.661155+00:00",
+          "outcome": "useful",
+          "q": "How to seed remote Supabase Project"
+        }
+      ],
+      "score": 0.999369641,
+      "source_file": "docs/synthetic-catalogue.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "docs_synthetic_catalogue_seed_supabase": {
+      "code_fingerprint": "86786a28dd280a3a22eeb91f0f5d016c3d3a04d0afd9256d3805a8ddb8ff2768",
+      "label": "Seed Supabase",
+      "last": "2026-09-18T13:49:47.661155+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T13:49:47.661155+00:00",
+          "outcome": "useful",
+          "q": "How to seed remote Supabase Project"
+        }
+      ],
+      "score": 0.999369641,
+      "source_file": "docs/synthetic-catalogue.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "package_scripts_validate": {
+      "code_fingerprint": "097bbdd752cd37bbc4906865f4255d7e15694bc04c5427e850790b93edf2e832",
+      "label": "validate",
+      "last": "2026-09-18T13:49:47.661155+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T13:49:47.661155+00:00",
+          "outcome": "useful",
+          "q": "How to seed remote Supabase Project"
+        }
+      ],
+      "score": 0.999369641,
+      "source_file": "package.json",
+      "status": "tentative",
+      "uses": 1
+    },
     "react": {
-      "code_fingerprint": "78948bf99423605e216f34ee23fa73fb5b69470b792c830e41224879bd0a5d4c",
+      "code_fingerprint": "097bbdd752cd37bbc4906865f4255d7e15694bc04c5427e850790b93edf2e832",
       "label": "react",
       "last": "2026-09-02T15:58:55.671068+00:00",
       "provenance": [
@@ -12,24 +76,123 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 0.819800896,
+      "score": 0.691953102,
       "source_file": "package.json",
       "status": "tentative",
       "uses": 1
     },
     "ref_supabase_functions_import_wardrobe_url_index_ts": {
-      "code_fingerprint": "9b186f423ebce1c7eaac219d9a2f4878c7143e421406f996bc6f39b4887c32b5",
+      "code_fingerprint": "4ce89e59a141d4fc86ad93637f34b7de440e212f14240d7ad33606f6ee6b24de",
       "label": "supabase/functions/import-wardrobe-url/index.ts",
-      "last": "2026-09-11T06:09:37.575702+00:00",
+      "last": "2026-09-11T06:26:09.257529+00:00",
       "provenance": [
+        {
+          "date": "2026-09-11T06:26:09.257529+00:00",
+          "outcome": "useful",
+          "q": "VS Code reports Cannot find name Deno in supabase/functions/import-wardrobe-url/index.ts"
+        },
         {
           "date": "2026-09-11T06:09:37.575702+00:00",
           "outcome": "useful",
           "q": "unexpected deploy status 400: Failed to bundle import-wardrobe-url because html-parsers module was not found"
         }
       ],
-      "score": 0.999795009,
+      "score": 1.687978156,
       "source_file": "tsconfig.json",
+      "status": "preferred",
+      "uses": 2
+    },
+    "scripts_catalog_seedcatalog": {
+      "code_fingerprint": "3f9c9d9f2e613dbda906c8f76b63b45dff19b50cb2fa8491010133eff284933c",
+      "label": "seedCatalog.ts",
+      "last": "2026-09-18T14:21:17.083292+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T14:21:17.083292+00:00",
+          "outcome": "useful",
+          "q": "Why does catalog:seed still report TypeError fetch failed on the first catalog_brands read after setting an sb_secret key?"
+        },
+        {
+          "date": "2026-09-18T14:14:04.156694+00:00",
+          "outcome": "useful",
+          "q": "What should be tested after the Supabase health endpoint returns HTTP 401 No API key found?"
+        },
+        {
+          "date": "2026-09-18T14:11:23.623985+00:00",
+          "outcome": "useful",
+          "q": "Why does catalog:seed still report TypeError fetch failed after Test-NetConnection to Supabase port 443 succeeds?"
+        },
+        {
+          "date": "2026-09-18T14:01:21.920302+00:00",
+          "outcome": "useful",
+          "q": "Why did npm run catalog:seed fail with TypeError: fetch failed at seedCatalog.ts line 72?"
+        }
+      ],
+      "score": 3.998904924,
+      "source_file": "scripts/catalog/seedCatalog.ts",
+      "status": "preferred",
+      "uses": 4
+    },
+    "scripts_catalog_seedcatalog_client": {
+      "code_fingerprint": "3f9c9d9f2e613dbda906c8f76b63b45dff19b50cb2fa8491010133eff284933c",
+      "label": "client",
+      "last": "2026-09-18T14:21:17.083292+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T14:21:17.083292+00:00",
+          "outcome": "useful",
+          "q": "Why does catalog:seed still report TypeError fetch failed on the first catalog_brands read after setting an sb_secret key?"
+        },
+        {
+          "date": "2026-09-18T14:14:04.156694+00:00",
+          "outcome": "useful",
+          "q": "What should be tested after the Supabase health endpoint returns HTTP 401 No API key found?"
+        },
+        {
+          "date": "2026-09-18T14:11:23.623985+00:00",
+          "outcome": "useful",
+          "q": "Why does catalog:seed still report TypeError fetch failed after Test-NetConnection to Supabase port 443 succeeds?"
+        },
+        {
+          "date": "2026-09-18T14:01:21.920302+00:00",
+          "outcome": "useful",
+          "q": "Why did npm run catalog:seed fail with TypeError: fetch failed at seedCatalog.ts line 72?"
+        }
+      ],
+      "score": 3.998904924,
+      "source_file": "scripts/catalog/seedCatalog.ts",
+      "status": "preferred",
+      "uses": 4
+    },
+    "scripts_catalog_seedcatalog_seedcatalog": {
+      "code_fingerprint": "3f9c9d9f2e613dbda906c8f76b63b45dff19b50cb2fa8491010133eff284933c",
+      "label": "seedCatalog()",
+      "last": "2026-09-18T14:21:17.083292+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T14:21:17.083292+00:00",
+          "outcome": "useful",
+          "q": "Why does catalog:seed still report TypeError fetch failed on the first catalog_brands read after setting an sb_secret key?"
+        }
+      ],
+      "score": 0.999874715,
+      "source_file": "scripts/catalog/seedCatalog.ts",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_catalog_services_catalogbrowseservice": {
+      "code_fingerprint": "29ea6614b1a339675b48c1f417ec76e95af19ae948830d001eeb702f32f07ff3",
+      "label": "catalogBrowseService.ts",
+      "last": "2026-09-18T08:05:05.424554+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T08:05:05.424554+00:00",
+          "outcome": "useful",
+          "q": "Inspect the existing catalog Supabase schema, Browse Brands flow, and Wardrobe persistence before implementing the synthetic catalogue."
+        }
+      ],
+      "score": 0.993857584,
+      "source_file": "src/catalog/services/catalogBrowseService.ts",
       "status": "tentative",
       "uses": 1
     },
@@ -44,7 +207,7 @@
           "q": "Wardrobe Page Update - Remove the \"Wardrobe\" heading - \"Categories\" section - \"All\" \"Tops\" ... remove the border radius"
         }
       ],
-      "score": 0.942101979,
+      "score": 0.795181355,
       "source_file": "src/components/ui/Chip.tsx",
       "status": "tentative",
       "uses": 1
@@ -60,7 +223,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.877048681,
+      "score": 0.740273106,
       "source_file": "src/components/ui/SearchBar.tsx",
       "status": "tentative",
       "uses": 1
@@ -76,10 +239,31 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.80055034,
+      "score": 0.675704667,
       "source_file": "src/components/ui/StateViews.tsx",
       "status": "tentative",
       "uses": 1
+    },
+    "src_constants_environment_environment": {
+      "code_fingerprint": "ea2141ec65f8881630c6e0a276e57728f6de63f9a6c0e4595b81994112d67f6c",
+      "label": "environment",
+      "last": "2026-09-18T14:21:17.083292+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T14:21:17.083292+00:00",
+          "outcome": "useful",
+          "q": "Why does catalog:seed still report TypeError fetch failed on the first catalog_brands read after setting an sb_secret key?"
+        },
+        {
+          "date": "2026-09-18T14:01:21.920302+00:00",
+          "outcome": "useful",
+          "q": "Why did npm run catalog:seed fail with TypeError: fetch failed at seedCatalog.ts line 72?"
+        }
+      ],
+      "score": 1.999429914,
+      "source_file": "src/constants/environment.ts",
+      "status": "preferred",
+      "uses": 2
     },
     "src_features_auth_authbootstrap": {
       "code_fingerprint": "2c6118f3d41f3cc939583a97382b67c644f0550a45c3e4d1e7897c840200ea87",
@@ -92,7 +276,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.979565794,
+      "score": 0.826802695,
       "source_file": "src/features/auth/AuthBootstrap.tsx",
       "status": "tentative",
       "uses": 1
@@ -118,7 +302,7 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 2.459841772,
+      "score": 2.076229916,
       "source_file": "src/features/explore/components/ExploreMasonryFeed.tsx",
       "status": "preferred",
       "uses": 3
@@ -134,7 +318,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.877048681,
+      "score": 0.740273106,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -150,7 +334,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.877048681,
+      "score": 0.740273106,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -166,7 +350,7 @@
           "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
         }
       ],
-      "score": 0.839530853,
+      "score": 0.708606176,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -182,7 +366,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.877048681,
+      "score": 0.740273106,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -218,7 +402,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 4.156517825,
+      "score": 3.508309661,
       "source_file": "src/features/explore/screens/ExploreScreen.tsx",
       "status": "preferred",
       "uses": 5
@@ -239,7 +423,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.696676053,
+      "score": 1.432079745,
       "source_file": "src/features/explore/screens/SearchResultsScreen.tsx",
       "status": "preferred",
       "uses": 2
@@ -255,7 +439,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.80055034,
+      "score": 0.675704667,
       "source_file": "src/features/home/screens/HomeScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -271,8 +455,40 @@
           "q": "There are a few errors that need to be fix: Explore Page Image keeps on rendering, make the image to ONLY render when user either refresh or reopen the app; The Back button instead of going back to the home page, make it go back to its previous action."
         }
       ],
-      "score": 0.820137937,
+      "score": 0.692237582,
       "source_file": "src/features/home/screens/InspirationDetailScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_wardrobe_screens_browsebrandsscreen": {
+      "code_fingerprint": "60a1c5e1c36b7e04440679c7ab0291b9801684cc040b20116df76d88bea8a2cf",
+      "label": "BrowseBrandsScreen.tsx",
+      "last": "2026-09-18T08:05:05.424554+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T08:05:05.424554+00:00",
+          "outcome": "useful",
+          "q": "Inspect the existing catalog Supabase schema, Browse Brands flow, and Wardrobe persistence before implementing the synthetic catalogue."
+        }
+      ],
+      "score": 0.993857584,
+      "source_file": "src/features/wardrobe/screens/BrowseBrandsScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_wardrobe_screens_wardrobescreen": {
+      "code_fingerprint": "e9efdfd2f03e7fd94c1ef6c207406f06b618571c7579b3d242f37365f07cb9b4",
+      "label": "WardrobeScreen.tsx",
+      "last": "2026-09-18T08:05:05.424554+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T08:05:05.424554+00:00",
+          "outcome": "useful",
+          "q": "Inspect the existing catalog Supabase schema, Browse Brands flow, and Wardrobe persistence before implementing the synthetic catalogue."
+        }
+      ],
+      "score": 0.993857584,
+      "source_file": "src/features/wardrobe/screens/WardrobeScreen.tsx",
       "status": "tentative",
       "uses": 1
     },
@@ -287,7 +503,7 @@
           "q": "Wardrobe Page Update - Remove the \"Wardrobe\" heading - \"Categories\" section - \"All\" \"Tops\" ... remove the border radius"
         }
       ],
-      "score": 0.942101979,
+      "score": 0.795181355,
       "source_file": "src/features/wardrobe/screens/WardrobeScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -308,7 +524,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.659158224,
+      "score": 1.400412815,
       "source_file": "src/navigation/MainAppNavigator.tsx",
       "status": "preferred",
       "uses": 2
@@ -324,7 +540,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.979565794,
+      "score": 0.826802695,
       "source_file": "src/navigation/RootNavigator.tsx",
       "status": "tentative",
       "uses": 1
@@ -350,7 +566,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 2.46021913,
+      "score": 2.076548425,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "preferred",
       "uses": 3
@@ -366,13 +582,13 @@
           "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
         }
       ],
-      "score": 0.839530853,
+      "score": 0.708606176,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "tentative",
       "uses": 1
     },
     "src_navigation_types": {
-      "code_fingerprint": "d15f790183c4abc7e7bb867e19db11b737cb87d5da535109ec07104678b86eb2",
+      "code_fingerprint": "d9f1ab0233d424c3fb9c741e101103881cd52ea81f8e576c540bfdf301256af5",
       "label": "navigation/types.ts",
       "last": "2026-09-03T16:41:06.618740+00:00",
       "provenance": [
@@ -387,13 +603,13 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.659158224,
+      "score": 1.400412815,
       "source_file": "src/navigation/types.ts",
       "status": "preferred",
       "uses": 2
     },
     "src_navigation_types_profilestackparamlist": {
-      "code_fingerprint": "d15f790183c4abc7e7bb867e19db11b737cb87d5da535109ec07104678b86eb2",
+      "code_fingerprint": "d9f1ab0233d424c3fb9c741e101103881cd52ea81f8e576c540bfdf301256af5",
       "label": "ProfileStackParamList",
       "last": "2026-09-05T15:11:22.407163+00:00",
       "provenance": [
@@ -403,7 +619,7 @@
           "q": "Remake the Mix & Match Profile experience with nested Style Profile screens, simple headings, real data, persistence, loading states, and working navigation."
         }
       ],
-      "score": 0.877970685,
+      "score": 0.741051324,
       "source_file": "src/navigation/types.ts",
       "status": "tentative",
       "uses": 1
@@ -419,7 +635,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.979565794,
+      "score": 0.826802695,
       "source_file": "src/screens/InitializationScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -435,7 +651,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.979565794,
+      "score": 0.826802695,
       "source_file": "src/store/authStoreRuntime.ts",
       "status": "tentative",
       "uses": 1
@@ -451,7 +667,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.80055034,
+      "score": 0.675704667,
       "source_file": "src/theme/index.ts",
       "status": "tentative",
       "uses": 1
@@ -467,7 +683,7 @@
           "q": "unexpected deploy status 400: Failed to bundle import-wardrobe-url because html-parsers module was not found"
         }
       ],
-      "score": 0.999795009,
+      "score": 0.843877168,
       "source_file": "supabase/functions/_shared/wardrobe-import/extract-products.ts",
       "status": "tentative",
       "uses": 1
@@ -483,8 +699,61 @@
           "q": "unexpected deploy status 400: Failed to bundle import-wardrobe-url because html-parsers module was not found"
         }
       ],
-      "score": 0.999795009,
+      "score": 0.843877168,
       "source_file": "supabase/functions/_shared/wardrobe-import/html-parsers.ts",
+      "status": "tentative",
+      "uses": 1
+    },
+    "supabase_readme_migration": {
+      "code_fingerprint": "b90fcbc24b1985e71b933f4737c55f0f025fc55d54fae06e0598eea8f93ef785",
+      "label": "Migration",
+      "last": "2026-09-18T14:14:04.156694+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T14:14:04.156694+00:00",
+          "outcome": "useful",
+          "q": "What should be tested after the Supabase health endpoint returns HTTP 401 No API key found?"
+        },
+        {
+          "date": "2026-09-18T13:49:47.661155+00:00",
+          "outcome": "useful",
+          "q": "How to seed remote Supabase Project"
+        }
+      ],
+      "score": 1.999128605,
+      "source_file": "supabase/README.md",
+      "status": "preferred",
+      "uses": 2
+    },
+    "tsconfig_compileroptions_types": {
+      "code_fingerprint": "4ce89e59a141d4fc86ad93637f34b7de440e212f14240d7ad33606f6ee6b24de",
+      "label": "types",
+      "last": "2026-09-11T06:26:09.257529+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-11T06:26:09.257529+00:00",
+          "outcome": "useful",
+          "q": "VS Code reports Cannot find name Deno in supabase/functions/import-wardrobe-url/index.ts"
+        }
+      ],
+      "score": 0.844100988,
+      "source_file": "tsconfig.json",
+      "status": "tentative",
+      "uses": 1
+    },
+    "tsconfig_exclude": {
+      "code_fingerprint": "4ce89e59a141d4fc86ad93637f34b7de440e212f14240d7ad33606f6ee6b24de",
+      "label": "exclude",
+      "last": "2026-09-11T06:26:09.257529+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-11T06:26:09.257529+00:00",
+          "outcome": "useful",
+          "q": "VS Code reports Cannot find name Deno in supabase/functions/import-wardrobe-url/index.ts"
+        }
+      ],
+      "score": 0.844100988,
+      "source_file": "tsconfig.json",
       "status": "tentative",
       "uses": 1
     }

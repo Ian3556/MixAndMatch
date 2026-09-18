@@ -1,180 +1,271 @@
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { AppScreen } from '@/components/ui/AppScreen';
-import { Chip } from '@/components/ui/Chip';
-import { OutfitCard } from '@/components/ui/OutfitCard';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-import { DeferredNotice } from '@/components/ui/StateViews';
-import { outfitConcepts } from '@/fixtures/outfits';
-import { quickStylingPrompts, stylingTips } from '@/fixtures/stylingTips';
-import { STYLIST_ROUTES } from '@/navigation/routes';
-import type { StylistStackParamList } from '@/navigation/types';
+import { EmptyState, ErrorState, SkeletonCard } from '@/components/ui/StateViews';
+import { stylingTips } from '@/fixtures/stylingTips';
+import { MAIN_ROUTES, STYLIST_ROUTES } from '@/navigation/routes';
+import type { MainTabParamList, StylistStackParamList } from '@/navigation/types';
+import { useStylistStore } from '@/store/stylistStore';
 import { useAppTheme, type AppTheme } from '@/theme';
-import { showDeferredNotice } from '@/utils/deferred';
+
+import { useStylistData } from '../useStylistData';
 
 type Props = NativeStackScreenProps<StylistStackParamList, 'Stylist'>;
 
-const primaryActions = [
-  {
-    title: 'Create an outfit',
-    subtitle: 'Start with an occasion and style goal',
-    symbol: '✦',
-    route: 'goal',
-  },
-  {
-    title: 'Style one item',
-    subtitle: 'Preview the item-led styling entry point',
-    symbol: '◇',
-    route: 'goal',
-  },
-  {
-    title: 'Choose an occasion',
-    subtitle: 'Build a look around where you are going',
-    symbol: '○',
-    route: 'goal',
-  },
-  {
-    title: 'Ask the AI stylist',
-    subtitle: 'AI conversation is deferred',
-    symbol: '✧',
-    route: 'deferred',
-  },
-  {
-    title: 'View saved outfits',
-    subtitle: 'Saved outfits are deferred',
-    symbol: '♡',
-    route: 'deferred',
-  },
+const quickBriefs = [
+  { label: 'University · Minimal', occasion: 'University', desiredStyle: 'Minimalist' },
+  { label: 'Dinner · Smart casual', occasion: 'Dinner', desiredStyle: 'Smart Casual' },
+  { label: 'Travel · Casual', occasion: 'Travel', desiredStyle: 'Casual' },
 ] as const;
 
 export function StylistScreen({ navigation }: Props) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
+  const { error, loading, ready, retry, wardrobe } = useStylistData();
+  const savedLooks = useStylistStore((state) => state.savedLooks);
+  const currentGeneration = useStylistStore((state) => state.currentGeneration);
+
+  const openWardrobe = () =>
+    navigation
+      .getParent<BottomTabNavigationProp<MainTabParamList>>()
+      ?.navigate(MAIN_ROUTES.WARDROBE_TAB);
+
   return (
     <AppScreen
-      eyebrow="Outfit studio"
-      subtitle="Shape a styling brief and inspect static result layouts—without invoking AI."
+      eyebrow="Local styling engine"
+      subtitle="Build outfit recommendations from your wardrobe, context, and explicit preferences."
       title="Stylist"
     >
-      <DeferredNotice>
-        The Stylist is a navigable UI shell. Prompts, generation, saving, and personalisation are
-        not connected.
-      </DeferredNotice>
-      <View style={styles.actionGrid}>
-        {primaryActions.map((action) => (
-          <Pressable
-            accessibilityRole="button"
-            key={action.title}
-            onPress={() =>
-              action.route === 'goal'
-                ? navigation.navigate(STYLIST_ROUTES.OUTFIT_GOAL)
-                : showDeferredNotice(action.title)
-            }
-            style={({ pressed }) => [styles.actionCard, pressed ? styles.pressed : null]}
-          >
-            <Text style={styles.actionSymbol}>{action.symbol}</Text>
-            <Text style={styles.actionTitle}>{action.title}</Text>
-            <Text style={styles.actionSubtitle}>{action.subtitle}</Text>
-          </Pressable>
-        ))}
-      </View>
-
-      <View style={styles.section}>
-        <SectionHeader title="Quick styling prompts" />
-        <View style={styles.chips}>
-          {quickStylingPrompts.map((prompt) => (
-            <Chip
-              key={prompt}
-              label={prompt}
-              onPress={() => showDeferredNotice('AI styling prompts')}
-            />
-          ))}
+      {loading ? (
+        <View style={styles.skeletons}>
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
         </View>
-      </View>
-
-      <View style={styles.section}>
-        <SectionHeader title="Recent outfit concepts" />
-        <ScrollView
-          contentContainerStyle={styles.horizontal}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        >
-          {outfitConcepts.map((outfit) => (
-            <View key={outfit.id} style={styles.outfitWidth}>
-              <OutfitCard
-                onPress={() =>
-                  navigation.navigate(STYLIST_ROUTES.OUTFIT_DETAIL, { outfitId: outfit.id })
-                }
-                outfit={outfit}
-              />
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-
-      <View style={styles.section}>
-        <SectionHeader
-          subtitle="General education, not personalised advice"
-          title="Styling fundamentals"
+      ) : error ? (
+        <ErrorState
+          action={{ label: 'Try again', onPress: retry }}
+          message={error}
+          title="Stylist unavailable"
         />
-        <View style={styles.tipGrid}>
-          {stylingTips.map((tip, index) => (
-            <View key={tip.id} style={styles.tipCard}>
-              <Text style={styles.tipNumber}>{String(index + 1).padStart(2, '0')}</Text>
-              <Text style={styles.tipTitle}>{tip.title}</Text>
-              <Text style={styles.tipBody}>{tip.body}</Text>
+      ) : ready && wardrobe.length === 0 ? (
+        <EmptyState
+          action={{ label: 'Add clothes', onPress: openWardrobe }}
+          message="Add a few tops, bottoms, dresses, or shoes before generating a look."
+          title="Your wardrobe is empty"
+        />
+      ) : (
+        <>
+          <View style={styles.heroActions}>
+            <PrimaryAction
+              detail="Choose occasion, weather, and style"
+              label="Create an outfit"
+              onPress={() => navigation.navigate(STYLIST_ROUTES.OUTFIT_GOAL)}
+              styles={styles}
+              symbol="✦"
+            />
+            <PrimaryAction
+              detail="Anchor every result around one piece"
+              label="Style one item"
+              onPress={() => navigation.navigate(STYLIST_ROUTES.OUTFIT_GOAL)}
+              styles={styles}
+              symbol="◇"
+            />
+          </View>
+
+          <View style={styles.section}>
+            <SectionHeader subtitle="Start with a practical context" title="Quick briefs" />
+            <View style={styles.briefs}>
+              {quickBriefs.map((brief) => (
+                <Pressable
+                  accessibilityRole="button"
+                  key={brief.label}
+                  onPress={() => navigation.navigate(STYLIST_ROUTES.OUTFIT_GOAL, brief)}
+                  style={({ pressed }) => [styles.brief, pressed ? styles.pressed : null]}
+                >
+                  <Text style={styles.briefLabel}>{brief.label}</Text>
+                  <Text style={styles.arrow}>→</Text>
+                </Pressable>
+              ))}
             </View>
-          ))}
-        </View>
-      </View>
+          </View>
+
+          {currentGeneration?.recommendations.length ? (
+            <LookDirectory
+              looks={currentGeneration.recommendations.map((recommendation) => ({
+                id: recommendation.outfit.id,
+                score: recommendation.score,
+                title:
+                  recommendation.outfit.top?.name ??
+                  recommendation.outfit.dress?.name ??
+                  'Wardrobe look',
+              }))}
+              onOpen={(outfitId) => navigation.navigate(STYLIST_ROUTES.OUTFIT_DETAIL, { outfitId })}
+              styles={styles}
+              title="Latest recommendations"
+            />
+          ) : null}
+
+          <LookDirectory
+            empty="Save a recommendation and it will remain available on this device."
+            looks={savedLooks.map((look) => ({
+              id: look.recommendation.outfit.id,
+              score: look.recommendation.score,
+              title:
+                look.recommendation.outfit.top?.name ??
+                look.recommendation.outfit.dress?.name ??
+                'Saved wardrobe look',
+            }))}
+            onOpen={(outfitId) => navigation.navigate(STYLIST_ROUTES.OUTFIT_DETAIL, { outfitId })}
+            styles={styles}
+            title="Saved looks"
+          />
+
+          <View style={styles.section}>
+            <SectionHeader subtitle="General guidance" title="Styling fundamentals" />
+            <View style={styles.tipGrid}>
+              {stylingTips.slice(0, 4).map((tip, index) => (
+                <View key={tip.id} style={styles.tip}>
+                  <Text style={styles.tipNumber}>{String(index + 1).padStart(2, '0')}</Text>
+                  <Text style={styles.tipTitle}>{tip.title}</Text>
+                  <Text style={styles.tipBody}>{tip.body}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        </>
+      )}
     </AppScreen>
+  );
+}
+
+type Styles = ReturnType<typeof createStyles>;
+
+function PrimaryAction({
+  label,
+  detail,
+  symbol,
+  onPress,
+  styles,
+}: {
+  label: string;
+  detail: string;
+  symbol: string;
+  onPress: () => void;
+  styles: Styles;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      style={({ pressed }) => [styles.primaryAction, pressed ? styles.pressed : null]}
+    >
+      <Text style={styles.actionSymbol}>{symbol}</Text>
+      <Text style={styles.actionLabel}>{label}</Text>
+      <Text style={styles.actionDetail}>{detail}</Text>
+    </Pressable>
+  );
+}
+
+function LookDirectory({
+  title,
+  looks,
+  empty,
+  onOpen,
+  styles,
+}: {
+  title: string;
+  looks: { id: string; title: string; score: number }[];
+  empty?: string;
+  onOpen: (outfitId: string) => void;
+  styles: Styles;
+}) {
+  return (
+    <View style={styles.section}>
+      <SectionHeader title={title} />
+      {looks.length === 0 ? <Text style={styles.emptyCopy}>{empty}</Text> : null}
+      {looks.slice(0, 5).map((look, index) => (
+        <Pressable
+          accessibilityRole="button"
+          key={look.id}
+          onPress={() => onOpen(look.id)}
+          style={({ pressed }) => [styles.lookRow, pressed ? styles.pressed : null]}
+        >
+          <Text style={styles.lookNumber}>{String(index + 1).padStart(2, '0')}</Text>
+          <Text numberOfLines={1} style={styles.lookTitle}>
+            {look.title}
+          </Text>
+          <Text style={styles.lookScore}>{look.score.toFixed(1)}</Text>
+        </Pressable>
+      ))}
+    </View>
   );
 }
 
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
-    actionGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.md },
-    actionCard: {
-      backgroundColor: theme.colors.surface,
-      borderColor: theme.colors.border,
-      borderRadius: theme.radii.lg,
-      borderWidth: 1,
+    skeletons: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.md },
+    heroActions: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.md },
+    primaryAction: {
+      borderBottomColor: theme.colors.border,
+      borderBottomWidth: 1,
       flexGrow: 1,
       gap: theme.spacing.xs,
-      minHeight: 156,
+      minHeight: 128,
       minWidth: 220,
-      padding: theme.spacing.lg,
+      paddingVertical: theme.spacing.lg,
       width: '46%',
     },
     actionSymbol: { color: theme.colors.primary, fontSize: theme.typography.fontSize.xl },
-    actionTitle: {
+    actionLabel: {
       color: theme.colors.text,
       fontSize: theme.typography.fontSize.lg,
       fontWeight: theme.typography.fontWeight.bold,
     },
-    actionSubtitle: {
-      color: theme.colors.textMuted,
-      fontSize: theme.typography.fontSize.sm,
-      lineHeight: theme.typography.lineHeight.sm,
-    },
+    actionDetail: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.sm },
     section: { gap: theme.spacing.md },
-    chips: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm },
-    horizontal: { gap: theme.spacing.md, paddingRight: theme.spacing.md },
-    outfitWidth: { width: 280 },
-    tipGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm },
-    tipCard: {
-      backgroundColor: theme.colors.surfaceMuted,
-      borderRadius: theme.radii.md,
+    briefs: { borderTopColor: theme.colors.border, borderTopWidth: StyleSheet.hairlineWidth },
+    brief: {
+      alignItems: 'center',
+      borderBottomColor: theme.colors.border,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      flexDirection: 'row',
+      minHeight: 56,
+    },
+    briefLabel: {
+      color: theme.colors.text,
+      flex: 1,
+      fontWeight: theme.typography.fontWeight.semibold,
+    },
+    arrow: { color: theme.colors.primary, fontSize: theme.typography.fontSize.lg },
+    lookRow: {
+      alignItems: 'center',
+      borderBottomColor: theme.colors.border,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      flexDirection: 'row',
+      gap: theme.spacing.md,
+      minHeight: 54,
+    },
+    lookNumber: { color: theme.colors.primary, fontSize: theme.typography.fontSize.xs, width: 24 },
+    lookTitle: { color: theme.colors.text, flex: 1 },
+    lookScore: { color: theme.colors.textMuted, fontVariant: ['tabular-nums'] },
+    emptyCopy: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.sm },
+    tipGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.md },
+    tip: {
+      borderTopColor: theme.colors.primary,
+      borderTopWidth: 2,
       flexGrow: 1,
       gap: theme.spacing.xs,
       minWidth: 180,
-      padding: theme.spacing.md,
-      width: '30%',
+      paddingTop: theme.spacing.md,
+      width: '46%',
     },
     tipNumber: { color: theme.colors.primary, fontSize: theme.typography.fontSize.xs },
     tipTitle: { color: theme.colors.text, fontWeight: theme.typography.fontWeight.semibold },
     tipBody: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.sm },
-    pressed: { opacity: 0.72 },
+    pressed: { opacity: 0.7 },
   });
 }

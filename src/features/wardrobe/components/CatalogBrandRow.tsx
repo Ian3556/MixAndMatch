@@ -36,16 +36,19 @@ export function CatalogBrandRow({ brand, onPress }: Props) {
       )}
       <View style={styles.copy}>
         <Text style={styles.name}>{brand.name}</Text>
-        <Text style={styles.status}>{formatStatus(brand.status)}</Text>
+        <Text style={styles.status}>{formatStatus(brand)}</Text>
       </View>
       <Ionicons color={theme.colors.textMuted} name="chevron-forward" size={20} />
     </Pressable>
   );
 }
 
-function formatStatus(status: CatalogBrand['status']): string {
-  if (['ready', 'supported', 'completed'].includes(status)) return 'Catalog available';
-  if (status === 'partially_supported') return 'Limited catalog';
+function formatStatus(brand: CatalogBrand): string {
+  if (brand.hasDemoCatalog) return `Demo catalogue · ${brand.productCount} products`;
+  if (['ready', 'supported', 'completed'].includes(brand.status)) {
+    return `Catalog available · ${brand.productCount} products`;
+  }
+  if (brand.status === 'partially_supported') return 'Limited catalog';
   return 'Catalog not available yet';
 }
 

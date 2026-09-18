@@ -183,6 +183,42 @@ export function CatalogProductDetailScreen({ navigation, route }: Props) {
         {product.description ? <Text style={styles.description}>{product.description}</Text> : null}
       </View>
 
+      {product.isDemo ? (
+        <View style={styles.demoNotice}>
+          <Text style={styles.demoTitle}>Synthetic development product</Text>
+          <Text style={styles.demoCopy}>
+            This fictional item and price are test data, not a current retailer listing.
+          </Text>
+        </View>
+      ) : null}
+
+      {product.styleTags.length > 0 ? (
+        <View style={styles.section}>
+          <Text accessibilityRole="header" style={styles.heading}>
+            Styling profile
+          </Text>
+          <Text style={styles.meta}>
+            {[
+              ...product.styleTags,
+              product.fit,
+              product.silhouette,
+              product.pattern,
+              product.length,
+            ]
+              .filter(Boolean)
+              .join(' · ')}
+          </Text>
+          <Text style={styles.meta}>
+            {[...product.occasionTags, ...product.seasonTags].join(' · ')}
+          </Text>
+          {product.formalityLevel !== null && product.warmthLevel !== null ? (
+            <Text style={styles.meta}>
+              Formality {product.formalityLevel}/5 · Warmth {product.warmthLevel}/5
+            </Text>
+          ) : null}
+        </View>
+      ) : null}
+
       {colors.length > 0 ? (
         <View style={styles.section}>
           <Text accessibilityRole="header" style={styles.heading}>
@@ -310,6 +346,19 @@ function createStyles(theme: AppTheme) {
       lineHeight: theme.typography.lineHeight.md,
     },
     section: { gap: theme.spacing.sm },
+    demoNotice: {
+      backgroundColor: theme.colors.surfaceMuted,
+      borderColor: theme.colors.border,
+      borderWidth: 1,
+      gap: theme.spacing.xs,
+      padding: theme.spacing.md,
+    },
+    demoTitle: {
+      color: theme.colors.text,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontWeight: theme.typography.fontWeight.semibold,
+    },
+    demoCopy: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.sm },
     heading: {
       color: theme.colors.text,
       fontFamily: theme.typography.fontFamily.medium,

@@ -18,6 +18,11 @@ metadata, the validated-product category RPC, source-aware wardrobe fields, and 
 Apply it before testing catalog-to-wardrobe saves. Existing manual and website-import rows are
 backfilled non-destructively.
 
+`migrations/20260918000100_add_synthetic_catalogue.sql` adds explicit demo/source markers, styling
+fields, image-source abstraction, and RLS-respecting browse/filter RPCs for the deterministic
+development catalogue. It does not insert products by itself. See `docs/synthetic-catalogue.md` for
+the guarded generator, seed, validation, and synthetic-only reset commands.
+
 Review the target project before applying migrations:
 
 ```powershell

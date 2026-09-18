@@ -56,6 +56,7 @@ export function CatalogProductCard({ product, viewMode, onPress, width }: Props)
         </Text>
         <Text numberOfLines={1} style={styles.meta}>
           {[
+            product.isDemo ? 'Demo' : null,
             product.categoryName,
             product.primaryColor,
             formatPrice(product.price, product.currency),

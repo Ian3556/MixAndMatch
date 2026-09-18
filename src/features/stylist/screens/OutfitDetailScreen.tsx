@@ -1,128 +1,114 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { ActionButton } from '@/components/ActionButton';
 import { AppScreen } from '@/components/ui/AppScreen';
-import { Badge } from '@/components/ui/ProfilePrimitives';
-import { PlaceholderArtwork } from '@/components/ui/PlaceholderArtwork';
-import { DeferredNotice, ErrorState } from '@/components/ui/StateViews';
-import { outfitConcepts } from '@/fixtures/outfits';
+import { ErrorState } from '@/components/ui/StateViews';
+import { StylingRecommendationCard } from '@/features/stylist/components/StylingRecommendationCard';
+import type { ClothingItem } from '@/features/stylist/types';
 import type { StylistStackParamList } from '@/navigation/types';
+import { useStylistStore } from '@/store/stylistStore';
 import { useAppTheme, type AppTheme } from '@/theme';
-import { showDeferredNotice } from '@/utils/deferred';
+
+import { useStylistData } from '../useStylistData';
 
 type Props = NativeStackScreenProps<StylistStackParamList, 'OutfitDetail'>;
+type FeedbackAction = 'like' | 'dislike' | 'save' | 'wore';
 
 export function OutfitDetailScreen({ navigation, route }: Props) {
-  const theme = useAppTheme();
-  const styles = createStyles(theme);
-  const outfit = outfitConcepts.find((candidate) => candidate.id === route.params.outfitId);
+  const styles = createStyles(useAppTheme());
+  const { user } = useStylistData();
+  const currentGeneration = useStylistStore((state) => state.currentGeneration);
+  const savedLooks = useStylistStore((state) => state.savedLooks);
+  const feedback = useStylistStore((state) => state.feedbackByOutfit[route.params.outfitId]);
+  const neverRecommendItemIds = useStylistStore(
+    (state) => state.preferenceModel.neverRecommendItemIds,
+  );
+  const recordFeedback = useStylistStore((state) => state.recordFeedback);
+  const neverRecommendItem = useStylistStore((state) => state.neverRecommendItem);
+  const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
+  const savedLook = savedLooks.find(
+    (look) => look.recommendation.outfit.id === route.params.outfitId,
+  );
+  const recommendation =
+    currentGeneration?.recommendations.find(
+      (candidate) => candidate.outfit.id === route.params.outfitId,
+    ) ?? savedLook?.recommendation;
+  const request = currentGeneration?.recommendations.some(
+    (candidate) => candidate.outfit.id === route.params.outfitId,
+  )
+    ? currentGeneration.request
+    : savedLook?.request;
 
-  if (!outfit) {
+  if (!recommendation || !request) {
     return (
       <AppScreen onBack={navigation.goBack} title="Outfit unavailable">
         <ErrorState
           action={{ label: 'Go back', onPress: navigation.goBack }}
-          message="This static outfit concept is not in the local fixture set."
-          title="Missing outfit concept"
+          message="This recommendation is no longer in the current session or saved looks."
+          title="Look not found"
         />
       </AppScreen>
     );
   }
 
-  const notes = [
-    ['Colour rationale', outfit.colorRationale],
-    ['Layering notes', outfit.layeringNotes],
-    ['Footwear notes', outfit.footwearNotes],
-    ['Accessories', outfit.accessories],
-  ] as const;
+  const applyFeedback = async (action: FeedbackAction) => {
+    if (!user) return;
+    setBusy(true);
+    try {
+      await recordFeedback(user.id, recommendation, request, action);
+      setNotice(action === 'save' ? 'Look saved on this device.' : 'Your feedback was recorded.');
+    } catch (caught) {
+      setNotice(caught instanceof Error ? caught.message : 'The feedback could not be recorded.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const excludeItem = async (item: ClothingItem) => {
+    if (!user) return;
+    setBusy(true);
+    try {
+      await neverRecommendItem(user.id, item.id);
+      setNotice(`${item.name} will not appear in future recommendations.`);
+    } catch (caught) {
+      setNotice(caught instanceof Error ? caught.message : 'The item could not be excluded.');
+    } finally {
+      setBusy(false);
+    }
+  };
 
   return (
-    <AppScreen onBack={navigation.goBack} subtitle={outfit.occasion} title={outfit.name}>
-      <PlaceholderArtwork aspectRatio={16 / 10} colors={outfit.colors} label={outfit.name} />
-      <View style={styles.badges}>
-        <Badge label={outfit.style} />
-        <Badge label="Fixture concept" />
-      </View>
-      <View style={styles.section}>
-        <Text accessibilityRole="header" style={styles.heading}>
-          Garments
-        </Text>
-        {outfit.garments.map((garment) => (
-          <View key={garment} style={styles.garmentRow}>
-            <Text style={styles.bullet}>◇</Text>
-            <Text style={styles.garmentText}>{garment}</Text>
-          </View>
-        ))}
-      </View>
-      <View style={styles.section}>
-        <Text accessibilityRole="header" style={styles.heading}>
-          Styling notes
-        </Text>
-        {notes.map(([label, value]) => (
-          <View key={label} style={styles.noteCard}>
-            <Text style={styles.noteLabel}>{label}</Text>
-            <Text style={styles.noteBody}>{value}</Text>
-          </View>
-        ))}
-      </View>
-      <DeferredNotice>
-        Saving, editing, sharing, and 3D preview remain deferred. These actions cannot mutate or
-        publish data.
-      </DeferredNotice>
-      <ActionButton label="Save outfit" onPress={() => showDeferredNotice('Saved outfits')} />
-      <ActionButton
-        label="Edit outfit"
-        onPress={() => showDeferredNotice('Outfit editing')}
-        variant="secondary"
+    <AppScreen
+      onBack={navigation.goBack}
+      subtitle="Deterministic recommendation"
+      title="Outfit detail"
+    >
+      {notice ? (
+        <View accessibilityLiveRegion="polite" style={styles.notice}>
+          <Text style={styles.noticeText}>{notice}</Text>
+        </View>
+      ) : null}
+      <StylingRecommendationCard
+        busy={busy}
+        {...(feedback ? { feedback } : {})}
+        index={0}
+        neverRecommendItemIds={neverRecommendItemIds}
+        onFeedback={(action) => void applyFeedback(action)}
+        onNeverRecommend={(item) => void excludeItem(item)}
+        recommendation={recommendation}
+        saved={Boolean(savedLook)}
       />
-      <ActionButton
-        label="Share outfit"
-        onPress={() => showDeferredNotice('Outfit sharing')}
-        variant="secondary"
-      />
-      <ActionButton
-        label="3D preview unavailable"
-        onPress={() => showDeferredNotice('3D outfit preview')}
-        variant="text"
-      />
+      <Text style={styles.futureBoundary}>3D preview unavailable in Styling Engine V1.</Text>
     </AppScreen>
   );
 }
 
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
-    badges: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm },
-    section: { gap: theme.spacing.sm },
-    heading: {
-      color: theme.colors.text,
-      fontSize: theme.typography.fontSize.lg,
-      fontWeight: theme.typography.fontWeight.bold,
-    },
-    garmentRow: {
-      alignItems: 'center',
-      backgroundColor: theme.colors.surface,
-      borderRadius: theme.radii.md,
-      flexDirection: 'row',
-      gap: theme.spacing.sm,
-      minHeight: 48,
-      paddingHorizontal: theme.spacing.md,
-    },
-    bullet: { color: theme.colors.primary },
-    garmentText: { color: theme.colors.text, flex: 1 },
-    noteCard: {
-      backgroundColor: theme.colors.surface,
-      borderColor: theme.colors.border,
-      borderRadius: theme.radii.md,
-      borderWidth: 1,
-      gap: theme.spacing.xs,
-      padding: theme.spacing.md,
-    },
-    noteLabel: { color: theme.colors.primary, fontWeight: theme.typography.fontWeight.semibold },
-    noteBody: {
-      color: theme.colors.textMuted,
-      fontSize: theme.typography.fontSize.sm,
-      lineHeight: theme.typography.lineHeight.sm,
-    },
+    notice: { backgroundColor: theme.colors.primarySoft, padding: theme.spacing.md },
+    noticeText: { color: theme.colors.text, fontSize: theme.typography.fontSize.sm },
+    futureBoundary: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.xs },
   });
 }
