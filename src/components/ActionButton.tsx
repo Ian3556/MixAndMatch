@@ -5,6 +5,7 @@ import { useAppTheme, type AppTheme } from '@/theme';
 type ActionButtonProps = Omit<PressableProps, 'children' | 'style'> & {
   label: string;
   loading?: boolean | undefined;
+  square?: boolean | undefined;
   variant?: 'primary' | 'secondary' | 'text' | undefined;
 };
 
@@ -12,6 +13,7 @@ export function ActionButton({
   label,
   loading = false,
   disabled = false,
+  square = false,
   variant = 'primary',
   ...pressableProps
 }: ActionButtonProps) {
@@ -27,6 +29,7 @@ export function ActionButton({
       style={({ pressed }) => [
         styles.base,
         styles[variant],
+        square ? styles.square : null,
         pressed && !isDisabled ? styles.pressed : null,
         isDisabled ? styles.disabled : null,
       ]}
@@ -53,6 +56,7 @@ function createStyles(theme: AppTheme) {
       minHeight: 52,
       paddingHorizontal: theme.spacing.lg,
     },
+    square: { borderRadius: theme.radii.none },
     primary: {
       backgroundColor: theme.colors.primary,
       borderColor: theme.colors.primary,

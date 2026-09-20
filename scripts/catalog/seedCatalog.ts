@@ -1,6 +1,13 @@
+import { readFile } from 'node:fs/promises';
+
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 import { STYLE_TAG_NAMES } from '../../src/data/catalog/attributes.ts';
+import {
+  DEMO_CATALOG_IMAGE_ASSETS,
+  DEMO_CATALOG_IMAGE_BUCKET,
+  type DemoCatalogImageKey,
+} from '../../src/data/catalog/demoImages.ts';
 import { generateCatalog } from '../../src/data/catalog/generator.ts';
 import { formatCatalogValidation, validateCatalog } from '../../src/data/catalog/validator.ts';
 import type { GeneratedCatalog } from '../../src/data/catalog/types.ts';
@@ -43,7 +50,7 @@ if (options.resetOnly) process.exit(0);
 
 await seedCatalog(client, catalog);
 console.log(
-  `Seeded ${catalog.products.length} synthetic products and ${catalog.variants.length} variants.`,
+  `Seeded ${catalog.products.length} synthetic products, ${catalog.variants.length} variants, and ${Object.keys(DEMO_CATALOG_IMAGE_ASSETS).length} shared generated category images.`,
 );
 
 function assertDevelopmentSeedAllowed() {
@@ -110,6 +117,7 @@ async function seedCatalog(client: SupabaseClient, generated: GeneratedCatalog) 
   const styleResult = await client.from('catalog_style_tags').select('id, slug');
   if (styleResult.error) throw new Error(styleResult.error.message);
   const styleIds = new Map((styleResult.data ?? []).map((row) => [row.slug, row.id]));
+  const imageUrls = await uploadDemoCatalogImages(client);
 
   const productRows = generated.products.map((product) => ({
     id: product.id,
@@ -153,6 +161,25 @@ async function seedCatalog(client: SupabaseClient, generated: GeneratedCatalog) 
     updated_at: product.updatedAt,
   }));
   await upsertBatches(client, 'catalog_products', productRows, 'id');
+
+  await upsertBatches(
+    client,
+    'catalog_product_images',
+    generated.products.map((product) => {
+      const imageUrl = requireLookup(imageUrls, product.imageAssetKey, 'generated image');
+      return {
+        product_id: product.id,
+        image_url: imageUrl,
+        source_url: imageUrl,
+        position: 0,
+        image_type: 'primary',
+        source_type: 'generated',
+        is_demo: true,
+        created_at: generated.generatedAt,
+      };
+    }),
+    'product_id,position',
+  );
 
   await upsertBatches(
     client,
@@ -254,6 +281,67 @@ async function seedCatalog(client: SupabaseClient, generated: GeneratedCatalog) 
     })),
     'id',
   );
+}
+
+async function uploadDemoCatalogImages(
+  client: SupabaseClient,
+): Promise<Map<DemoCatalogImageKey, string>> {
+  await ensureDemoCatalogImageBucket(client);
+  const urls = new Map<DemoCatalogImageKey, string>();
+  const entries = Object.entries(DEMO_CATALOG_IMAGE_ASSETS) as [
+    DemoCatalogImageKey,
+    (typeof DEMO_CATALOG_IMAGE_ASSETS)[DemoCatalogImageKey],
+  ][];
+
+  for (const [key, asset] of entries) {
+    const bytes = await readFile(new URL(`../../${asset.localPath}`, import.meta.url));
+    const upload = await client.storage
+      .from(DEMO_CATALOG_IMAGE_BUCKET)
+      .upload(asset.storagePath, bytes, {
+        cacheControl: '3600',
+        contentType: 'image/png',
+        upsert: true,
+      });
+    if (upload.error) {
+      throw new Error(`Unable to upload demo image ${asset.localPath}: ${upload.error.message}`);
+    }
+    const publicUrl = client.storage.from(DEMO_CATALOG_IMAGE_BUCKET).getPublicUrl(asset.storagePath)
+      .data.publicUrl;
+    if (!publicUrl) throw new Error(`Unable to resolve public URL for ${asset.storagePath}.`);
+    urls.set(key, publicUrl);
+  }
+
+  return urls;
+}
+
+async function ensureDemoCatalogImageBucket(client: SupabaseClient) {
+  const buckets = await client.storage.listBuckets({
+    limit: 100,
+    search: DEMO_CATALOG_IMAGE_BUCKET,
+  });
+  if (buckets.error) {
+    throw new Error(`Unable to list Storage buckets: ${buckets.error.message}`);
+  }
+
+  const bucketExists = buckets.data.some((bucket) => bucket.id === DEMO_CATALOG_IMAGE_BUCKET);
+  const configuration = {
+    public: true,
+    fileSizeLimit: 5 * 1024 * 1024,
+    allowedMimeTypes: ['image/png'],
+  };
+
+  if (!bucketExists) {
+    const created = await client.storage.createBucket(DEMO_CATALOG_IMAGE_BUCKET, configuration);
+    if (created.error) {
+      throw new Error(`Unable to create demo image bucket: ${created.error.message}`);
+    }
+    return;
+  }
+
+  const updated = await client.storage.updateBucket(DEMO_CATALOG_IMAGE_BUCKET, configuration);
+  if (updated.error) {
+    throw new Error(`Unable to configure demo image bucket: ${updated.error.message}`);
+  }
 }
 
 async function upsertBatches(

@@ -1,10 +1,14 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 import { AppScreen } from '@/components/ui/AppScreen';
 import { ErrorState } from '@/components/ui/StateViews';
 import { StylingRecommendationCard } from '@/features/stylist/components/StylingRecommendationCard';
+import {
+  StylistEditorialHeader,
+  StylistNotice,
+} from '@/features/stylist/components/StylistEditorial';
 import type { ClothingItem } from '@/features/stylist/types';
 import type { StylistStackParamList } from '@/navigation/types';
 import { useStylistStore } from '@/store/stylistStore';
@@ -43,10 +47,16 @@ export function OutfitDetailScreen({ navigation, route }: Props) {
 
   if (!recommendation || !request) {
     return (
-      <AppScreen onBack={navigation.goBack} title="Outfit unavailable">
+      <AppScreen hideHeader title="Outfit unavailable">
+        <StylistEditorialHeader
+          eyebrow="LOOK DETAIL"
+          onBack={navigation.goBack}
+          title="Outfit unavailable."
+        />
         <ErrorState
           action={{ label: 'Go back', onPress: navigation.goBack }}
           message="This recommendation is no longer in the current session or saved looks."
+          square
           title="Look not found"
         />
       </AppScreen>
@@ -80,18 +90,17 @@ export function OutfitDetailScreen({ navigation, route }: Props) {
   };
 
   return (
-    <AppScreen
-      onBack={navigation.goBack}
-      subtitle="Deterministic recommendation"
-      title="Outfit detail"
-    >
-      {notice ? (
-        <View accessibilityLiveRegion="polite" style={styles.notice}>
-          <Text style={styles.noticeText}>{notice}</Text>
-        </View>
-      ) : null}
+    <AppScreen hideHeader title="Outfit detail">
+      <StylistEditorialHeader
+        eyebrow="LOOK DETAIL"
+        meta="DETERMINISTIC WARDROBE RECOMMENDATION"
+        onBack={navigation.goBack}
+        title="The full composition."
+      />
+      {notice ? <StylistNotice>{notice}</StylistNotice> : null}
       <StylingRecommendationCard
         busy={busy}
+        featured
         {...(feedback ? { feedback } : {})}
         index={0}
         neverRecommendItemIds={neverRecommendItemIds}
@@ -107,8 +116,14 @@ export function OutfitDetailScreen({ navigation, route }: Props) {
 
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
-    notice: { backgroundColor: theme.colors.primarySoft, padding: theme.spacing.md },
-    noticeText: { color: theme.colors.text, fontSize: theme.typography.fontSize.sm },
-    futureBoundary: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.xs },
+    futureBoundary: {
+      borderTopColor: theme.colors.border,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      color: theme.colors.textMuted,
+      fontSize: theme.typography.fontSize.xs,
+      letterSpacing: 0.8,
+      paddingTop: theme.spacing.md,
+      textTransform: 'uppercase',
+    },
   });
 }

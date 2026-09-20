@@ -9,15 +9,16 @@ type MessageStateProps = {
   message: string;
   symbol: string;
   action?: StateAction;
+  square?: boolean;
 };
 
-function MessageState({ title, message, symbol, action }: MessageStateProps) {
+function MessageState({ title, message, symbol, action, square = false }: MessageStateProps) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
   return (
-    <View style={styles.messageState}>
-      <View style={styles.symbolShell}>
+    <View style={[styles.messageState, square ? styles.messageStateSquare : null]}>
+      <View style={[styles.symbolShell, square ? styles.symbolSquare : null]}>
         <Text style={styles.symbol}>{symbol}</Text>
       </View>
       <Text accessibilityRole="header" style={styles.title}>
@@ -25,7 +26,11 @@ function MessageState({ title, message, symbol, action }: MessageStateProps) {
       </Text>
       <Text style={styles.message}>{message}</Text>
       {action ? (
-        <Pressable accessibilityRole="button" onPress={action.onPress} style={styles.action}>
+        <Pressable
+          accessibilityRole="button"
+          onPress={action.onPress}
+          style={[styles.action, square ? styles.actionSquare : null]}
+        >
           <Text style={styles.actionLabel}>{action.label}</Text>
         </Pressable>
       ) : null}
@@ -55,14 +60,14 @@ export function LoadingState({ title, message }: { title: string; message: strin
   );
 }
 
-export function SkeletonCard() {
+export function SkeletonCard({ square = false }: { square?: boolean }) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   return (
     <View accessibilityLabel="Content loading" style={styles.skeletonCard}>
-      <View style={styles.skeletonImage} />
-      <View style={styles.skeletonLineWide} />
-      <View style={styles.skeletonLine} />
+      <View style={[styles.skeletonImage, square ? styles.skeletonSquare : null]} />
+      <View style={[styles.skeletonLineWide, square ? styles.skeletonSquare : null]} />
+      <View style={[styles.skeletonLine, square ? styles.skeletonSquare : null]} />
     </View>
   );
 }
@@ -89,6 +94,7 @@ function createStyles(theme: AppTheme) {
       gap: theme.spacing.sm,
       padding: theme.spacing.xl,
     },
+    messageStateSquare: { borderRadius: theme.radii.none },
     symbolShell: {
       alignItems: 'center',
       backgroundColor: theme.colors.primarySoft,
@@ -99,6 +105,7 @@ function createStyles(theme: AppTheme) {
       width: 56,
     },
     symbol: { color: theme.colors.primary, fontSize: theme.typography.fontSize.xl },
+    symbolSquare: { borderRadius: theme.radii.none },
     title: {
       color: theme.colors.text,
       fontFamily: theme.typography.fontFamily.bold,
@@ -129,6 +136,7 @@ function createStyles(theme: AppTheme) {
       fontFamily: theme.typography.fontFamily.medium,
       fontWeight: theme.typography.fontWeight.semibold,
     },
+    actionSquare: { borderRadius: theme.radii.none },
     skeletonCard: { gap: theme.spacing.sm, minWidth: 150 },
     skeletonImage: {
       aspectRatio: 4 / 5,
@@ -147,6 +155,7 @@ function createStyles(theme: AppTheme) {
       height: 12,
       width: '52%',
     },
+    skeletonSquare: { borderRadius: theme.radii.none },
     notice: {
       backgroundColor: theme.colors.primarySoft,
       borderColor: theme.colors.primary,

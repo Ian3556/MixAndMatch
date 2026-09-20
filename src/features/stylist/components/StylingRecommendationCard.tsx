@@ -1,13 +1,15 @@
-import { useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
-import { Chip } from '@/components/ui/Chip';
-import { PlaceholderArtwork } from '@/components/ui/PlaceholderArtwork';
 import type { OutfitFeedbackState } from '@/services/stylistPersistence';
 import { useAppTheme, type AppTheme } from '@/theme';
 
 import type { ClothingItem, StylingRecommendation } from '../types';
 import { getOutfitItems } from '../types';
+import {
+  buildStylingInstructions,
+  getRecommendationTitle,
+} from '../presentation/stylingPresentation';
+import { OutfitImageComposition } from './OutfitImageComposition';
 
 type FeedbackAction = 'like' | 'dislike' | 'save' | 'wore';
 
@@ -18,6 +20,7 @@ type Props = {
   saved: boolean;
   neverRecommendItemIds: readonly string[];
   busy?: boolean;
+  featured?: boolean;
   onFeedback: (action: FeedbackAction) => void;
   onNeverRecommend: (item: ClothingItem) => void;
   onOpen?: () => void;
@@ -30,83 +33,119 @@ export function StylingRecommendationCard({
   saved,
   neverRecommendItemIds,
   busy = false,
+  featured = false,
   onFeedback,
   onNeverRecommend,
   onOpen,
 }: Props) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
+  const { width } = useWindowDimensions();
   const items = getOutfitItems(recommendation.outfit);
   const neverRecommend = new Set(neverRecommendItemIds);
+  const instructions = buildStylingInstructions(items);
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, featured ? styles.featuredCard : null]}>
       <View style={styles.headingRow}>
         <View style={styles.lookIdentity}>
           <Text style={styles.lookNumber}>LOOK {String(index + 1).padStart(2, '0')}</Text>
-          <Text style={styles.lookTitle}>{lookTitle(recommendation)}</Text>
+          <Text style={[styles.lookTitle, featured ? styles.featuredTitle : null]}>
+            {getRecommendationTitle(recommendation)}
+          </Text>
         </View>
         <View style={styles.scoreBlock}>
-          <Text style={styles.score}>{recommendation.score.toFixed(1)}</Text>
-          <Text style={styles.scoreLabel}>MATCH</Text>
+          <Text style={styles.score}>{Math.round(recommendation.score)}</Text>
+          <Text style={styles.scoreLabel}>MATCH / 100</Text>
         </View>
       </View>
 
-      <View style={styles.itemGrid}>
-        {items.map((item) => (
-          <RecommendationItem
-            item={item}
-            key={item.id}
-            neverRecommended={neverRecommend.has(item.id)}
-            onNeverRecommend={() => onNeverRecommend(item)}
-            placeholderColors={[
-              theme.colors.primarySoft,
-              theme.colors.surfaceMuted,
-              theme.colors.surface,
-            ]}
-            styles={styles}
-          />
-        ))}
-      </View>
+      <OutfitImageComposition featured={featured} items={items} />
+
       {!recommendation.outfit.shoes ? (
         <Text style={styles.availabilityNote}>
-          Footwear is not included because no compatible shoe candidate was available.
+          Footwear is open: no compatible shoe was available in this wardrobe.
         </Text>
       ) : null}
 
-      <View style={styles.explanation}>
-        <Text style={styles.explanationLabel}>Why this works</Text>
-        <Text style={styles.explanationBody}>{recommendation.explanation}</Text>
+      <View style={[styles.editorialNotes, width >= 720 ? styles.editorialNotesWide : null]}>
+        <View style={styles.noteColumn}>
+          <Text style={styles.noteLabel}>WHY IT WORKS</Text>
+          <Text style={styles.noteBody}>{recommendation.explanation}</Text>
+        </View>
+        <View style={styles.noteColumn}>
+          <Text style={styles.noteLabel}>HOW TO WEAR IT</Text>
+          {instructions.map((instruction, instructionIndex) => (
+            <View key={instruction} style={styles.instructionRow}>
+              <Text style={styles.instructionIndex}>
+                {String(instructionIndex + 1).padStart(2, '0')}
+              </Text>
+              <Text style={styles.instructionText}>{instruction}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.itemDirectory}>
+        <Text style={styles.noteLabel}>WARDROBE PIECES</Text>
+        {items.map((item, itemIndex) => {
+          const excluded = neverRecommend.has(item.id);
+          return (
+            <View key={item.id} style={styles.itemRow}>
+              <Text style={styles.itemIndex}>{String(itemIndex + 1).padStart(2, '0')}</Text>
+              <View style={styles.itemCopy}>
+                <Text numberOfLines={1} style={styles.itemName}>
+                  {item.name}
+                </Text>
+                <Text style={styles.itemMeta}>
+                  {[item.category, item.primaryColor].filter(Boolean).join(' · ')}
+                </Text>
+              </View>
+              <Pressable
+                accessibilityRole="button"
+                accessibilityState={{ disabled: excluded }}
+                disabled={excluded || busy}
+                hitSlop={8}
+                onPress={() => onNeverRecommend(item)}
+                style={({ pressed }) => [styles.excludeAction, pressed ? styles.pressed : null]}
+              >
+                <Text style={[styles.excludeLabel, excluded ? styles.excludeLabelDisabled : null]}>
+                  {excluded ? 'EXCLUDED' : 'NEVER RECOMMEND'}
+                </Text>
+              </Pressable>
+            </View>
+          );
+        })}
       </View>
 
       <View style={styles.feedbackRow}>
-        <Chip
-          label="Like"
-          onPress={() => {
-            if (!busy) onFeedback('like');
-          }}
+        <FeedbackControl
+          disabled={busy}
+          label="LIKE"
+          onPress={() => onFeedback('like')}
           selected={feedback?.sentiment === 'like'}
+          styles={styles}
         />
-        <Chip
-          label="Dislike"
-          onPress={() => {
-            if (!busy) onFeedback('dislike');
-          }}
+        <FeedbackControl
+          disabled={busy}
+          label="DISLIKE"
+          onPress={() => onFeedback('dislike')}
           selected={feedback?.sentiment === 'dislike'}
+          styles={styles}
         />
-        <Chip
-          label="Save"
-          onPress={() => {
-            if (!busy) onFeedback('save');
-          }}
+        <FeedbackControl
+          disabled={busy}
+          label="SAVE"
+          onPress={() => onFeedback('save')}
           selected={saved}
+          styles={styles}
         />
-        <Chip
-          label="Wore"
-          onPress={() => {
-            if (!busy) onFeedback('wore');
-          }}
+        <FeedbackControl
+          disabled={busy}
+          label="WORE"
+          onPress={() => onFeedback('wore')}
           selected={Boolean(feedback?.woreAt)}
+          styles={styles}
         />
       </View>
 
@@ -116,7 +155,7 @@ export function StylingRecommendationCard({
           onPress={onOpen}
           style={({ pressed }) => [styles.detailLink, pressed ? styles.pressed : null]}
         >
-          <Text style={styles.detailLinkLabel}>View full breakdown →</Text>
+          <Text style={styles.detailLinkLabel}>VIEW FULL BREAKDOWN →</Text>
         </Pressable>
       ) : null}
 
@@ -127,53 +166,35 @@ export function StylingRecommendationCard({
 
 type Styles = ReturnType<typeof createStyles>;
 
-function RecommendationItem({
-  item,
-  neverRecommended,
-  onNeverRecommend,
-  placeholderColors,
+function FeedbackControl({
+  label,
+  selected,
+  disabled,
+  onPress,
   styles,
 }: {
-  item: ClothingItem;
-  neverRecommended: boolean;
-  onNeverRecommend: () => void;
-  placeholderColors: readonly string[];
+  label: string;
+  selected: boolean;
+  disabled: boolean;
+  onPress: () => void;
   styles: Styles;
 }) {
-  const [imageFailed, setImageFailed] = useState(false);
   return (
-    <View style={styles.item}>
-      <View style={styles.imageFrame}>
-        {item.imageUrl && !imageFailed ? (
-          <Image
-            accessibilityLabel={`${item.name} wardrobe image`}
-            onError={() => setImageFailed(true)}
-            resizeMode="cover"
-            source={{ uri: item.imageUrl }}
-            style={styles.image}
-          />
-        ) : (
-          <PlaceholderArtwork colors={placeholderColors} compact label={item.name} />
-        )}
-      </View>
-      <Text numberOfLines={2} style={styles.itemName}>
-        {item.name}
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ disabled, selected }}
+      disabled={disabled}
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.feedbackControl,
+        selected ? styles.feedbackControlSelected : null,
+        pressed ? styles.pressed : null,
+      ]}
+    >
+      <Text style={[styles.feedbackLabel, selected ? styles.feedbackLabelSelected : null]}>
+        {selected ? `✓ ${label}` : label}
       </Text>
-      <Text style={styles.itemMeta}>
-        {[item.category, item.primaryColor].filter(Boolean).join(' · ')}
-      </Text>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityState={{ disabled: neverRecommended }}
-        disabled={neverRecommended}
-        onPress={onNeverRecommend}
-        style={({ pressed }) => [styles.neverButton, pressed ? styles.pressed : null]}
-      >
-        <Text style={[styles.neverLabel, neverRecommended ? styles.neverLabelDisabled : null]}>
-          {neverRecommended ? 'Excluded from future looks' : 'Never recommend this item'}
-        </Text>
-      </Pressable>
-    </View>
+    </Pressable>
   );
 }
 
@@ -186,7 +207,7 @@ function ScoreBreakdown({
 }) {
   return (
     <View style={styles.debug}>
-      <Text style={styles.debugTitle}>Development score breakdown</Text>
+      <Text style={styles.debugTitle}>DEVELOPMENT SCORE BREAKDOWN</Text>
       <View style={styles.debugGrid}>
         {Object.entries(recommendation.scoreBreakdown).map(([label, score]) => (
           <Text key={label} style={styles.debugValue}>
@@ -198,58 +219,110 @@ function ScoreBreakdown({
   );
 }
 
-function lookTitle(recommendation: StylingRecommendation): string {
-  const outfit = recommendation.outfit;
-  const style = getOutfitItems(outfit).flatMap((item) => item.styles ?? [])[0];
-  if (style) return style.replace(/-/g, ' ');
-  return outfit.dress ? 'One-piece wardrobe look' : 'Wardrobe combination';
-}
-
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
     card: {
       borderTopColor: theme.colors.text,
-      borderTopWidth: 2,
+      borderTopWidth: 1,
       gap: theme.spacing.lg,
       paddingTop: theme.spacing.md,
     },
+    featuredCard: { borderTopWidth: 2, gap: theme.spacing.xl },
     headingRow: { alignItems: 'flex-start', flexDirection: 'row', gap: theme.spacing.md },
     lookIdentity: { flex: 1, gap: theme.spacing.xs },
     lookNumber: {
       color: theme.colors.primary,
+      fontFamily: theme.typography.fontFamily.medium,
       fontSize: theme.typography.fontSize.xs,
-      fontWeight: theme.typography.fontWeight.bold,
-      letterSpacing: 1.4,
+      fontWeight: theme.typography.fontWeight.semibold,
+      letterSpacing: 1.6,
     },
     lookTitle: {
       color: theme.colors.text,
+      fontFamily: theme.typography.fontFamily.editorial,
       fontSize: theme.typography.fontSize.xl,
-      fontWeight: theme.typography.fontWeight.bold,
+      fontWeight: theme.typography.fontWeight.regular,
+      lineHeight: theme.typography.lineHeight.xl,
       textTransform: 'capitalize',
     },
-    scoreBlock: { alignItems: 'flex-end' },
+    featuredTitle: {
+      fontSize: theme.typography.fontSize.xxxl,
+      letterSpacing: -1,
+      lineHeight: theme.typography.lineHeight.xxxl,
+    },
+    scoreBlock: { alignItems: 'flex-end', minWidth: 72 },
     score: {
       color: theme.colors.text,
-      fontSize: theme.typography.fontSize.xl,
-      fontWeight: theme.typography.fontWeight.bold,
+      fontFamily: theme.typography.fontFamily.editorial,
+      fontSize: theme.typography.fontSize.xxl,
       fontVariant: ['tabular-nums'],
+      lineHeight: theme.typography.lineHeight.xxl,
     },
-    scoreLabel: {
+    scoreLabel: { color: theme.colors.textMuted, fontSize: 10, letterSpacing: 1 },
+    availabilityNote: {
+      borderLeftColor: theme.colors.warning,
+      borderLeftWidth: 2,
+      color: theme.colors.textMuted,
+      fontSize: theme.typography.fontSize.sm,
+      lineHeight: theme.typography.lineHeight.sm,
+      paddingLeft: theme.spacing.sm,
+    },
+    editorialNotes: {
+      borderBottomColor: theme.colors.border,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderTopColor: theme.colors.border,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      gap: theme.spacing.xl,
+      paddingVertical: theme.spacing.lg,
+    },
+    editorialNotesWide: { flexDirection: 'row' },
+    noteColumn: { flex: 1, gap: theme.spacing.md, minWidth: 220 },
+    noteLabel: {
+      color: theme.colors.text,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontSize: theme.typography.fontSize.xs,
+      fontWeight: theme.typography.fontWeight.semibold,
+      letterSpacing: 1.4,
+    },
+    noteBody: {
+      color: theme.colors.textMuted,
+      fontFamily: theme.typography.fontFamily.regular,
+      fontSize: theme.typography.fontSize.md,
+      lineHeight: theme.typography.lineHeight.md,
+    },
+    instructionRow: { flexDirection: 'row', gap: theme.spacing.sm },
+    instructionIndex: {
+      color: theme.colors.primary,
+      fontSize: theme.typography.fontSize.xs,
+      fontVariant: ['tabular-nums'],
+      width: 22,
+    },
+    instructionText: {
+      color: theme.colors.text,
+      flex: 1,
+      fontSize: theme.typography.fontSize.sm,
+      lineHeight: theme.typography.lineHeight.sm,
+    },
+    itemDirectory: { gap: theme.spacing.sm },
+    itemRow: {
+      alignItems: 'center',
+      borderBottomColor: theme.colors.border,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      flexDirection: 'row',
+      gap: theme.spacing.sm,
+      minHeight: 56,
+      paddingVertical: theme.spacing.xs,
+    },
+    itemIndex: {
       color: theme.colors.textMuted,
       fontSize: theme.typography.fontSize.xs,
-      letterSpacing: 1,
+      fontVariant: ['tabular-nums'],
+      width: 24,
     },
-    itemGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.md },
-    item: { flexGrow: 1, gap: theme.spacing.xs, minWidth: 138, width: '28%' },
-    imageFrame: {
-      aspectRatio: 4 / 5,
-      backgroundColor: theme.colors.surfaceMuted,
-      overflow: 'hidden',
-      width: '100%',
-    },
-    image: { height: '100%', width: '100%' },
+    itemCopy: { flex: 1, gap: theme.spacing.xxs },
     itemName: {
       color: theme.colors.text,
+      fontFamily: theme.typography.fontFamily.medium,
       fontSize: theme.typography.fontSize.sm,
       fontWeight: theme.typography.fontWeight.semibold,
     },
@@ -258,26 +331,48 @@ function createStyles(theme: AppTheme) {
       fontSize: theme.typography.fontSize.xs,
       textTransform: 'capitalize',
     },
-    neverButton: { justifyContent: 'center', minHeight: 44 },
-    neverLabel: { color: theme.colors.danger, fontSize: theme.typography.fontSize.xs },
-    neverLabelDisabled: { color: theme.colors.textMuted },
-    availabilityNote: { color: theme.colors.warning, fontSize: theme.typography.fontSize.sm },
-    explanation: {
-      backgroundColor: theme.colors.surfaceMuted,
-      gap: theme.spacing.sm,
-      padding: theme.spacing.md,
+    excludeAction: { justifyContent: 'center', minHeight: 44, paddingLeft: theme.spacing.sm },
+    excludeLabel: {
+      color: theme.colors.danger,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontSize: 10,
+      letterSpacing: 0.7,
+      textAlign: 'right',
     },
-    explanationLabel: { color: theme.colors.text, fontWeight: theme.typography.fontWeight.bold },
-    explanationBody: {
+    excludeLabelDisabled: { color: theme.colors.textMuted },
+    feedbackRow: {
+      borderBottomColor: theme.colors.border,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderTopColor: theme.colors.border,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
+    feedbackControl: {
+      alignItems: 'center',
+      borderRightColor: theme.colors.border,
+      borderRightWidth: StyleSheet.hairlineWidth,
+      flexGrow: 1,
+      justifyContent: 'center',
+      minHeight: 48,
+      minWidth: 96,
+      paddingHorizontal: theme.spacing.sm,
+    },
+    feedbackControlSelected: { backgroundColor: theme.colors.primarySoft },
+    feedbackLabel: {
       color: theme.colors.textMuted,
-      fontSize: theme.typography.fontSize.sm,
-      lineHeight: theme.typography.lineHeight.sm,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontSize: theme.typography.fontSize.xs,
+      letterSpacing: 0.8,
     },
-    feedbackRow: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm },
+    feedbackLabelSelected: { color: theme.colors.primary, fontWeight: '600' },
     detailLink: { alignItems: 'flex-start', justifyContent: 'center', minHeight: 44 },
     detailLinkLabel: {
       color: theme.colors.primary,
+      fontFamily: theme.typography.fontFamily.medium,
+      fontSize: theme.typography.fontSize.xs,
       fontWeight: theme.typography.fontWeight.semibold,
+      letterSpacing: 1,
     },
     debug: {
       borderColor: theme.colors.border,
@@ -289,7 +384,6 @@ function createStyles(theme: AppTheme) {
       color: theme.colors.text,
       fontSize: theme.typography.fontSize.xs,
       fontWeight: theme.typography.fontWeight.bold,
-      textTransform: 'uppercase',
     },
     debugGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.sm },
     debugValue: {
@@ -298,6 +392,6 @@ function createStyles(theme: AppTheme) {
       fontSize: theme.typography.fontSize.xs,
       minWidth: 120,
     },
-    pressed: { opacity: 0.7 },
+    pressed: { opacity: 0.62 },
   });
 }

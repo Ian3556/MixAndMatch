@@ -11,9 +11,17 @@ type SelectFieldProps = {
   options: readonly string[];
   onChange: (value: string) => void;
   error?: string | undefined;
+  square?: boolean | undefined;
 };
 
-export function SelectField({ label, value, options, onChange, error }: SelectFieldProps) {
+export function SelectField({
+  label,
+  value,
+  options,
+  onChange,
+  error,
+  square = false,
+}: SelectFieldProps) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +35,7 @@ export function SelectField({ label, value, options, onChange, error }: SelectFi
         onPress={() => setIsOpen(true)}
         style={({ pressed }) => [
           styles.control,
+          square ? styles.square : null,
           error ? styles.controlError : null,
           pressed ? styles.pressed : null,
         ]}
@@ -51,6 +60,7 @@ export function SelectField({ label, value, options, onChange, error }: SelectFi
         selected={value}
         title={label}
         visible={isOpen}
+        square={square}
       />
     </View>
   );
@@ -76,6 +86,7 @@ function createStyles(theme: AppTheme) {
       paddingHorizontal: theme.spacing.md,
     },
     controlError: { borderColor: theme.colors.danger },
+    square: { borderRadius: theme.radii.none },
     value: { color: theme.colors.text, flex: 1, fontSize: theme.typography.fontSize.md },
     placeholder: { color: theme.colors.textMuted },
     chevron: { color: theme.colors.textMuted, fontSize: theme.typography.fontSize.lg },

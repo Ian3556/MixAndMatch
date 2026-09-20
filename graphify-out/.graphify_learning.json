@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-18T14:29:05.610172+00:00",
+  "generated_at": "2026-09-19T15:05:08.111060+00:00",
   "nodes": {
     "docs_catalog_database_mix_match_catalogue_database": {
       "code_fingerprint": "0e74de6c2758fdda9986ad12deab8924a9419093c8afab5a0a68dd9852e78304",
@@ -12,13 +12,29 @@
           "q": "Inspect the existing catalog Supabase schema, Browse Brands flow, and Wardrobe persistence before implementing the synthetic catalogue."
         }
       ],
-      "score": 0.993857584,
+      "score": 0.970596396,
       "source_file": "docs/catalog-database.md",
       "status": "tentative",
       "uses": 1
     },
+    "docs_synthetic_catalogue": {
+      "code_fingerprint": "16b7288d0f4fbfb8ad3578eb16c59f7792b28ca789459a6cb7b62b00597ee1b2",
+      "label": "synthetic-catalogue.md",
+      "last": "2026-09-19T14:29:59.267555+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-19T14:29:59.267555+00:00",
+          "outcome": "useful",
+          "q": "Can we add image to the demo catalog?"
+        }
+      ],
+      "score": 0.999436216,
+      "source_file": "docs/synthetic-catalogue.md",
+      "status": "tentative",
+      "uses": 1
+    },
     "docs_synthetic_catalogue_development_synthetic_catalogue": {
-      "code_fingerprint": "86786a28dd280a3a22eeb91f0f5d016c3d3a04d0afd9256d3805a8ddb8ff2768",
+      "code_fingerprint": "16b7288d0f4fbfb8ad3578eb16c59f7792b28ca789459a6cb7b62b00597ee1b2",
       "label": "Development synthetic catalogue",
       "last": "2026-09-18T13:49:47.661155+00:00",
       "provenance": [
@@ -28,13 +44,13 @@
           "q": "How to seed remote Supabase Project"
         }
       ],
-      "score": 0.999369641,
+      "score": 0.975979443,
       "source_file": "docs/synthetic-catalogue.md",
       "status": "tentative",
       "uses": 1
     },
     "docs_synthetic_catalogue_seed_supabase": {
-      "code_fingerprint": "86786a28dd280a3a22eeb91f0f5d016c3d3a04d0afd9256d3805a8ddb8ff2768",
+      "code_fingerprint": "16b7288d0f4fbfb8ad3578eb16c59f7792b28ca789459a6cb7b62b00597ee1b2",
       "label": "Seed Supabase",
       "last": "2026-09-18T13:49:47.661155+00:00",
       "provenance": [
@@ -44,7 +60,7 @@
           "q": "How to seed remote Supabase Project"
         }
       ],
-      "score": 0.999369641,
+      "score": 0.975979443,
       "source_file": "docs/synthetic-catalogue.md",
       "status": "tentative",
       "uses": 1
@@ -60,7 +76,7 @@
           "q": "How to seed remote Supabase Project"
         }
       ],
-      "score": 0.999369641,
+      "score": 0.975979443,
       "source_file": "package.json",
       "status": "tentative",
       "uses": 1
@@ -76,7 +92,7 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 0.691953102,
+      "score": 0.675757973,
       "source_file": "package.json",
       "status": "tentative",
       "uses": 1
@@ -97,16 +113,31 @@
           "q": "unexpected deploy status 400: Failed to bundle import-wardrobe-url because html-parsers module was not found"
         }
       ],
-      "score": 1.687978156,
+      "score": 1.648471109,
       "source_file": "tsconfig.json",
       "status": "preferred",
       "uses": 2
     },
     "scripts_catalog_seedcatalog": {
-      "code_fingerprint": "3f9c9d9f2e613dbda906c8f76b63b45dff19b50cb2fa8491010133eff284933c",
+      "code_fingerprint": "8018e7c3aa47a26702b792dd79f773811fd2cdcb0fc883c50a3c623386b72a71",
       "label": "seedCatalog.ts",
-      "last": "2026-09-18T14:21:17.083292+00:00",
+      "last": "2026-09-19T14:59:09.527420+00:00",
       "provenance": [
+        {
+          "date": "2026-09-19T14:59:09.527420+00:00",
+          "outcome": "useful",
+          "q": "why does it keep showing Refusing to seed: MIXANDMATCH_CATALOG_ENV must equal development?"
+        },
+        {
+          "date": "2026-09-19T14:29:59.267555+00:00",
+          "outcome": "useful",
+          "q": "Can we add image to the demo catalog?"
+        },
+        {
+          "date": "2026-09-18T14:33:58.730968+00:00",
+          "outcome": "useful",
+          "q": "Error: Unable to seed catalog_brands: null value in column source_status violates not-null constraint"
+        },
         {
           "date": "2026-09-18T14:21:17.083292+00:00",
           "outcome": "useful",
@@ -116,25 +147,31 @@
           "date": "2026-09-18T14:14:04.156694+00:00",
           "outcome": "useful",
           "q": "What should be tested after the Supabase health endpoint returns HTTP 401 No API key found?"
-        },
-        {
-          "date": "2026-09-18T14:11:23.623985+00:00",
-          "outcome": "useful",
-          "q": "Why does catalog:seed still report TypeError fetch failed after Test-NetConnection to Supabase port 443 succeeds?"
-        },
-        {
-          "date": "2026-09-18T14:01:21.920302+00:00",
-          "outcome": "useful",
-          "q": "Why did npm run catalog:seed fail with TypeError: fetch failed at seedCatalog.ts line 72?"
         }
       ],
-      "score": 3.998904924,
+      "score": 6.881322681,
       "source_file": "scripts/catalog/seedCatalog.ts",
       "status": "preferred",
-      "uses": 4
+      "uses": 7
+    },
+    "scripts_catalog_seedcatalog_assertdevelopmentseedallowed": {
+      "code_fingerprint": "8018e7c3aa47a26702b792dd79f773811fd2cdcb0fc883c50a3c623386b72a71",
+      "label": "assertDevelopmentSeedAllowed()",
+      "last": "2026-09-19T14:59:09.527420+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-19T14:59:09.527420+00:00",
+          "outcome": "useful",
+          "q": "why does it keep showing Refusing to seed: MIXANDMATCH_CATALOG_ENV must equal development?"
+        }
+      ],
+      "score": 0.999904113,
+      "source_file": "scripts/catalog/seedCatalog.ts",
+      "status": "tentative",
+      "uses": 1
     },
     "scripts_catalog_seedcatalog_client": {
-      "code_fingerprint": "3f9c9d9f2e613dbda906c8f76b63b45dff19b50cb2fa8491010133eff284933c",
+      "code_fingerprint": "8018e7c3aa47a26702b792dd79f773811fd2cdcb0fc883c50a3c623386b72a71",
       "label": "client",
       "last": "2026-09-18T14:21:17.083292+00:00",
       "provenance": [
@@ -159,23 +196,44 @@
           "q": "Why did npm run catalog:seed fail with TypeError: fetch failed at seedCatalog.ts line 72?"
         }
       ],
-      "score": 3.998904924,
+      "score": 3.905310749,
       "source_file": "scripts/catalog/seedCatalog.ts",
       "status": "preferred",
       "uses": 4
     },
     "scripts_catalog_seedcatalog_seedcatalog": {
-      "code_fingerprint": "3f9c9d9f2e613dbda906c8f76b63b45dff19b50cb2fa8491010133eff284933c",
+      "code_fingerprint": "8018e7c3aa47a26702b792dd79f773811fd2cdcb0fc883c50a3c623386b72a71",
       "label": "seedCatalog()",
-      "last": "2026-09-18T14:21:17.083292+00:00",
+      "last": "2026-09-18T14:33:58.730968+00:00",
       "provenance": [
+        {
+          "date": "2026-09-18T14:33:58.730968+00:00",
+          "outcome": "useful",
+          "q": "Error: Unable to seed catalog_brands: null value in column source_status violates not-null constraint"
+        },
         {
           "date": "2026-09-18T14:21:17.083292+00:00",
           "outcome": "useful",
           "q": "Why does catalog:seed still report TypeError fetch failed on the first catalog_brands read after setting an sb_secret key?"
         }
       ],
-      "score": 0.999874715,
+      "score": 1.953144299,
+      "source_file": "scripts/catalog/seedCatalog.ts",
+      "status": "preferred",
+      "uses": 2
+    },
+    "scripts_catalog_seedcatalog_upsertbatches": {
+      "code_fingerprint": "8018e7c3aa47a26702b792dd79f773811fd2cdcb0fc883c50a3c623386b72a71",
+      "label": "upsertBatches()",
+      "last": "2026-09-18T14:33:58.730968+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T14:33:58.730968+00:00",
+          "outcome": "useful",
+          "q": "Error: Unable to seed catalog_brands: null value in column source_status violates not-null constraint"
+        }
+      ],
+      "score": 0.976671603,
       "source_file": "scripts/catalog/seedCatalog.ts",
       "status": "tentative",
       "uses": 1
@@ -183,18 +241,23 @@
     "src_catalog_services_catalogbrowseservice": {
       "code_fingerprint": "29ea6614b1a339675b48c1f417ec76e95af19ae948830d001eeb702f32f07ff3",
       "label": "catalogBrowseService.ts",
-      "last": "2026-09-18T08:05:05.424554+00:00",
+      "last": "2026-09-19T14:29:59.267555+00:00",
       "provenance": [
+        {
+          "date": "2026-09-19T14:29:59.267555+00:00",
+          "outcome": "useful",
+          "q": "Can we add image to the demo catalog?"
+        },
         {
           "date": "2026-09-18T08:05:05.424554+00:00",
           "outcome": "useful",
           "q": "Inspect the existing catalog Supabase schema, Browse Brands flow, and Wardrobe persistence before implementing the synthetic catalogue."
         }
       ],
-      "score": 0.993857584,
+      "score": 1.970032612,
       "source_file": "src/catalog/services/catalogBrowseService.ts",
-      "status": "tentative",
-      "uses": 1
+      "status": "preferred",
+      "uses": 2
     },
     "src_components_ui_chip_chip": {
       "code_fingerprint": "6e8a897774a20a65eada2c025c47f30272146e5e2a397afc60038a388b42e8ed",
@@ -207,7 +270,7 @@
           "q": "Wardrobe Page Update - Remove the \"Wardrobe\" heading - \"Categories\" section - \"All\" \"Tops\" ... remove the border radius"
         }
       ],
-      "score": 0.795181355,
+      "score": 0.776570174,
       "source_file": "src/components/ui/Chip.tsx",
       "status": "tentative",
       "uses": 1
@@ -223,32 +286,42 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.740273106,
+      "score": 0.72294705,
       "source_file": "src/components/ui/SearchBar.tsx",
       "status": "tentative",
       "uses": 1
     },
     "src_components_ui_stateviews": {
-      "code_fingerprint": "5891ffd52882cb058cbc9e067d0ea678ddc0900995881407ee85780fe7fa2bf7",
+      "code_fingerprint": "e01deca9882fa74f3529c33380a64597f45f20cc42d3055db899fd6434426f56",
       "label": "StateViews.tsx",
-      "last": "2026-09-01T15:17:58.176268+00:00",
+      "last": "2026-09-19T14:10:17.361675+00:00",
       "provenance": [
+        {
+          "date": "2026-09-19T14:10:17.361675+00:00",
+          "outcome": "useful",
+          "q": "Map the existing Styling Page presentation components, loading states, recommendation flow, and navigation dependencies to preserve during an editorial redesign."
+        },
         {
           "date": "2026-09-01T15:17:58.176268+00:00",
           "outcome": "useful",
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.675704667,
+      "score": 1.659010214,
       "source_file": "src/components/ui/StateViews.tsx",
-      "status": "tentative",
-      "uses": 1
+      "status": "preferred",
+      "uses": 2
     },
     "src_constants_environment_environment": {
       "code_fingerprint": "ea2141ec65f8881630c6e0a276e57728f6de63f9a6c0e4595b81994112d67f6c",
       "label": "environment",
-      "last": "2026-09-18T14:21:17.083292+00:00",
+      "last": "2026-09-19T14:59:09.527420+00:00",
       "provenance": [
+        {
+          "date": "2026-09-19T14:59:09.527420+00:00",
+          "outcome": "useful",
+          "q": "why does it keep showing Refusing to seed: MIXANDMATCH_CATALOG_ENV must equal development?"
+        },
         {
           "date": "2026-09-18T14:21:17.083292+00:00",
           "outcome": "useful",
@@ -260,10 +333,26 @@
           "q": "Why did npm run catalog:seed fail with TypeError: fetch failed at seedCatalog.ts line 72?"
         }
       ],
-      "score": 1.999429914,
+      "score": 2.952537467,
       "source_file": "src/constants/environment.ts",
       "status": "preferred",
-      "uses": 2
+      "uses": 3
+    },
+    "src_data_catalog_generator": {
+      "code_fingerprint": "6cd6a1363d5c1d03e9fa10fc58c32152b66afb7da2d3ace26141936772f1688c",
+      "label": "generator.ts",
+      "last": "2026-09-19T14:29:59.267555+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-19T14:29:59.267555+00:00",
+          "outcome": "useful",
+          "q": "Can we add image to the demo catalog?"
+        }
+      ],
+      "score": 0.999436216,
+      "source_file": "src/data/catalog/generator.ts",
+      "status": "tentative",
+      "uses": 1
     },
     "src_features_auth_authbootstrap": {
       "code_fingerprint": "2c6118f3d41f3cc939583a97382b67c644f0550a45c3e4d1e7897c840200ea87",
@@ -276,7 +365,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.826802695,
+      "score": 0.807451418,
       "source_file": "src/features/auth/AuthBootstrap.tsx",
       "status": "tentative",
       "uses": 1
@@ -302,7 +391,7 @@
           "q": "Understand this Maximum update depth exceeded error from Expo setupHMR and React Native Web Image."
         }
       ],
-      "score": 2.076229916,
+      "score": 2.027635855,
       "source_file": "src/features/explore/components/ExploreMasonryFeed.tsx",
       "status": "preferred",
       "uses": 3
@@ -318,7 +407,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.740273106,
+      "score": 0.72294705,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -334,7 +423,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.740273106,
+      "score": 0.72294705,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -350,7 +439,7 @@
           "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
         }
       ],
-      "score": 0.708606176,
+      "score": 0.692021283,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -366,7 +455,7 @@
           "q": "Mix & Match — Small UI Amendment: use Ionicons chevron-back-outline for the Outfit Detail overlay Back button; remove Explore visible search submit controls; submit with keyboard Search/Enter; trim and reset empty queries; preserve Explore search/filter/scroll state on Back."
         }
       ],
-      "score": 0.740273106,
+      "score": 0.72294705,
       "source_file": "src/features/explore/screens/ExploreOutfitDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -402,7 +491,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 3.508309661,
+      "score": 3.426197844,
       "source_file": "src/features/explore/screens/ExploreScreen.tsx",
       "status": "preferred",
       "uses": 5
@@ -423,7 +512,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.432079745,
+      "score": 1.398561988,
       "source_file": "src/features/explore/screens/SearchResultsScreen.tsx",
       "status": "preferred",
       "uses": 2
@@ -439,7 +528,7 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.675704667,
+      "score": 0.659889832,
       "source_file": "src/features/home/screens/HomeScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -455,8 +544,56 @@
           "q": "There are a few errors that need to be fix: Explore Page Image keeps on rendering, make the image to ONLY render when user either refresh or reopen the app; The Back button instead of going back to the home page, make it go back to its previous action."
         }
       ],
-      "score": 0.692237582,
+      "score": 0.676035795,
       "source_file": "src/features/home/screens/InspirationDetailScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_stylist_components_stylingrecommendationcard": {
+      "code_fingerprint": "79c232642464e8f409ed26619edb365f889e430cf3d8172f675238ec199777ef",
+      "label": "StylingRecommendationCard.tsx",
+      "last": "2026-09-19T14:10:17.361675+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-19T14:10:17.361675+00:00",
+          "outcome": "useful",
+          "q": "Map the existing Styling Page presentation components, loading states, recommendation flow, and navigation dependencies to preserve during an editorial redesign."
+        }
+      ],
+      "score": 0.999120382,
+      "source_file": "src/features/stylist/components/StylingRecommendationCard.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_stylist_screens_stylistscreen": {
+      "code_fingerprint": "34cf337277ddbba78141dc701d5af44a159a386fe697db577ebdccbfeeb2a2be",
+      "label": "StylistScreen.tsx",
+      "last": "2026-09-19T14:10:17.361675+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-19T14:10:17.361675+00:00",
+          "outcome": "useful",
+          "q": "Map the existing Styling Page presentation components, loading states, recommendation flow, and navigation dependencies to preserve during an editorial redesign."
+        }
+      ],
+      "score": 0.999120382,
+      "source_file": "src/features/stylist/screens/StylistScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_wardrobe_components_catalogproductcard": {
+      "code_fingerprint": "3aa4467802f1bb711b0e15f4615f43a798719d8e56b28b988801615bbd28fb78",
+      "label": "CatalogProductCard.tsx",
+      "last": "2026-09-19T14:29:59.267555+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-19T14:29:59.267555+00:00",
+          "outcome": "useful",
+          "q": "Can we add image to the demo catalog?"
+        }
+      ],
+      "score": 0.999436216,
+      "source_file": "src/features/wardrobe/components/CatalogProductCard.tsx",
       "status": "tentative",
       "uses": 1
     },
@@ -471,8 +608,24 @@
           "q": "Inspect the existing catalog Supabase schema, Browse Brands flow, and Wardrobe persistence before implementing the synthetic catalogue."
         }
       ],
-      "score": 0.993857584,
+      "score": 0.970596396,
       "source_file": "src/features/wardrobe/screens/BrowseBrandsScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_features_wardrobe_screens_catalogproductdetailscreen": {
+      "code_fingerprint": "e106040a126ce983b35376f577d4356b42efc20a0efa0fff705b4affa8a5bdd7",
+      "label": "CatalogProductDetailScreen.tsx",
+      "last": "2026-09-19T14:29:59.267555+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-19T14:29:59.267555+00:00",
+          "outcome": "useful",
+          "q": "Can we add image to the demo catalog?"
+        }
+      ],
+      "score": 0.999436216,
+      "source_file": "src/features/wardrobe/screens/CatalogProductDetailScreen.tsx",
       "status": "tentative",
       "uses": 1
     },
@@ -487,7 +640,7 @@
           "q": "Inspect the existing catalog Supabase schema, Browse Brands flow, and Wardrobe persistence before implementing the synthetic catalogue."
         }
       ],
-      "score": 0.993857584,
+      "score": 0.970596396,
       "source_file": "src/features/wardrobe/screens/WardrobeScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -503,7 +656,7 @@
           "q": "Wardrobe Page Update - Remove the \"Wardrobe\" heading - \"Categories\" section - \"All\" \"Tops\" ... remove the border radius"
         }
       ],
-      "score": 0.795181355,
+      "score": 0.776570174,
       "source_file": "src/features/wardrobe/screens/WardrobeScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -524,7 +677,7 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.400412815,
+      "score": 1.367636221,
       "source_file": "src/navigation/MainAppNavigator.tsx",
       "status": "preferred",
       "uses": 2
@@ -540,7 +693,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.826802695,
+      "score": 0.807451418,
       "source_file": "src/navigation/RootNavigator.tsx",
       "status": "tentative",
       "uses": 1
@@ -548,8 +701,13 @@
     "src_navigation_tabnavigators": {
       "code_fingerprint": "845dcfffa359966b7d976680aa9865b55420cef897280ffebe2b78f647ee1320",
       "label": "TabNavigators.tsx",
-      "last": "2026-09-03T16:41:06.618740+00:00",
+      "last": "2026-09-19T14:10:17.361675+00:00",
       "provenance": [
+        {
+          "date": "2026-09-19T14:10:17.361675+00:00",
+          "outcome": "useful",
+          "q": "Map the existing Styling Page presentation components, loading states, recommendation flow, and navigation dependencies to preserve during an editorial redesign."
+        },
         {
           "date": "2026-09-03T16:41:06.618740+00:00",
           "outcome": "useful",
@@ -566,10 +724,10 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 2.076548425,
+      "score": 3.027067291,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "preferred",
-      "uses": 3
+      "uses": 4
     },
     "src_navigation_tabnavigators_exploretabnavigator": {
       "code_fingerprint": "845dcfffa359966b7d976680aa9865b55420cef897280ffebe2b78f647ee1320",
@@ -582,7 +740,7 @@
           "q": "Mix & Match — Image Detail Back Button + Bottom Navigation Remake"
         }
       ],
-      "score": 0.708606176,
+      "score": 0.692021283,
       "source_file": "src/navigation/TabNavigators.tsx",
       "status": "tentative",
       "uses": 1
@@ -590,8 +748,13 @@
     "src_navigation_types": {
       "code_fingerprint": "d9f1ab0233d424c3fb9c741e101103881cd52ea81f8e576c540bfdf301256af5",
       "label": "navigation/types.ts",
-      "last": "2026-09-03T16:41:06.618740+00:00",
+      "last": "2026-09-19T14:10:17.361675+00:00",
       "provenance": [
+        {
+          "date": "2026-09-19T14:10:17.361675+00:00",
+          "outcome": "useful",
+          "q": "Map the existing Styling Page presentation components, loading states, recommendation flow, and navigation dependencies to preserve during an editorial redesign."
+        },
         {
           "date": "2026-09-03T16:41:06.618740+00:00",
           "outcome": "useful",
@@ -603,10 +766,10 @@
           "q": "Update Explore into a Pinterest-style fashion feed with functional search and filters, then reorder the bottom navigation to Home, Explore, Stylist, Wardrobe, Profile."
         }
       ],
-      "score": 1.400412815,
+      "score": 2.366756603,
       "source_file": "src/navigation/types.ts",
       "status": "preferred",
-      "uses": 2
+      "uses": 3
     },
     "src_navigation_types_profilestackparamlist": {
       "code_fingerprint": "d9f1ab0233d424c3fb9c741e101103881cd52ea81f8e576c540bfdf301256af5",
@@ -619,7 +782,7 @@
           "q": "Remake the Mix & Match Profile experience with nested Style Profile screens, simple headings, real data, persistence, loading states, and working navigation."
         }
       ],
-      "score": 0.741051324,
+      "score": 0.723707053,
       "source_file": "src/navigation/types.ts",
       "status": "tentative",
       "uses": 1
@@ -635,7 +798,7 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.826802695,
+      "score": 0.807451418,
       "source_file": "src/screens/InitializationScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -651,8 +814,24 @@
           "q": "How should the Double M startup loader integrate with the existing app?"
         }
       ],
-      "score": 0.826802695,
+      "score": 0.807451418,
       "source_file": "src/store/authStoreRuntime.ts",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_store_styliststore": {
+      "code_fingerprint": "81be9859766c6452ea1772e64471c4b1ee232e0cf3e9462715230684f45b05aa",
+      "label": "stylistStore.ts",
+      "last": "2026-09-19T14:10:17.361675+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-19T14:10:17.361675+00:00",
+          "outcome": "useful",
+          "q": "Map the existing Styling Page presentation components, loading states, recommendation flow, and navigation dependencies to preserve during an editorial redesign."
+        }
+      ],
+      "score": 0.999120382,
+      "source_file": "src/store/stylistStore.ts",
       "status": "tentative",
       "uses": 1
     },
@@ -667,8 +846,24 @@
           "q": "How is the current Home Page implemented, including routing, navigation, loading, images, theme, data, and layout?"
         }
       ],
-      "score": 0.675704667,
+      "score": 0.659889832,
       "source_file": "src/theme/index.ts",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_types_catalogdatabase_catalogbrandsourcestatus": {
+      "code_fingerprint": "6d0693b937f0173d72f68f185b7fa8d55868454f6461be8ea82c9952cf5e34e2",
+      "label": "CatalogBrandSourceStatus",
+      "last": "2026-09-18T14:33:58.730968+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-18T14:33:58.730968+00:00",
+          "outcome": "useful",
+          "q": "Error: Unable to seed catalog_brands: null value in column source_status violates not-null constraint"
+        }
+      ],
+      "score": 0.976671603,
+      "source_file": "src/types/catalogDatabase.ts",
       "status": "tentative",
       "uses": 1
     },
@@ -683,7 +878,7 @@
           "q": "unexpected deploy status 400: Failed to bundle import-wardrobe-url because html-parsers module was not found"
         }
       ],
-      "score": 0.843877168,
+      "score": 0.824126264,
       "source_file": "supabase/functions/_shared/wardrobe-import/extract-products.ts",
       "status": "tentative",
       "uses": 1
@@ -699,7 +894,7 @@
           "q": "unexpected deploy status 400: Failed to bundle import-wardrobe-url because html-parsers module was not found"
         }
       ],
-      "score": 0.843877168,
+      "score": 0.824126264,
       "source_file": "supabase/functions/_shared/wardrobe-import/html-parsers.ts",
       "status": "tentative",
       "uses": 1
@@ -707,8 +902,13 @@
     "supabase_readme_migration": {
       "code_fingerprint": "b90fcbc24b1985e71b933f4737c55f0f025fc55d54fae06e0598eea8f93ef785",
       "label": "Migration",
-      "last": "2026-09-18T14:14:04.156694+00:00",
+      "last": "2026-09-18T14:33:58.730968+00:00",
       "provenance": [
+        {
+          "date": "2026-09-18T14:33:58.730968+00:00",
+          "outcome": "useful",
+          "q": "Error: Unable to seed catalog_brands: null value in column source_status violates not-null constraint"
+        },
         {
           "date": "2026-09-18T14:14:04.156694+00:00",
           "outcome": "useful",
@@ -720,10 +920,10 @@
           "q": "How to seed remote Supabase Project"
         }
       ],
-      "score": 1.999128605,
+      "score": 2.9290107,
       "source_file": "supabase/README.md",
       "status": "preferred",
-      "uses": 2
+      "uses": 3
     },
     "tsconfig_compileroptions_types": {
       "code_fingerprint": "4ce89e59a141d4fc86ad93637f34b7de440e212f14240d7ad33606f6ee6b24de",
@@ -736,7 +936,7 @@
           "q": "VS Code reports Cannot find name Deno in supabase/functions/import-wardrobe-url/index.ts"
         }
       ],
-      "score": 0.844100988,
+      "score": 0.824344846,
       "source_file": "tsconfig.json",
       "status": "tentative",
       "uses": 1
@@ -752,7 +952,7 @@
           "q": "VS Code reports Cannot find name Deno in supabase/functions/import-wardrobe-url/index.ts"
         }
       ],
-      "score": 0.844100988,
+      "score": 0.824344846,
       "source_file": "tsconfig.json",
       "status": "tentative",
       "uses": 1

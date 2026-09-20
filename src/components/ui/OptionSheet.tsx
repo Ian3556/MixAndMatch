@@ -10,6 +10,7 @@ type OptionSheetProps = {
   selected?: string;
   onSelect: (option: string) => void;
   onDismiss: () => void;
+  square?: boolean | undefined;
 };
 
 export function OptionSheet({
@@ -19,6 +20,7 @@ export function OptionSheet({
   selected,
   onSelect,
   onDismiss,
+  square = false,
 }: OptionSheetProps) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -36,7 +38,7 @@ export function OptionSheet({
         onPress={onDismiss}
         style={styles.backdrop}
       >
-        <SafeAreaView edges={['bottom']} style={styles.sheet}>
+        <SafeAreaView edges={['bottom']} style={[styles.sheet, square ? styles.squareSheet : null]}>
           <Pressable accessibilityRole="none" onPress={(event) => event.stopPropagation()}>
             <View style={styles.header}>
               <Text accessibilityRole="header" style={styles.title}>
@@ -78,6 +80,10 @@ function createStyles(theme: AppTheme) {
       borderTopRightRadius: theme.radii.xl,
       maxHeight: '82%',
       padding: theme.spacing.md,
+    },
+    squareSheet: {
+      borderTopLeftRadius: theme.radii.none,
+      borderTopRightRadius: theme.radii.none,
     },
     header: {
       alignItems: 'center',

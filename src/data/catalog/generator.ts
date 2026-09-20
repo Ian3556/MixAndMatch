@@ -10,6 +10,7 @@ import {
   SYNTHETIC_SOURCE_DOMAIN,
 } from './brands.ts';
 import { CATEGORIES_BY_SLUG } from './categories.ts';
+import { isDemoCatalogImageKey } from './demoImages.ts';
 import type {
   BrandProfile,
   CatalogCategoryDefinition,
@@ -146,6 +147,9 @@ function buildProduct({
   );
   const bodyTypeTags = BODY_TYPE_TAGS_BY_FIT[fit] ?? BODY_TYPE_TAGS_BY_FIT.regular ?? ['balanced'];
   const sourceUrl = `https://${SYNTHETIC_SOURCE_DOMAIN}/${brand.slug}/${slug}`;
+  if (!isDemoCatalogImageKey(category.slug)) {
+    throw new Error(`Missing demo image asset for synthetic category: ${category.slug}.`);
+  }
 
   return {
     id: productId,
@@ -180,7 +184,8 @@ function buildProduct({
     price,
     currency: 'MYR',
     imageUrl: null,
-    imageSourceType: 'placeholder',
+    imageAssetKey: category.slug,
+    imageSourceType: 'generated',
     sourceUrl,
     sourceDomain: SYNTHETIC_SOURCE_DOMAIN,
     sourceType: 'synthetic',

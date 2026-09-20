@@ -6,6 +6,10 @@ import { ActionButton } from '@/components/ActionButton';
 import { AppScreen } from '@/components/ui/AppScreen';
 import { Chip } from '@/components/ui/Chip';
 import { SelectField } from '@/components/ui/SelectField';
+import {
+  StylistEditorialHeader,
+  StylistSectionHeading,
+} from '@/features/stylist/components/StylistEditorial';
 import { preferredStyleOptions } from '@/features/profile/styleProfileOptions';
 import { STYLIST_ROUTES } from '@/navigation/routes';
 import type { StylistStackParamList } from '@/navigation/types';
@@ -48,11 +52,14 @@ export function OutfitPreferencesScreen({ navigation, route }: Props) {
   };
 
   return (
-    <AppScreen
-      onBack={navigation.goBack}
-      subtitle={`${route.params.request.occasion ?? 'Any occasion'} · ${route.params.request.weather ?? 'Any weather'}`}
-      title="Refine the outfit"
-    >
+    <AppScreen hideHeader title="Outfit preferences">
+      <StylistEditorialHeader
+        eyebrow="STYLE BRIEF · 02"
+        meta={`${route.params.request.occasion ?? 'Any occasion'} · ${route.params.request.weather ?? 'Any weather'}`}
+        onBack={navigation.goBack}
+        title="Refine the edit."
+      />
+      <StylistSectionHeading eyebrow="CHOOSE YOUR VIBE" title="Layer the style signals." />
       <PreferenceChips
         label="Style signals"
         onPress={(value) => toggle(value, stylesWanted, setStylesWanted)}
@@ -64,6 +71,7 @@ export function OutfitPreferencesScreen({ navigation, route }: Props) {
         label="Formality"
         onChange={(value) => setFormality(value as (typeof formalityOptions)[number])}
         options={formalityOptions}
+        square
         value={formality}
       />
       <View style={styles.group}>
@@ -79,13 +87,15 @@ export function OutfitPreferencesScreen({ navigation, route }: Props) {
                 label={item.name}
                 onPress={() => toggle(item.id, excludedItems, setExcludedItems)}
                 selected={excludedItems.includes(item.id)}
+                square
               />
             ))}
         </View>
       </View>
       <ActionButton
-        label="Generate looks"
+        label="Generate style"
         onPress={() => navigation.navigate(STYLIST_ROUTES.OUTFIT_GENERATING, { request })}
+        square
       />
     </AppScreen>
   );
@@ -116,6 +126,7 @@ function PreferenceChips({
             label={option}
             onPress={() => onPress(option)}
             selected={selected.includes(option)}
+            square
           />
         ))}
       </View>

@@ -21,7 +21,7 @@ The feature extends the existing normalized catalogue rather than creating paral
 | Style vocabulary | `catalog_style_tags`, `catalog_product_style_tags` | weighted deterministic assignments                                         |
 | Materials        | `catalog_product_materials`                        | percentages and `is_demo`                                                  |
 | Provenance       | `catalog_product_sources`                          | synthetic extraction method, seed snapshot, and `is_demo`                  |
-| Images           | `catalog_product_images`                           | normalized image source type; no row means local placeholder artwork       |
+| Images           | `catalog_product_images`                           | generated demo image URL, source type, and demo marker                     |
 
 Migration: `supabase/migrations/20260918000100_add_synthetic_catalogue.sql`.
 
@@ -38,6 +38,7 @@ Configuration lives in `src/data/catalog/`:
 - `brandProfiles.ts`: brand positioning, category weights, style weights, gender mix, and price multiplier;
 - `categories.ts`: the category/subcategory hierarchy and valid attribute combinations;
 - `attributes.ts`: colours, colour families, style vocabulary, stock states, and compatibility tags;
+- `demoImages.ts`: the 17 app-owned category image assets and stable Storage object paths;
 - `generator.ts`: seeded selection, stable IDs, product naming, prices, variants, and provenance;
 - `validator.ts`: structural, taxonomy, duplicate, styling, variant, image-fallback, and contradiction checks.
 
@@ -60,12 +61,15 @@ npm run catalog:generate
 ```
 
 `catalog:validate` generates twice in memory, compares deterministic hashes, and prints brand,
-product, variant, category, placeholder, and validation totals. `catalog:generate` also writes
+product, variant, category, image-asset, and validation totals. `catalog:generate` also writes
 `.catalog/synthetic-catalog.json`; `.catalog/` is ignored by Git.
 
-Generated products deliberately have no remote product photo. `image_source_type = placeholder`
-causes the existing application-owned `PlaceholderArtwork` component to render. The validation
-summary reports these as missing remote images and separately confirms that every one has a fallback.
+Generated products use one application-owned image per subcategory. These neutral category visuals
+are illustrative demo artwork, not exact representations of each fictional product's colour or
+materials. The generator records a stable asset key and `image_source_type = generated`; the seed
+command uploads the 17 PNGs from `assets/catalog/demo/` and assigns the matching public URL to every
+product. The existing `PlaceholderArtwork` component remains the runtime fallback for image-load
+errors.
 
 ## Change the seed or product count
 
@@ -117,15 +121,17 @@ MIXANDMATCH_CATALOG_ENV=development
 CATALOG_ALLOW_SYNTHETIC_SEED=true
 ```
 
-Seed or update the deterministic rows:
+Seed or update the deterministic rows and generated images:
 
 ```powershell
 npm run catalog:seed
 ```
 
 Normal seeding upserts stable IDs and does not delete first, so wardrobe provenance links remain
-intact when the seed/configuration is unchanged. The script writes in bounded batches and uses the
-existing category and style-tag IDs from the target database.
+intact when the seed/configuration is unchanged. The script creates or configures the public
+`mixandmatch-demo-catalog` Storage bucket, uploads the 17 app-owned PNGs with stable paths, and upserts
+one primary `catalog_product_images` row per demo product. It writes database rows in bounded batches
+and uses the existing category and style-tag IDs from the target database.
 
 ## Reset only synthetic catalogue data
 
@@ -179,8 +185,8 @@ record provider-specific evidence in `catalog_product_sources`. Supported normal
 - `url_import`
 
 Image records independently identify `placeholder`, `manual_upload`, `generated`, `affiliate`,
-`brand_api`, or `url_import`. Replacing placeholders with licensed images therefore requires data
-changes, not a frontend rewrite.
+`brand_api`, or `url_import`. Replacing the generated demo artwork with licensed product images
+therefore requires data changes, not a frontend rewrite.
 
 Do not reinterpret the synthetic generator as a real-data importer. The existing governed catalogue
 pipeline and source-review process remain the path for real products.

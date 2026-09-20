@@ -1,4 +1,5 @@
 import { CATALOG_CATEGORIES } from './categories.ts';
+import { isDemoCatalogImageKey } from './demoImages.ts';
 import type {
   CatalogValidationIssue,
   CatalogValidationReport,
@@ -128,15 +129,38 @@ export function validateCatalog(catalog: GeneratedCatalog): CatalogValidationRep
   const placeholderImages = catalog.products.filter(
     (product) => product.imageSourceType === 'placeholder',
   ).length;
-  if (missingRemoteImages > 0 && missingRemoteImages !== placeholderImages) {
+  const generatedImages = catalog.products.filter(
+    (product) =>
+      product.imageSourceType === 'generated' &&
+      isDemoCatalogImageKey(product.imageAssetKey) &&
+      product.imageAssetKey === product.subcategorySlug,
+  ).length;
+  const missingImageConfiguration = catalog.products.filter(
+    (product) =>
+      product.imageUrl === null &&
+      product.imageSourceType !== 'placeholder' &&
+      !(
+        product.imageSourceType === 'generated' &&
+        isDemoCatalogImageKey(product.imageAssetKey) &&
+        product.imageAssetKey === product.subcategorySlug
+      ),
+  ).length;
+  if (missingImageConfiguration > 0) {
     errors.push({
       code: 'IMAGE_FALLBACK_MISSING',
-      message: 'A product without a remote image is missing placeholder configuration.',
+      message: `${missingImageConfiguration} products have neither a remote image, a placeholder, nor a matching generated asset.`,
     });
-  } else if (missingRemoteImages > 0) {
+  }
+  if (placeholderImages > 0) {
     warnings.push({
       code: 'PLACEHOLDER_IMAGES',
-      message: `${missingRemoteImages} products intentionally use application-owned placeholder artwork.`,
+      message: `${placeholderImages} products intentionally use application-owned placeholder artwork.`,
+    });
+  }
+  if (generatedImages > 0 && missingRemoteImages > 0) {
+    warnings.push({
+      code: 'GENERATED_IMAGE_UPLOAD_REQUIRED',
+      message: `${generatedImages} products have app-owned generated assets that the seed command uploads to Supabase Storage.`,
     });
   }
 
@@ -149,6 +173,7 @@ export function validateCatalog(catalog: GeneratedCatalog): CatalogValidationRep
     demoProducts: catalog.products.filter((product) => product.isDemo).length,
     missingRemoteImages,
     placeholderImages,
+    generatedImages,
     productsPerBrand,
     productsPerCategory,
     errors,
@@ -173,8 +198,9 @@ export function formatCatalogValidation(report: CatalogValidationReport): string
     `Variants: ${report.variants}`,
     `Categories: ${report.categories}`,
     `Demo products: ${report.demoProducts}`,
-    `Missing remote images: ${report.missingRemoteImages}`,
+    `Images pending remote upload: ${report.missingRemoteImages}`,
     `Placeholder fallbacks: ${report.placeholderImages}`,
+    `Generated image assets: ${report.generatedImages}`,
     '',
     'Products per brand:',
     brandLines,

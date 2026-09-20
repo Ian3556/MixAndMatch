@@ -1,11 +1,16 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 import { ActionButton } from '@/components/ActionButton';
 import { AppScreen } from '@/components/ui/AppScreen';
 import { EmptyState, ErrorState } from '@/components/ui/StateViews';
 import { StylingRecommendationCard } from '@/features/stylist/components/StylingRecommendationCard';
+import {
+  StylistEditorialHeader,
+  StylistNotice,
+  StylistSectionHeading,
+} from '@/features/stylist/components/StylistEditorial';
 import type { ClothingItem, StylingRecommendation } from '@/features/stylist/types';
 import { STYLIST_ROUTES } from '@/navigation/routes';
 import type { StylistStackParamList } from '@/navigation/types';
@@ -19,6 +24,7 @@ type FeedbackAction = 'like' | 'dislike' | 'save' | 'wore';
 
 export function OutfitResultScreen({ navigation, route }: Props) {
   const styles = createStyles(useAppTheme());
+  const { width } = useWindowDimensions();
   const { user, profile, wardrobe, ready } = useStylistData();
   const generation = useStylistStore((state) => state.currentGeneration);
   const feedbackByOutfit = useStylistStore((state) => state.feedbackByOutfit);
@@ -83,38 +89,45 @@ export function OutfitResultScreen({ navigation, route }: Props) {
 
   if (!generation) {
     return (
-      <AppScreen onBack={navigation.goBack} title="Recommendations unavailable">
+      <AppScreen hideHeader title="Recommendations unavailable">
+        <StylistEditorialHeader
+          eyebrow="THE STYLING EDIT"
+          onBack={navigation.goBack}
+          title="Recommendations unavailable."
+        />
         <ErrorState
           action={{
             label: 'Create a new brief',
             onPress: () => navigation.navigate(STYLIST_ROUTES.OUTFIT_GOAL),
           }}
           message={`Generation ${route.params.generationId} is no longer available in this session.`}
+          square
           title="Create the looks again"
         />
       </AppScreen>
     );
   }
 
+  const primaryRecommendation = generation.recommendations[0];
+
   return (
-    <AppScreen
-      onBack={() => navigation.navigate(STYLIST_ROUTES.STYLIST)}
-      subtitle={`${generation.recommendations.length} deterministic wardrobe matches`}
-      title="Your looks"
-    >
+    <AppScreen hideHeader title="Your looks">
+      <StylistEditorialHeader
+        eyebrow="THE STYLING EDIT"
+        meta={`${generation.recommendations.length} DETERMINISTIC WARDROBE MATCHES`}
+        onBack={() => navigation.navigate(STYLIST_ROUTES.STYLIST)}
+        title="Your wardrobe, recut."
+      />
       {storeError ? (
         <ErrorState
           action={{ label: 'Dismiss', onPress: clearError }}
           message={storeError}
+          square
           title="Local save failed"
         />
       ) : null}
-      {notice ? (
-        <View accessibilityLiveRegion="polite" style={styles.notice}>
-          <Text style={styles.noticeText}>{notice}</Text>
-        </View>
-      ) : null}
-      {generation.recommendations.length === 0 ? (
+      {notice ? <StylistNotice>{notice}</StylistNotice> : null}
+      {!primaryRecommendation ? (
         <>
           <EmptyState
             action={{
@@ -122,6 +135,7 @@ export function OutfitResultScreen({ navigation, route }: Props) {
               onPress: () => navigation.navigate(STYLIST_ROUTES.OUTFIT_GOAL),
             }}
             message="No strong match was found with the current wardrobe and hard filters. Add compatible pieces or change the brief."
+            square
             title="No valid outfits"
           />
           {__DEV__ && generation.diagnostics.rejectedCandidates.length > 0 ? (
@@ -139,35 +153,84 @@ export function OutfitResultScreen({ navigation, route }: Props) {
           ) : null}
         </>
       ) : (
-        generation.recommendations.map((recommendation, index) => (
-          <StylingRecommendationCard
-            busy={busy}
-            {...(feedbackByOutfit[recommendation.outfit.id]
-              ? { feedback: feedbackByOutfit[recommendation.outfit.id] }
-              : {})}
-            index={index}
-            key={recommendation.outfit.id}
-            neverRecommendItemIds={neverRecommendItemIds}
-            onFeedback={(action) => void applyFeedback(recommendation, action)}
-            onNeverRecommend={(item) => void excludeItem(item)}
-            onOpen={() =>
-              navigation.navigate(STYLIST_ROUTES.OUTFIT_DETAIL, {
-                outfitId: recommendation.outfit.id,
-              })
-            }
-            recommendation={recommendation}
-            saved={savedLooks.some(
-              (look) => look.recommendation.outfit.id === recommendation.outfit.id,
-            )}
-          />
-        ))
+        <>
+          <View style={styles.section}>
+            <StylistSectionHeading eyebrow="01 · RECOMMENDED LOOK" title="The lead look." />
+            <StylingRecommendationCard
+              busy={busy}
+              featured
+              {...(feedbackByOutfit[primaryRecommendation.outfit.id]
+                ? { feedback: feedbackByOutfit[primaryRecommendation.outfit.id] }
+                : {})}
+              index={0}
+              neverRecommendItemIds={neverRecommendItemIds}
+              onFeedback={(action) => void applyFeedback(primaryRecommendation, action)}
+              onNeverRecommend={(item) => void excludeItem(item)}
+              onOpen={() =>
+                navigation.navigate(STYLIST_ROUTES.OUTFIT_DETAIL, {
+                  outfitId: primaryRecommendation.outfit.id,
+                })
+              }
+              recommendation={primaryRecommendation}
+              saved={savedLooks.some(
+                (look) => look.recommendation.outfit.id === primaryRecommendation.outfit.id,
+              )}
+            />
+          </View>
+
+          {generation.recommendations.length > 1 ? (
+            <View style={styles.section}>
+              <StylistSectionHeading
+                eyebrow="02 · ALTERNATIVE LOOKS"
+                title="Change the composition."
+              />
+              <View style={styles.alternativeGrid}>
+                {generation.recommendations.slice(1).map((recommendation, index) => (
+                  <View
+                    key={recommendation.outfit.id}
+                    style={[
+                      styles.alternativeCard,
+                      width >= 720 ? styles.alternativeCardWide : null,
+                    ]}
+                  >
+                    <StylingRecommendationCard
+                      busy={busy}
+                      {...(feedbackByOutfit[recommendation.outfit.id]
+                        ? { feedback: feedbackByOutfit[recommendation.outfit.id] }
+                        : {})}
+                      index={index + 1}
+                      neverRecommendItemIds={neverRecommendItemIds}
+                      onFeedback={(action) => void applyFeedback(recommendation, action)}
+                      onNeverRecommend={(item) => void excludeItem(item)}
+                      onOpen={() =>
+                        navigation.navigate(STYLIST_ROUTES.OUTFIT_DETAIL, {
+                          outfitId: recommendation.outfit.id,
+                        })
+                      }
+                      recommendation={recommendation}
+                      saved={savedLooks.some(
+                        (look) => look.recommendation.outfit.id === recommendation.outfit.id,
+                      )}
+                    />
+                  </View>
+                ))}
+              </View>
+            </View>
+          ) : null}
+        </>
       )}
       {generation.recommendations.length > 0 ? (
         <View style={styles.actions}>
-          <ActionButton label="Regenerate" loading={busy} onPress={() => void regenerateLooks()} />
+          <ActionButton
+            label="Regenerate"
+            loading={busy}
+            onPress={() => void regenerateLooks()}
+            square
+          />
           <ActionButton
             label="Adjust filters"
             onPress={() => navigation.navigate(STYLIST_ROUTES.OUTFIT_GOAL)}
+            square
             variant="secondary"
           />
         </View>
@@ -185,8 +248,10 @@ function feedbackMessage(action: FeedbackAction): string {
 
 function createStyles(theme: AppTheme) {
   return StyleSheet.create({
-    notice: { backgroundColor: theme.colors.primarySoft, padding: theme.spacing.md },
-    noticeText: { color: theme.colors.text, fontSize: theme.typography.fontSize.sm },
+    section: { gap: theme.spacing.lg },
+    alternativeGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.xl },
+    alternativeCard: { width: '100%' },
+    alternativeCardWide: { flexGrow: 1, minWidth: 320, width: '47%' },
     actions: { gap: theme.spacing.sm },
     debugRejections: {
       borderColor: theme.colors.border,

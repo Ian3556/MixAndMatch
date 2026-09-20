@@ -6,6 +6,7 @@ import { ActionButton } from '@/components/ActionButton';
 import { AppScreen } from '@/components/ui/AppScreen';
 import { SelectField } from '@/components/ui/SelectField';
 import { EmptyState, ErrorState, SkeletonCard } from '@/components/ui/StateViews';
+import { StylistEditorialHeader } from '@/features/stylist/components/StylistEditorial';
 import { occasionOptions, preferredStyleOptions } from '@/features/profile/styleProfileOptions';
 import { MAIN_ROUTES, STYLIST_ROUTES } from '@/navigation/routes';
 import type { MainTabParamList, StylistStackParamList } from '@/navigation/types';
@@ -47,23 +48,27 @@ export function OutfitGoalScreen({ navigation, route }: Props) {
   };
 
   return (
-    <AppScreen
-      onBack={navigation.goBack}
-      subtitle="Set the context used by the local recommendation engine."
-      title="What are we dressing for?"
-    >
+    <AppScreen hideHeader title="Style brief">
+      <StylistEditorialHeader
+        eyebrow="STYLE BRIEF · 01"
+        meta="OCCASION · WEATHER · WARDROBE ANCHOR"
+        onBack={navigation.goBack}
+        title="Set the scene."
+      />
       {loading ? (
-        <SkeletonCard />
+        <SkeletonCard square />
       ) : error ? (
         <ErrorState
           action={{ label: 'Try again', onPress: retry }}
           message={error}
+          square
           title="Wardrobe unavailable"
         />
       ) : ready && wardrobe.length === 0 ? (
         <EmptyState
           action={{ label: 'Add clothes', onPress: openWardrobe }}
           message="The engine needs wardrobe items before it can assemble a look."
+          square
           title="Add clothes first"
         />
       ) : (
@@ -72,24 +77,28 @@ export function OutfitGoalScreen({ navigation, route }: Props) {
             label="Occasion"
             onChange={(value) => navigation.setParams({ occasion: value })}
             options={occasionOptions}
+            square
             value={occasion}
           />
           <SelectField
             label="Style / vibe"
             onChange={(value) => navigation.setParams({ desiredStyle: value })}
             options={preferredStyleOptions}
+            square
             value={style}
           />
           <SelectField
             label="Weather"
             onChange={setWeather}
             options={weatherOptions}
+            square
             value={weather}
           />
           <SelectField
             label="Temperature"
             onChange={setTemperature}
             options={temperatureOptions}
+            square
             value={temperature}
           />
           <SelectField
@@ -99,9 +108,10 @@ export function OutfitGoalScreen({ navigation, route }: Props) {
               navigation.setParams({ selectedItemId: selected?.id ?? '' });
             }}
             options={itemOptions}
+            square
             value={selectedLabel}
           />
-          <ActionButton label="Continue" onPress={continueToPreferences} />
+          <ActionButton label="Continue to preferences" onPress={continueToPreferences} square />
         </>
       )}
     </AppScreen>

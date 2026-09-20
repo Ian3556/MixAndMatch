@@ -1,20 +1,21 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
 
 import { AppScreen } from '@/components/ui/AppScreen';
-import { ErrorState, SkeletonCard } from '@/components/ui/StateViews';
+import { ErrorState } from '@/components/ui/StateViews';
+import {
+  StylistEditorialHeader,
+  StylistEditorialSkeleton,
+} from '@/features/stylist/components/StylistEditorial';
 import { STYLIST_ROUTES } from '@/navigation/routes';
 import type { StylistStackParamList } from '@/navigation/types';
 import { useStylistStore } from '@/store/stylistStore';
-import { useAppTheme, type AppTheme } from '@/theme';
 
 import { useStylistData } from '../useStylistData';
 
 type Props = NativeStackScreenProps<StylistStackParamList, 'OutfitGenerating'>;
 
 export function OutfitGeneratingScreen({ navigation, route }: Props) {
-  const styles = createStyles(useAppTheme());
   const { user, profile, wardrobe, ready, error: dataError, retry } = useStylistData();
   const styleProfile = profile?.styleProfile;
   const generate = useStylistStore((state) => state.generate);
@@ -43,11 +44,13 @@ export function OutfitGeneratingScreen({ navigation, route }: Props) {
 
   const error = generationError ?? dataError;
   return (
-    <AppScreen
-      onBack={navigation.goBack}
-      subtitle="Using only local wardrobe data"
-      title="Building your looks"
-    >
+    <AppScreen hideHeader title="Building your looks">
+      <StylistEditorialHeader
+        eyebrow="THE STYLING EDIT"
+        meta="LOCAL ENGINE · REAL WARDROBE"
+        onBack={navigation.goBack}
+        title="Composing the look."
+      />
       {error ? (
         <ErrorState
           action={{
@@ -59,21 +62,12 @@ export function OutfitGeneratingScreen({ navigation, route }: Props) {
             },
           }}
           message={error}
+          square
           title="Generation stopped"
         />
       ) : (
-        <View style={styles.skeletons}>
-          <SkeletonCard />
-          <SkeletonCard />
-          <SkeletonCard />
-        </View>
+        <StylistEditorialSkeleton />
       )}
     </AppScreen>
   );
-}
-
-function createStyles(theme: AppTheme) {
-  return StyleSheet.create({
-    skeletons: { flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.md },
-  });
 }

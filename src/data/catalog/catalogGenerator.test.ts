@@ -1,7 +1,9 @@
 import { createHash } from 'node:crypto';
+import { access } from 'node:fs/promises';
 
 import { describe, expect, it } from 'vitest';
 
+import { DEMO_CATALOG_IMAGE_ASSETS } from './demoImages.ts';
 import { generateCatalog } from './generator.ts';
 import { validateCatalog } from './validator.ts';
 
@@ -19,7 +21,19 @@ describe('synthetic catalog generator', () => {
     expect(first.variants.length).toBeGreaterThan(2_500);
     expect(report.passed).toBe(true);
     expect(report.demoProducts).toBe(1_000);
-    expect(report.placeholderImages).toBe(1_000);
+    expect(report.placeholderImages).toBe(0);
+    expect(report.generatedImages).toBe(1_000);
+    expect(new Set(first.products.map((product) => product.imageAssetKey))).toEqual(
+      new Set(Object.keys(DEMO_CATALOG_IMAGE_ASSETS)),
+    );
+  });
+
+  it('ships every generated image declared by the demo catalog manifest', async () => {
+    await Promise.all(
+      Object.values(DEMO_CATALOG_IMAGE_ASSETS).map((asset) =>
+        access(new URL(`../../../${asset.localPath}`, import.meta.url)),
+      ),
+    );
   });
 
   it('changes deterministic identities when the seed changes', () => {

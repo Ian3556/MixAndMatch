@@ -16,12 +16,14 @@ additive
 address
 admin
 affected
+after
 agents
 aliases
 all
 allocate
 allow
 allowed
+alternative
 amendment
 analyze
 anchor
@@ -30,6 +32,7 @@ and
 android
 animation
 answer
+api
 app
 apparel
 appearance
@@ -88,7 +91,7 @@ brand
 branding
 brands
 breakdown
-briefs
+brow
 browse
 build
 bundle
@@ -148,7 +151,9 @@ compatibility
 compiler
 complete
 completion
+compone
 component
+components
 composition
 concepts
 confidence
@@ -166,6 +171,7 @@ content
 context
 continue
 contracts
+control
 controls
 conventions
 copy
@@ -218,6 +224,7 @@ dev
 developer
 development
 diagnostics
+did
 directory
 discovered
 discovery
@@ -234,6 +241,7 @@ domain
 double
 draft
 duplicate
+during
 eas
 edge
 edit
@@ -245,6 +253,7 @@ empty
 enabled
 encryption
 end
+endpoint
 enforce
 engine
 engines
@@ -293,6 +302,7 @@ extract
 extraction
 face
 fade
+fail
 failed
 failure
 falkor
@@ -383,6 +393,7 @@ heading
 headings
 health
 help
+hero
 hex
 history
 hmr
@@ -408,6 +419,7 @@ images
 imp
 implementation
 implemented
+implementing
 import
 imported
 importer
@@ -429,11 +441,13 @@ initialize
 input
 inputs
 insert
+inspect
 inspection
 inspiration
 installed
 instance
 instead
+instructions
 integer
 integrate
 integration
@@ -469,6 +483,7 @@ kind
 known
 label
 labels
+landing
 layer
 layout
 learned
@@ -495,6 +510,7 @@ log
 login
 logo
 look
+looks
 lookup
 main
 maintenance
@@ -552,6 +568,7 @@ need
 neo
 nes
 nested
+net
 neutral
 never
 next
@@ -567,6 +584,8 @@ notice
 notification
 novelty
 now
+npm
+null
 nullable
 number
 obsidian
@@ -627,11 +646,13 @@ plugin
 plugins
 policy
 polyfill
+port
 positive
 preference
 preferences
 preferred
 prefill
+presentation
 preserve
 preserved
 prettier
@@ -639,7 +660,6 @@ prettierrc
 preview
 previous
 price
-primary
 primitives
 print
 priority
@@ -685,6 +705,7 @@ recommendations
 recommended
 record
 recovery
+redesign
 redirect
 redirects
 reduced
@@ -703,6 +724,7 @@ relationships
 release
 remaining
 remake
+remote
 remove
 removed
 render
@@ -732,12 +754,14 @@ result
 results
 resumability
 retry
+returns
 reusable
 review
 rewrites
 risks
 rls
 role
+roll
 rollout
 root
 roots
@@ -769,6 +793,7 @@ search
 season
 seasons
 second
+secret
 section
 security
 seed
@@ -808,6 +833,7 @@ skeleton
 skeletons
 skill
 skin
+sleeve
 slug
 slugify
 small
@@ -831,6 +857,7 @@ status
 statuses
 step
 steps
+still
 stock
 stop
 storage
@@ -854,6 +881,7 @@ subagents
 subcategory
 subcommands
 submit
+succeeds
 success
 summarize
 summary
@@ -879,6 +907,7 @@ technical
 temperature
 terms
 test
+tested
 testing
 tests
 text
@@ -890,6 +919,7 @@ theme
 then
 there
 this
+tile
 timed
 timeout
 timestamp
@@ -919,9 +949,11 @@ tsx
 two
 type
 typecheck
+typeerror
 types
 typescript
 typography
+unable
 unavailable
 unchecked
 understand
@@ -957,10 +989,12 @@ vercel
 verification
 verified
 version
+vibe
 video
 view
 viewbox
 views
+violates
 visible
 visual
 vitest
@@ -977,6 +1011,7 @@ welcome
 what
 wheel
 when
+why
 width
 wiki
 windows

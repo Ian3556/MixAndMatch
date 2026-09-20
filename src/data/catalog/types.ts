@@ -1,3 +1,5 @@
+import type { DemoCatalogImageKey } from './demoImages.ts';
+
 export type CatalogSourceType = 'synthetic';
 
 export type CatalogImageSourceType =
@@ -89,7 +91,8 @@ export type SyntheticProduct = {
   skinToneTags: string[];
   price: number;
   currency: 'MYR';
-  imageUrl: null;
+  imageUrl: string | null;
+  imageAssetKey: DemoCatalogImageKey;
   imageSourceType: CatalogImageSourceType;
   sourceUrl: string;
   sourceDomain: string;
@@ -138,6 +141,7 @@ export type CatalogValidationReport = {
   demoProducts: number;
   missingRemoteImages: number;
   placeholderImages: number;
+  generatedImages: number;
   productsPerBrand: Record<string, number>;
   productsPerCategory: Record<string, number>;
   errors: CatalogValidationIssue[];
