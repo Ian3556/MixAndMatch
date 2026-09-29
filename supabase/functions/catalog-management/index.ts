@@ -21,6 +21,7 @@ import type {
   RawCatalogProductCandidate,
 } from '../_shared/catalog/types.ts';
 import { fetchHtmlPage, WardrobeImportError } from '../_shared/wardrobe-import/fetch-page.ts';
+import { createDenoPinnedFetch } from '../_shared/wardrobe-import/pinned-fetch.ts';
 import { resolvePublicDns } from '../_shared/wardrobe-import/resolve-public-dns.ts';
 import { validateImportUrl } from '../_shared/wardrobe-import/validate-url.ts';
 
@@ -505,7 +506,7 @@ async function processEntry(job: JobRow, entry: EntryRow, client: CatalogRestCli
   if (job.operation === 'import' && job.source_type === 'url') {
     const source = await findSourceById(job.brand_source_id, client);
     const page = await fetchHtmlPage(entry.source_url, {
-      fetch,
+      fetchResolved: createDenoPinnedFetch(),
       resolveHostname: resolvePublicDns,
       timeoutMs: source.timeout_ms,
       userAgent: 'MixAndMatchCatalogImporter/1.0',

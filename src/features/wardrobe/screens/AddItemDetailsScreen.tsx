@@ -15,6 +15,7 @@ import {
 import { wardrobeCategories } from '@/fixtures/categories';
 import { WARDROBE_ROUTES } from '@/navigation/routes';
 import type { WardrobeStackParamList } from '@/navigation/types';
+import { TOP_SUBCATEGORIES } from '@/services/wardrobeMetadata';
 import { useAppTheme, type AppTheme } from '@/theme';
 import type { DraftWardrobeItem } from '@/types/wardrobe';
 
@@ -49,7 +50,11 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
   const [errors, setErrors] = useState<ManualWardrobeItemErrors>({});
 
   function updateDraft<K extends keyof DraftWardrobeItem>(key: K, value: DraftWardrobeItem[K]) {
-    setDraft((current) => ({ ...current, [key]: value }));
+    setDraft((current) => ({
+      ...current,
+      [key]: value,
+      ...(key === 'category' && value !== current.category ? { subcategory: '' } : {}),
+    }));
     if (key in errors) {
       setErrors((current) => {
         const next = { ...current };
@@ -107,12 +112,22 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
 
       <View style={styles.twoColumn}>
         <View style={styles.fieldColumn}>
-          <SelectField
-            label="Subcategory"
-            onChange={(value) => updateDraft('subcategory', value)}
-            options={['Basic', 'Layer', 'Statement', 'Tailored', 'Casual']}
-            value={draft.subcategory}
-          />
+          {draft.category === 'Tops' ? (
+            <SelectField
+              label="Subcategory"
+              onChange={(value) => updateDraft('subcategory', value === 'None' ? '' : value)}
+              options={['None', ...TOP_SUBCATEGORIES]}
+              value={draft.subcategory}
+            />
+          ) : (
+            <FormTextInput
+              label="Subcategory"
+              maxLength={100}
+              onChangeText={(value) => updateDraft('subcategory', value)}
+              placeholder="Optional"
+              value={draft.subcategory}
+            />
+          )}
         </View>
         <View style={styles.fieldColumn}>
           <FormTextInput
@@ -162,19 +177,11 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
           />
         </View>
         <View style={styles.fieldColumn}>
-          <SelectField
+          <FormTextInput
             label="Material"
-            onChange={(value) => updateDraft('material', value)}
-            options={[
-              'Cotton',
-              'Linen',
-              'Wool',
-              'Denim',
-              'Leather',
-              'Synthetic',
-              'Blend',
-              'Unknown',
-            ]}
+            maxLength={100}
+            onChangeText={(value) => updateDraft('material', value)}
+            placeholder="Only if known"
             value={draft.material}
           />
         </View>
@@ -184,16 +191,31 @@ export function AddItemDetailsScreen({ navigation, route }: Props) {
         <View style={styles.fieldColumn}>
           <SelectField
             label="Season"
-            onChange={(value) => updateDraft('season', value)}
-            options={['All season', 'Warm weather', 'Cold weather', 'Transitional']}
+            onChange={(value) => updateDraft('season', value === 'None' ? '' : value)}
+            options={['None', 'Spring', 'Summer', 'Autumn', 'Winter', 'All Season']}
             value={draft.season}
           />
         </View>
         <View style={styles.fieldColumn}>
           <SelectField
             label="Occasion"
-            onChange={(value) => updateDraft('occasion', value)}
-            options={['Everyday', 'Work', 'Formal', 'Evening', 'Travel', 'Active']}
+            onChange={(value) => updateDraft('occasion', value === 'None' ? '' : value)}
+            options={[
+              'None',
+              'Casual',
+              'Smart Casual',
+              'Business',
+              'Formal',
+              'Sport',
+              'Sport, Tennis',
+              'Sport, Gym',
+              'Sport, Running',
+              'Outdoor',
+              'Travel',
+              'Party',
+              'Date',
+              'Home',
+            ]}
             value={draft.occasion}
           />
         </View>

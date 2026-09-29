@@ -188,6 +188,7 @@ function wardrobeItem(overrides: Partial<WardrobeItem>): WardrobeItem {
     season: null,
     occasion: null,
     notes: null,
+    description: null,
     isFavorite: false,
     imageUrl: null,
     imageUrls: [],

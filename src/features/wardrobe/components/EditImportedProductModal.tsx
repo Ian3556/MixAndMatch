@@ -20,9 +20,10 @@ type EditFields = {
   subcategory: string;
   brand: string;
   color: string;
+  material: string;
   size: string;
   imageUrl: string;
-  notes: string;
+  description: string;
 };
 
 export function EditImportedProductModal({ candidate, onCancel, onSave }: Props) {
@@ -53,9 +54,10 @@ function EditImportedProductForm({
     subcategory: candidate.subcategory ?? '',
     brand: candidate.brand ?? '',
     color: candidate.color ?? '',
+    material: candidate.material ?? '',
     size: candidate.size ?? '',
     imageUrl: candidate.imageUrl ?? '',
-    notes: candidate.description ?? '',
+    description: candidate.description ?? '',
   }));
   const [nameError, setNameError] = useState<string>();
 
@@ -74,9 +76,10 @@ function EditImportedProductForm({
       subcategory: fields.subcategory.trim(),
       brand: fields.brand.trim(),
       color: fields.color.trim(),
+      material: fields.material.trim(),
       size: fields.size.trim(),
       imageUrl: fields.imageUrl.trim(),
-      description: fields.notes.trim(),
+      description: fields.description.trim(),
     });
   };
 
@@ -132,6 +135,11 @@ function EditImportedProductForm({
               value={fields.color}
             />
             <FormTextInput
+              label="Material"
+              onChangeText={(value) => update('material', value)}
+              value={fields.material}
+            />
+            <FormTextInput
               label="Size"
               onChangeText={(value) => update('size', value)}
               value={fields.size}
@@ -144,12 +152,12 @@ function EditImportedProductForm({
               value={fields.imageUrl}
             />
             <FormTextInput
-              label="Notes"
+              label="Product description"
               multiline
               numberOfLines={4}
-              onChangeText={(value) => update('notes', value)}
+              onChangeText={(value) => update('description', value)}
               textAlignVertical="top"
-              value={fields.notes}
+              value={fields.description}
             />
             <ActionButton label="Save changes" onPress={save} />
           </ScrollView>

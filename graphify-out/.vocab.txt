@@ -78,6 +78,7 @@ behavior
 benchmark
 between
 blocked
+blocks
 body
 bootstrap
 border
@@ -93,6 +94,8 @@ brands
 breakdown
 brow
 browse
+bucket
+buffered
 build
 bundle
 bundler
@@ -102,6 +105,7 @@ calculate
 call
 callback
 can
+cancel
 candidate
 candidates
 cannot
@@ -124,6 +128,7 @@ chevron
 chip
 chips
 choice
+chunked
 clamp
 claude
 clean
@@ -131,6 +136,7 @@ cli
 client
 clipboard
 clone
+close
 clothes
 clothing
 cluster
@@ -155,6 +161,7 @@ compone
 component
 components
 composition
+concatenate
 concepts
 confidence
 config
@@ -183,6 +190,7 @@ create
 created
 credentials
 criteria
+crlf
 cross
 currency
 current
@@ -195,6 +203,7 @@ days
 debug
 decision
 decode
+decoder
 decorative
 deduplicate
 deduplication
@@ -251,6 +260,7 @@ element
 email
 empty
 enabled
+encoder
 encryption
 end
 endpoint
@@ -269,6 +279,8 @@ entry
 enums
 env
 environment
+eof
+equal
 err
 erro
 error
@@ -276,6 +288,7 @@ errors
 eslint
 establish
 exact
+exactly
 exceeded
 exclude
 executive
@@ -304,7 +317,9 @@ face
 fade
 fail
 failed
+fails
 failure
+fake
 falkor
 falkordb
 families
@@ -333,6 +348,7 @@ first
 fit
 five
 fix
+fixed
 fixture
 fixtures
 flag
@@ -382,10 +398,12 @@ graphify
 graphml
 grid
 group
+groups
 guard
 handle
 handler
 hash
+head
 header
 headers
 headi
@@ -475,6 +493,7 @@ jaccard
 job
 jobs
 json
+keep
 keeps
 key
 keyboard
@@ -519,9 +538,12 @@ management
 manifest
 manual
 map
+mapped
 mark
+markup
 masonry
 match
+matches
 material
 materials
 max
@@ -543,6 +565,8 @@ migration
 minimum
 missing
 mix
+mixandm
+mixandmatch
 mjs
 mock
 modal
@@ -552,6 +576,7 @@ modified
 module
 monochrome
 monotonic
+most
 mostly
 motion
 mts
@@ -569,6 +594,7 @@ neo
 nes
 nested
 net
+network
 neutral
 never
 next
@@ -636,11 +662,11 @@ persist
 persisted
 persistence
 phase
+pinned
 pinterest
 pipeline
 placeholder
 plan
-platform
 plist
 plugin
 plugins
@@ -694,6 +720,7 @@ rate
 raw
 react
 read
+reader
 readiness
 readme
 real
@@ -714,6 +741,7 @@ reference
 refine
 refresh
 refused
+refusing
 reject
 rejected
 rejecting
@@ -724,6 +752,7 @@ relationships
 release
 remaining
 remake
+remember
 remote
 remove
 removed
@@ -745,6 +774,7 @@ required
 reset
 resolution
 resolve
+resolved
 resolver
 response
 responsive
@@ -817,6 +847,7 @@ shared
 sheet
 should
 show
+showing
 sign
 signal
 signals
@@ -848,6 +879,7 @@ src
 stable
 stack
 stage
+stalling
 start
 startup
 stat
@@ -939,6 +971,7 @@ tops
 total
 tracker
 tracking
+trailers
 trailing
 transcribe
 transition
@@ -963,8 +996,10 @@ unified
 unique
 unsafe
 unsupported
+until
 update
 updated
+upload
 upsert
 url
 urls
@@ -998,6 +1033,7 @@ violates
 visible
 visual
 vitest
+wait
 wardrobe
 warmth
 was
@@ -1021,5 +1057,6 @@ work
 workflow
 working
 worn
+write
 you
 zustand

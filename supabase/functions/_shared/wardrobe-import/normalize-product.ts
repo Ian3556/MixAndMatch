@@ -1,6 +1,7 @@
 import { cleanText } from './html-utils.ts';
 import {
   MAX_IMPORTED_PRODUCTS,
+  MAX_RAW_PRODUCT_CANDIDATES,
   type ImportedProductCandidate,
   type RawProductCandidate,
 } from './types.ts';
@@ -11,11 +12,18 @@ export function normalizeProducts(
   candidates: RawProductCandidate[],
   sourceUrl: string,
 ): ImportedProductCandidate[] {
-  const normalized = candidates
-    .map((candidate) => normalizeProduct(candidate, sourceUrl))
-    .filter((candidate): candidate is ImportedProductCandidate => candidate !== null);
-
-  return deduplicateProducts(normalized).slice(0, MAX_IMPORTED_PRODUCTS);
+  const output: ImportedProductCandidate[] = [];
+  const identities = createIdentityIndex();
+  const maximum = Math.min(candidates.length, MAX_RAW_PRODUCT_CANDIDATES);
+  for (let index = 0; index < maximum && output.length < MAX_IMPORTED_PRODUCTS; index += 1) {
+    const candidate = candidates[index];
+    if (!candidate) continue;
+    const normalized = normalizeProduct(candidate, sourceUrl);
+    if (!normalized || isDuplicateProduct(identities, normalized)) continue;
+    rememberProduct(identities, normalized);
+    output.push(normalized);
+  }
+  return output;
 }
 
 export function normalizeProduct(
@@ -46,6 +54,7 @@ export function normalizeProduct(
   if (category) result.category = category;
   assignText(result, 'subcategory', candidate.subcategory, 100);
   assignText(result, 'color', candidate.color, 100);
+  assignText(result, 'material', candidate.material, 100);
   assignText(result, 'size', candidate.size, 100);
   assignText(result, 'availability', candidate.availability, 160);
   if (canonicalUrl) result.canonicalUrl = canonicalUrl;
@@ -106,45 +115,60 @@ function normalizeImageUrl(value: unknown, baseUrl: string): string | undefined 
   return normalizeUrl(candidate, baseUrl);
 }
 
-function deduplicateProducts(products: ImportedProductCandidate[]): ImportedProductCandidate[] {
-  const output: ImportedProductCandidate[] = [];
+type IdentityIndex = {
+  canonical: Map<string, Set<string | null>>;
+  productUrl: Map<string, Set<string | null>>;
+  external: Set<string>;
+  imageAndName: Set<string>;
+};
 
-  for (const product of products) {
-    if (output.some((existing) => productsMatch(existing, product))) continue;
-    output.push(product);
-  }
-
-  return output;
+function createIdentityIndex(): IdentityIndex {
+  return {
+    canonical: new Map(),
+    productUrl: new Map(),
+    external: new Set(),
+    imageAndName: new Set(),
+  };
 }
 
-function productsMatch(left: ImportedProductCandidate, right: ImportedProductCandidate): boolean {
-  const leftCanonical = left.canonicalUrl?.toLowerCase();
-  const rightCanonical = right.canonicalUrl?.toLowerCase();
-  const distinctVariants =
-    left.externalId &&
-    right.externalId &&
-    left.externalId.toLowerCase() !== right.externalId.toLowerCase();
-  if (leftCanonical && rightCanonical && leftCanonical === rightCanonical && !distinctVariants)
-    return true;
-
-  const leftUrl = normalizeUrl(left.productUrl, left.productUrl, true)?.toLowerCase();
-  const rightUrl = normalizeUrl(right.productUrl, right.productUrl, true)?.toLowerCase();
-  if (leftUrl && rightUrl && leftUrl === rightUrl && !distinctVariants) return true;
-
-  if (
-    left.externalId &&
-    right.externalId &&
-    left.sourceDomain === right.sourceDomain &&
-    left.externalId.toLowerCase() === right.externalId.toLowerCase()
-  ) {
-    return true;
-  }
+function isDuplicateProduct(index: IdentityIndex, product: ImportedProductCandidate): boolean {
+  const variant = product.externalId?.toLowerCase() ?? null;
+  const canonical = product.canonicalUrl?.toLowerCase();
+  if (canonical && identityMatches(index.canonical.get(canonical), variant)) return true;
+  const productUrl = normalizeUrl(product.productUrl, product.productUrl, true)?.toLowerCase();
+  if (productUrl && identityMatches(index.productUrl.get(productUrl), variant)) return true;
+  if (variant && index.external.has(`${product.sourceDomain}\0${variant}`)) return true;
   return Boolean(
-    left.imageUrl &&
-    right.imageUrl &&
-    left.name.toLowerCase() === right.name.toLowerCase() &&
-    left.imageUrl.toLowerCase() === right.imageUrl.toLowerCase(),
+    product.imageUrl &&
+    index.imageAndName.has(`${product.name.toLowerCase()}\0${product.imageUrl.toLowerCase()}`),
   );
+}
+
+function rememberProduct(index: IdentityIndex, product: ImportedProductCandidate) {
+  const variant = product.externalId?.toLowerCase() ?? null;
+  const canonical = product.canonicalUrl?.toLowerCase();
+  if (canonical) rememberIdentity(index.canonical, canonical, variant);
+  const productUrl = normalizeUrl(product.productUrl, product.productUrl, true)?.toLowerCase();
+  if (productUrl) rememberIdentity(index.productUrl, productUrl, variant);
+  if (variant) index.external.add(`${product.sourceDomain}\0${variant}`);
+  if (product.imageUrl) {
+    index.imageAndName.add(`${product.name.toLowerCase()}\0${product.imageUrl.toLowerCase()}`);
+  }
+}
+
+function identityMatches(variants: Set<string | null> | undefined, variant: string | null) {
+  if (!variants) return false;
+  return variant === null || variants.has(null) || variants.has(variant);
+}
+
+function rememberIdentity(
+  index: Map<string, Set<string | null>>,
+  key: string,
+  variant: string | null,
+) {
+  const variants = index.get(key) ?? new Set<string | null>();
+  variants.add(variant);
+  index.set(key, variants);
 }
 
 function assignText<K extends keyof ImportedProductCandidate>(

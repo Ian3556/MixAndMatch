@@ -3,6 +3,9 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 import { extractProductsFromHtml } from './extract-products';
+import { extractJsonLdProducts } from './json-ld';
+import { normalizeProducts } from './normalize-product';
+import { MAX_JSON_LD_DEPTH, MAX_RAW_PRODUCT_CANDIDATES, type RawProductCandidate } from './types';
 
 const fixtureDirectory = fileURLToPath(
   new URL('../../../../src/fixtures/wardrobe-import/', import.meta.url),
@@ -91,8 +94,71 @@ describe('wardrobe import extraction pipeline', () => {
     });
   });
 
+  it('keeps explicit material composition on a single structured product page', () => {
+    const html = `<script type="application/ld+json">${JSON.stringify({
+      '@type': 'Product',
+      name: "Men's tennis top",
+      url: '/products/tennis-top',
+      category: 'Tops',
+    })}</script><section>Product details: 88% polyester/12% elastane</section>`;
+    expect(extractProductsFromHtml(html, sourceUrl).products[0]?.material).toBe(
+      '88% polyester / 12% elastane',
+    );
+  });
+
+  it('does not assign page-wide material to a collection candidate', () => {
+    const html = `<script type="application/ld+json">${JSON.stringify({
+      '@type': 'ItemList',
+      itemListElement: [{ '@type': 'Product', name: 'Tennis top', url: '/products/tennis-top' }],
+    })}</script><section>Product details: 88% polyester/12% elastane</section>`;
+    expect(extractProductsFromHtml(html, sourceUrl).products[0]?.material).toBeUndefined();
+  });
+
   it('rejects logos and banners without rejecting a real product', () => {
     const products = extractProductsFromHtml(fixture('decorative-images'), sourceUrl).products;
     expect(products.map((product) => product.name)).toEqual(['Real Shirt']);
+  });
+
+  it('caps JSON-LD candidates before normalization', () => {
+    const products = Array.from({ length: MAX_RAW_PRODUCT_CANDIDATES + 25 }, (_, index) => ({
+      '@type': 'Product',
+      name: `Product ${index}`,
+      url: `/products/${index}`,
+    }));
+    const html = `<script type="application/ld+json">${JSON.stringify(products)}</script>`;
+
+    expect(extractJsonLdProducts(html, sourceUrl)).toHaveLength(MAX_RAW_PRODUCT_CANDIDATES);
+    expect(extractProductsFromHtml(html, sourceUrl).products).toHaveLength(50);
+  });
+
+  it('stops traversing JSON-LD beyond the configured depth', () => {
+    let nested: unknown = {
+      '@type': 'Product',
+      name: 'Too Deep',
+      url: '/products/too-deep',
+    };
+    for (let depth = 0; depth <= MAX_JSON_LD_DEPTH; depth += 1) nested = { child: nested };
+    const html = `<script type="application/ld+json">${JSON.stringify(nested)}</script>`;
+
+    expect(extractJsonLdProducts(html, sourceUrl)).toEqual([]);
+  });
+
+  it('never reads candidates beyond the raw-candidate budget', () => {
+    const candidates = Array.from(
+      { length: MAX_RAW_PRODUCT_CANDIDATES },
+      () =>
+        ({
+          name: '',
+          extractionMethod: 'html-heuristic',
+          confidence: 'low',
+        }) satisfies RawProductCandidate,
+    );
+    Object.defineProperty(candidates, MAX_RAW_PRODUCT_CANDIDATES, {
+      get() {
+        throw new Error('candidate budget exceeded');
+      },
+    });
+
+    expect(normalizeProducts(candidates, sourceUrl)).toEqual([]);
   });
 });

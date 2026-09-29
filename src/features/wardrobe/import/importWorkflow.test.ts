@@ -61,6 +61,35 @@ describe('wardrobe import workflow', () => {
     });
   });
 
+  it('keeps retailer copy separate from personal notes and derives trusted metadata', () => {
+    const [input] = buildWardrobeInputs(
+      createImportPreview(
+        [
+          {
+            ...candidate,
+            name: "NikeCourt Advantage Men's Dri-FIT Tennis Top",
+            productUrl: 'https://www.nike.com/my/t/example',
+            sourceDomain: 'www.nike.com',
+            category: 'Tops',
+            color: 'Purple Dynasty/Lemon Venom/Lemon Venom',
+            description: 'The slim-fit Advantage top is built to minimise distractions.',
+          },
+        ],
+        [],
+      ),
+    );
+    expect(input).toMatchObject({
+      brand: 'Nike',
+      subcategory: 'Performance Top',
+      occasion: 'Sport, Tennis',
+      primaryColor: 'Purple Dynasty / Lemon Venom',
+      notes: null,
+      metadata: {
+        productDescription: 'The slim-fit Advantage top is built to minimise distractions.',
+      },
+    });
+  });
+
   it('keeps partial failures selected while clearing saved and duplicate items', () => {
     const preview = createImportPreview(
       [candidate, { ...candidate, externalId: 'shirt-2' }, { ...candidate, externalId: 'shirt-3' }],

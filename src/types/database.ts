@@ -9,6 +9,12 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      saved_inspirations: {
+        Row: { user_id: string; inspiration_id: string; created_at: string };
+        Insert: { user_id: string; inspiration_id: string; created_at?: string };
+        Update: never;
+        Relationships: [];
+      };
       profiles: {
         Row: {
           avatar_url: string | null;

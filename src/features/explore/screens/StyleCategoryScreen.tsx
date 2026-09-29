@@ -11,6 +11,7 @@ import type { ExploreStackParamList } from '@/navigation/types';
 import { useAppTheme, type AppTheme } from '@/theme';
 import { showDeferredNotice } from '@/utils/deferred';
 import { getGridColumnCount, getGridItemWidth } from '@/utils/layout';
+import { LegacyInspirationSave } from '../components/LegacyInspirationSave';
 
 type Props = NativeStackScreenProps<ExploreStackParamList, 'StyleCategory'>;
 
@@ -55,7 +56,7 @@ export function StyleCategoryScreen({ navigation, route }: Props) {
             key={`${route.params.categoryId}-${item.id}`}
             onMore={() => showDeferredNotice('Category item options')}
             onOpen={() => openItem(item.id)}
-            onSave={() => showDeferredNotice('Saved styles')}
+            saveAction={<LegacyInspirationSave inspirationId={item.id} />}
             width={itemWidth}
           />
         ))}

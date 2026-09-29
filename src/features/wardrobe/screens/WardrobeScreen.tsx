@@ -5,6 +5,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
 import { AppScreen } from '@/components/ui/AppScreen';
+import { FirstOutfitGuide } from '@/features/stylist/components/FirstOutfitGuide';
 import { Chip } from '@/components/ui/Chip';
 import { SearchBar } from '@/components/ui/SearchBar';
 import { ErrorState } from '@/components/ui/StateViews';
@@ -110,6 +111,7 @@ export function WardrobeScreen({ navigation, route }: Props) {
         ) : null}
 
         <WardrobeSummary items={wardrobeItems} loading={initialLoading} />
+        <FirstOutfitGuide />
 
         <View style={styles.section}>
           <View style={styles.sectionHeadingRow}>

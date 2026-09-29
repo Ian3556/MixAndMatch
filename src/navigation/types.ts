@@ -15,11 +15,12 @@ export type AuthStackParamList = {
 
 export type HomeStackParamList = {
   Home: undefined;
-  InspirationDetail: { inspirationId: string };
+  InspirationDetail: ExploreStackParamList['InspirationDetail'];
 };
 
 export type ExploreStackParamList = {
   Explore: undefined;
+  SavedInspirations: undefined;
   SearchResults: { query: string };
   StyleCategory: { categoryId: string; title: string };
   InspirationDetail:
@@ -41,6 +42,7 @@ export type WardrobeStackParamList = {
   AddItemDetails: { imageKey: string; initialDraft?: ManualWardrobeItemPrefill };
   AddItemReview: { draft: DraftWardrobeItem };
   WardrobeItemDetail: { itemId: string };
+  EditWardrobeItem: { itemId: string };
 };
 
 export type StylistStackParamList = {

@@ -83,7 +83,7 @@ export function OutfitGoalScreen({ navigation, route }: Props) {
           <SelectField
             label="Style / vibe"
             onChange={(value) => navigation.setParams({ desiredStyle: value })}
-            options={preferredStyleOptions}
+            options={Array.from(new Set([...preferredStyleOptions, style]))}
             square
             value={style}
           />

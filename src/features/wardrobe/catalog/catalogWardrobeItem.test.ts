@@ -48,6 +48,7 @@ describe('catalog wardrobe adapter', () => {
       importMethod: 'catalog',
       brand: 'COS',
       category: 'Tops',
+      description: null,
       deduplicationKey: 'catalog:product-1:default',
     });
   });

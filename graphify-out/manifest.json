@@ -90,8 +90,8 @@
     "semantic_hash": ""
   },
   "src/components/ui/InspirationCard.tsx": {
-    "mtime": 1785853107.694314,
-    "ast_hash": "8488cd7d338aed1feff7a6b40b704b81",
+    "mtime": 1790588349.756783,
+    "ast_hash": "9b6b78e69d86544f202e9efd2f82ac63",
     "semantic_hash": ""
   },
   "src/components/ui/OptionSheet.tsx": {
@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "src/features/auth/AuthBootstrap.tsx": {
-    "mtime": 1789028006.7485254,
-    "ast_hash": "5b3286f170ad9e80f9fa0c5a96fada51",
+    "mtime": 1790588664.9680624,
+    "ast_hash": "1f3a7100918e5db8341790864fd8a1f9",
     "semantic_hash": ""
   },
   "src/features/auth/components/DevelopmentQuickLogin.tsx": {
@@ -215,28 +215,28 @@
     "semantic_hash": ""
   },
   "src/features/explore/screens/ExploreScreen.tsx": {
-    "mtime": 1788616172.815771,
-    "ast_hash": "a5e1a8e5c2b3b8610161c9c90a07db53",
+    "mtime": 1790588664.836676,
+    "ast_hash": "a7544a77f5879248d6e45796b03f6bb0",
     "semantic_hash": ""
   },
   "src/features/explore/screens/SearchResultsScreen.tsx": {
-    "mtime": 1788616229.8449411,
-    "ast_hash": "58ad931a7875d0a1dc9a8c8d42a74747",
+    "mtime": 1790588352.522987,
+    "ast_hash": "4730af00dfbddbcb94714aa24c7e69cf",
     "semantic_hash": ""
   },
   "src/features/explore/screens/StyleCategoryScreen.tsx": {
-    "mtime": 1788366093.4385867,
-    "ast_hash": "cf16c08c3c36bc34cba1b43f3a30539f",
+    "mtime": 1790588353.963836,
+    "ast_hash": "fbf0a3cfe5c49fa252782d3aa9b847a5",
     "semantic_hash": ""
   },
   "src/features/home/screens/HomeScreen.tsx": {
-    "mtime": 1788274625.7689805,
-    "ast_hash": "db100d809764792c3a8134acee4e2969",
+    "mtime": 1790588483.6363685,
+    "ast_hash": "f977ea1e2dc8f20d7f4789af7c19190b",
     "semantic_hash": ""
   },
   "src/features/home/screens/InspirationDetailScreen.tsx": {
-    "mtime": 1788450799.03456,
-    "ast_hash": "87dd262316e276a338b6e6cdcc6ddd5d",
+    "mtime": 1790588664.86451,
+    "ast_hash": "60643ed74a4c405cef4a95b2c959a040",
     "semantic_hash": ""
   },
   "src/features/profile/screens/AboutScreen.tsx": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "src/features/stylist/screens/OutfitGoalScreen.tsx": {
-    "mtime": 1789826904.9967678,
-    "ast_hash": "b85da40d0d738d9df5bc73de3a5eaed2",
+    "mtime": 1790588253.403836,
+    "ast_hash": "43b52f61a9d17a5979d219a8bac2d9f3",
     "semantic_hash": ""
   },
   "src/features/stylist/screens/OutfitPreferencesScreen.tsx": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "src/features/wardrobe/components/EditImportedProductModal.tsx": {
-    "mtime": 1789105710.9644608,
-    "ast_hash": "fd2c1758ca82d9feeade975599c12031",
+    "mtime": 1790087375.745635,
+    "ast_hash": "e9a7912ef73128a36b52e9d78a9f7776",
     "semantic_hash": ""
   },
   "src/features/wardrobe/components/ImportCompleteStep.tsx": {
@@ -350,18 +350,18 @@
     "semantic_hash": ""
   },
   "src/features/wardrobe/import/importWorkflow.test.ts": {
-    "mtime": 1789105715.7290535,
-    "ast_hash": "113643314fd70511c396b90fe4221968",
+    "mtime": 1790087887.3358598,
+    "ast_hash": "3f8df82505df1e3c4b9f784b953b09e7",
     "semantic_hash": ""
   },
   "src/features/wardrobe/import/importWorkflow.ts": {
-    "mtime": 1789105709.7754967,
-    "ast_hash": "948614c0f7981ee45f0f03d7721de8ca",
+    "mtime": 1790087360.7914908,
+    "ast_hash": "1414d0557e93eab01bbb5298b10de5f0",
     "semantic_hash": ""
   },
   "src/features/wardrobe/screens/AddItemDetailsScreen.tsx": {
-    "mtime": 1789104902.693534,
-    "ast_hash": "b60cbc3539bafd987164421d7ffb2acc",
+    "mtime": 1790088118.5244184,
+    "ast_hash": "c5779e0a2139836f7c8984d9e811564a",
     "semantic_hash": ""
   },
   "src/features/wardrobe/screens/AddItemEntryScreen.tsx": {
@@ -385,13 +385,13 @@
     "semantic_hash": ""
   },
   "src/features/wardrobe/screens/WardrobeItemDetailScreen.tsx": {
-    "mtime": 1789653114.5896797,
-    "ast_hash": "43900ed5d660caa6311e59e1bea2d16e",
+    "mtime": 1790087761.7042782,
+    "ast_hash": "8911f94f4ee461fd9f9b8d3ef8fe9306",
     "semantic_hash": ""
   },
   "src/features/wardrobe/screens/WardrobeScreen.tsx": {
-    "mtime": 1789104781.2872207,
-    "ast_hash": "b538e504c91ecff25a1c9aa2ef1e3336",
+    "mtime": 1790588485.0149815,
+    "ast_hash": "f447b931008695f4854bccece8dd2b06",
     "semantic_hash": ""
   },
   "src/fixtures/categories.ts": {
@@ -450,13 +450,13 @@
     "semantic_hash": ""
   },
   "src/navigation/TabNavigators.tsx": {
-    "mtime": 1789104929.598798,
-    "ast_hash": "7ed6ad07aa4bea4a80056bf1a3785813",
+    "mtime": 1790588665.0682056,
+    "ast_hash": "70148eb528f59feeec77e93bdff2fecd",
     "semantic_hash": ""
   },
   "src/navigation/interactionAudit.test.ts": {
-    "mtime": 1789105317.8838594,
-    "ast_hash": "4f9b5250e1153503e471137a6ebbd97b",
+    "mtime": 1790588665.081659,
+    "ast_hash": "0601b583bb9b50e9b84e942ac14df5b6",
     "semantic_hash": ""
   },
   "src/navigation/navigationConfig.test.ts": {
@@ -470,13 +470,13 @@
     "semantic_hash": ""
   },
   "src/navigation/routes.ts": {
-    "mtime": 1789104782.4601254,
-    "ast_hash": "c10669df1a0e425619c386a2236da567",
+    "mtime": 1790588252.018377,
+    "ast_hash": "60d9e82d0d372b53b80c5ec73bab4804",
     "semantic_hash": ""
   },
   "src/navigation/types.ts": {
-    "mtime": 1789652767.8546686,
-    "ast_hash": "269de7dd9a18ddd4cdf238f73fa0c208",
+    "mtime": 1790588250.6135747,
+    "ast_hash": "11eb9fc5c353baf8ce1d6248b2df3ae2",
     "semantic_hash": ""
   },
   "src/screens/AuthStateErrorScreen.tsx": {
@@ -540,13 +540,13 @@
     "semantic_hash": ""
   },
   "src/services/wardrobeService.test.ts": {
-    "mtime": 1789105018.403444,
-    "ast_hash": "f09619b004561862a8f50becf2327446",
+    "mtime": 1790088691.9060237,
+    "ast_hash": "fa5d4f088d4f5773ae843f4a1fbc3eb3",
     "semantic_hash": ""
   },
   "src/services/wardrobeService.ts": {
-    "mtime": 1789104999.1415994,
-    "ast_hash": "63e5bd714d69f61ba66417616af6b43b",
+    "mtime": 1790087426.2340577,
+    "ast_hash": "b6aa3d0599b3c698cc20fab4f4684494",
     "semantic_hash": ""
   },
   "src/store/authAccountActions.ts": {
@@ -580,8 +580,8 @@
     "semantic_hash": ""
   },
   "src/store/wardrobeStore.ts": {
-    "mtime": 1788882381.1318364,
-    "ast_hash": "005446719a66c8106e681e263917dd2f",
+    "mtime": 1790087458.7805648,
+    "ast_hash": "ca6484e9019bc21c8e9877902836da92",
     "semantic_hash": ""
   },
   "src/theme/ThemeProvider.tsx": {
@@ -630,8 +630,8 @@
     "semantic_hash": ""
   },
   "src/types/database.ts": {
-    "mtime": 1789104228.0212402,
-    "ast_hash": "44621be7352a46c9e9bd33c93b0ce1ed",
+    "mtime": 1790588098.3828983,
+    "ast_hash": "839ab6135f6796cd0a91c623137b8982",
     "semantic_hash": ""
   },
   "src/types/environment.d.ts": {
@@ -645,8 +645,8 @@
     "semantic_hash": ""
   },
   "src/types/wardrobe.ts": {
-    "mtime": 1789104229.16965,
-    "ast_hash": "37344032faf68988aa5ff56ea7a10e04",
+    "mtime": 1790087344.7971869,
+    "ast_hash": "7ddf7c6cf8a5c4af0eab9854479e8614",
     "semantic_hash": ""
   },
   "src/utils/deferred.ts": {
@@ -685,28 +685,28 @@
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/extract-products.test.ts": {
-    "mtime": 1789105733.1147773,
-    "ast_hash": "077cfebb342dc8781d3f8b13d649244c",
+    "mtime": 1790088837.559271,
+    "ast_hash": "9ad6f1f4670989d4e04f3624bf89dd1e",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/extract-products.ts": {
-    "mtime": 1789106579.766013,
-    "ast_hash": "96be58c777534903fc69795ca7a8cc8d",
+    "mtime": 1790089003.5669162,
+    "ast_hash": "6a0b38b05f6f3b3533e5f5740852e729",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/fetch-page.test.ts": {
-    "mtime": 1785941287.512166,
-    "ast_hash": "e2cfa5e246a4da971d70c07d8356c8af",
+    "mtime": 1789915329.9640238,
+    "ast_hash": "1a7262dc4fa9140449ab699db38cf2ee",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/fetch-page.ts": {
-    "mtime": 1789106581.033719,
-    "ast_hash": "e2b7a09e6262be3b6fadccd430e6ca3b",
+    "mtime": 1789915328.9054916,
+    "ast_hash": "6ef413c230ba7801d1f9f8057bd8e802",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/html-parsers.ts": {
-    "mtime": 1789106582.3879476,
-    "ast_hash": "60e633244daeaf3a8523a13512bdf6f9",
+    "mtime": 1789914017.5863452,
+    "ast_hash": "9a0f86d21c3615ca27c6130f67aee8b4",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/html-utils.ts": {
@@ -715,33 +715,33 @@
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/json-ld.ts": {
-    "mtime": 1789106583.5383317,
-    "ast_hash": "7712c52dc0ff0089b76e9542261a8e7d",
+    "mtime": 1790087363.104351,
+    "ast_hash": "6f2ca6470a868a583982646ed27d5ba2",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/normalize-product.ts": {
-    "mtime": 1789106584.7569978,
-    "ast_hash": "64d2e77d2ae2887ad73a1432c0b52465",
+    "mtime": 1790087364.2718985,
+    "ast_hash": "f45c141491993f8fdcf61954d724009a",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/types.ts": {
-    "mtime": 1789105705.0192566,
-    "ast_hash": "66d7ae10337ce95bc1236bf8452f7bde",
+    "mtime": 1790087361.9501436,
+    "ast_hash": "c4f8a219ef6e490a9988ddfbfd2f6490",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/validate-url.test.ts": {
-    "mtime": 1785939933.5238848,
-    "ast_hash": "826993930e202fec7318a97fa03898da",
+    "mtime": 1789913942.3296638,
+    "ast_hash": "2666da56c6f48fe556560253d662d9c9",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/validate-url.ts": {
-    "mtime": 1789106587.297402,
-    "ast_hash": "6d88c5a07ea66e2594c56ab408d0d632",
+    "mtime": 1789914295.2361405,
+    "ast_hash": "a1e16fa2b8197048e2c4200419f9f501",
     "semantic_hash": ""
   },
   "supabase/functions/import-wardrobe-url/index.ts": {
-    "mtime": 1789107877.6145875,
-    "ast_hash": "18daf8b6f2fda2a770f89c19f91d4a34",
+    "mtime": 1789913893.547084,
+    "ast_hash": "d80fcdd0bcbaed7bc5248843a1781007",
     "semantic_hash": ""
   },
   "supabase/index.ts": {
@@ -1005,8 +1005,8 @@
     "semantic_hash": ""
   },
   "supabase/functions/_shared/catalog/job-state.ts": {
-    "mtime": 1786119808.049835,
-    "ast_hash": "92c9385b85271822e763336b2b4b6180",
+    "mtime": 1790583976.8097754,
+    "ast_hash": "454ffaeb5f85f7b5b69572faaa5c7ce8",
     "semantic_hash": ""
   },
   "supabase/functions/_shared/catalog/management-actions.test.ts": {
@@ -1070,13 +1070,13 @@
     "semantic_hash": ""
   },
   "supabase/functions/_shared/wardrobe-import/resolve-public-dns.ts": {
-    "mtime": 1789106586.0115714,
-    "ast_hash": "8f32f67e45940504077c4c948c18569d",
+    "mtime": 1789914363.4791148,
+    "ast_hash": "e4e8a4ea0a84daa60b938cf71c87894f",
     "semantic_hash": ""
   },
   "supabase/functions/catalog-management/index.ts": {
-    "mtime": 1789107878.9268243,
-    "ast_hash": "c81cb2f4f4f85d31beb5d51c077374ba",
+    "mtime": 1789913894.664998,
+    "ast_hash": "0d89f69663139e3c378e55b3bf2ba412",
     "semantic_hash": ""
   },
   "supabase/migrations/20260808000100_create_catalog_database.sql": {
@@ -1255,8 +1255,8 @@
     "semantic_hash": ""
   },
   "src/features/explore/screens/ExploreOutfitDetailScreen.tsx": {
-    "mtime": 1788616229.8754969,
-    "ast_hash": "7859bbb3c9c91e20a4dfb519663f1112",
+    "mtime": 1790588664.8044894,
+    "ast_hash": "14e92ba39bde6384294b66a8bfeeac52",
     "semantic_hash": ""
   },
   "src/features/explore/utils/discovery.test.ts": {
@@ -1550,13 +1550,13 @@
     "semantic_hash": ""
   },
   "src/features/wardrobe/catalog/catalogWardrobeItem.test.ts": {
-    "mtime": 1789718075.0356574,
-    "ast_hash": "7d38c83a86e8bd5cc859ca324ec6b50d",
+    "mtime": 1790087879.224835,
+    "ast_hash": "15d09e52af9ab018dd033ce1bc6b7b14",
     "semantic_hash": ""
   },
   "src/features/wardrobe/catalog/catalogWardrobeItem.ts": {
-    "mtime": 1789718021.3548186,
-    "ast_hash": "fe7077ca6bbbd7491fc4d88290de770b",
+    "mtime": 1790087359.683389,
+    "ast_hash": "92c2946c2d2ab670cac6b253ed4f5582",
     "semantic_hash": ""
   },
   "src/features/wardrobe/components/CatalogBrandRow.tsx": {
@@ -1595,8 +1595,8 @@
     "semantic_hash": ""
   },
   "src/services/wardrobeNormalization.ts": {
-    "mtime": 1789105071.9307024,
-    "ast_hash": "4a7ba8dcc680c48159de42d90c9ac758",
+    "mtime": 1790087945.8198507,
+    "ast_hash": "2ae1f1d774c193252e5414b9f4a2772d",
     "semantic_hash": ""
   },
   "supabase/migrations/20260911000100_unify_wardrobe_sources_and_catalog_browse.sql": {
@@ -1765,8 +1765,8 @@
     "semantic_hash": ""
   },
   "src/features/stylist/tests/recommendationEngine.test.ts": {
-    "mtime": 1789653463.7953825,
-    "ast_hash": "dfa02b1ef0d84d5d14bd8663f460bbea",
+    "mtime": 1790087758.235558,
+    "ast_hash": "7b9edfe7a0f416a820f8331d50671eef",
     "semantic_hash": ""
   },
   "src/features/stylist/tests/scoringEngine.test.ts": {
@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "src/features/stylist/useStylistData.ts": {
-    "mtime": 1789652766.6625326,
-    "ast_hash": "8ec6945a2408493c7770f400c993a3bf",
+    "mtime": 1790588487.797395,
+    "ast_hash": "d2fe6de3523ceb35632cc9d74ce0dae7",
     "semantic_hash": ""
   },
   "src/services/stylistPersistence.ts": {
@@ -1815,8 +1815,8 @@
     "semantic_hash": ""
   },
   "src/store/stylistStore.ts": {
-    "mtime": 1789653218.8400269,
-    "ast_hash": "ba1a666ff01e3159879be582415c8fe6",
+    "mtime": 1790588665.0245044,
+    "ast_hash": "b685e6c3db6a7d64b5b63699875f1d1b",
     "semantic_hash": ""
   },
   "scripts/catalog/cli.ts": {
@@ -2067,6 +2067,161 @@
   "graphify-out/memory/query_20260919_145909_why_does_it_keep_showing_refusing_to_seed__mixandm.md": {
     "mtime": 1789829949.5270195,
     "ast_hash": "2b790d82687f38a512eb598cf21d385e",
+    "semantic_hash": ""
+  },
+  "supabase/functions/_shared/wardrobe-import/pinned-fetch.test.ts": {
+    "mtime": 1789915197.6087606,
+    "ast_hash": "9fc8c754419530b98febdc3ad3379959",
+    "semantic_hash": ""
+  },
+  "supabase/functions/_shared/wardrobe-import/pinned-fetch.ts": {
+    "mtime": 1789915170.4450152,
+    "ast_hash": "235657258be2a0cc536b148edb064dbe",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260919_150707_supabase_seed_fails_with_unable_to_inspect_demo_im.md": {
+    "mtime": 1789830427.4831905,
+    "ast_hash": "a31d14d6efdbd8c81cec0cfe1f7cc3b2",
+    "semantic_hash": ""
+  },
+  "src/features/wardrobe/components/WardrobeHeroImage.tsx": {
+    "mtime": 1790088729.1908054,
+    "ast_hash": "4907b0088a35b31f5655fde2956a213f",
+    "semantic_hash": ""
+  },
+  "src/features/wardrobe/detail/imageLayout.test.ts": {
+    "mtime": 1790088170.7380674,
+    "ast_hash": "3c2fcb7a6ccecc678a9f0d3190c6eda2",
+    "semantic_hash": ""
+  },
+  "src/features/wardrobe/detail/imageLayout.ts": {
+    "mtime": 1790088169.5130873,
+    "ast_hash": "2954306dc86b527d2a47aa8273003c25",
+    "semantic_hash": ""
+  },
+  "src/features/wardrobe/detail/wardrobePresentation.test.ts": {
+    "mtime": 1790087887.306672,
+    "ast_hash": "9fa38ba51f74633f171744f839ab376c",
+    "semantic_hash": ""
+  },
+  "src/features/wardrobe/detail/wardrobePresentation.ts": {
+    "mtime": 1790087640.5217695,
+    "ast_hash": "ca5b02d4804398df246980ebd6b03065",
+    "semantic_hash": ""
+  },
+  "src/features/wardrobe/edit/editWardrobeItem.test.ts": {
+    "mtime": 1790087887.3168046,
+    "ast_hash": "a5142f6120eba72a1a39ef7892dee395",
+    "semantic_hash": ""
+  },
+  "src/features/wardrobe/edit/editWardrobeItem.ts": {
+    "mtime": 1790087920.7570438,
+    "ast_hash": "b7aef2f0d070feeac446e80b50e37d6b",
+    "semantic_hash": ""
+  },
+  "src/features/wardrobe/screens/EditWardrobeItemScreen.tsx": {
+    "mtime": 1790088108.2638001,
+    "ast_hash": "0009324f6a2686692e5abc73e64ae257",
+    "semantic_hash": ""
+  },
+  "src/services/wardrobeMetadata.test.ts": {
+    "mtime": 1790087850.4387035,
+    "ast_hash": "47bdfd8fdf7bb67c2a095671a93721ff",
+    "semantic_hash": ""
+  },
+  "src/services/wardrobeMetadata.ts": {
+    "mtime": 1790088105.3426204,
+    "ast_hash": "e1f2441cf25f445b8aeccab1d26f925f",
+    "semantic_hash": ""
+  },
+  "supabase/functions/_shared/wardrobe-import/material-spec.test.ts": {
+    "mtime": 1790087851.5827215,
+    "ast_hash": "dd7819df4e9ccfa6c3a0955a188353ed",
+    "semantic_hash": ""
+  },
+  "supabase/functions/_shared/wardrobe-import/material-spec.ts": {
+    "mtime": 1790087887.2766054,
+    "ast_hash": "b37a8f31121b0ac421514ab3a15bf499",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260922_145826_redesign_wardrobe_clothes_details__fix_missing_met.md": {
+    "mtime": 1790089106.2591906,
+    "ast_hash": "58b0eeb4e6bcbea3f99129afa0ba0055",
+    "semantic_hash": ""
+  },
+  "src/features/explore/components/InspirationActions.tsx": {
+    "mtime": 1790588664.7442968,
+    "ast_hash": "9c30a2bba8f19c438ec5533c65cb4991",
+    "semantic_hash": ""
+  },
+  "src/features/explore/components/InspirationDetailContent.tsx": {
+    "mtime": 1790589187.8857758,
+    "ast_hash": "01a8976173d8f16a58c3dc30163c2d95",
+    "semantic_hash": ""
+  },
+  "src/features/explore/components/LegacyInspirationSave.tsx": {
+    "mtime": 1790588664.7864003,
+    "ast_hash": "74938b47e0d0e8adcf996f7fe0201b3f",
+    "semantic_hash": ""
+  },
+  "src/features/explore/components/SaveInspirationButton.tsx": {
+    "mtime": 1790588664.7384937,
+    "ast_hash": "44277f14886aa113791e0f337b36d7bb",
+    "semantic_hash": ""
+  },
+  "src/features/explore/hooks/useSavedInspirations.ts": {
+    "mtime": 1790588664.7947261,
+    "ast_hash": "1d2ea3678b9d3d1bf0684212aa1de337",
+    "semantic_hash": ""
+  },
+  "src/features/explore/screens/SavedInspirationsScreen.tsx": {
+    "mtime": 1790588664.8146698,
+    "ast_hash": "6a6ff507b5f786309702c6916fed82ee",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/components/FirstOutfitGuide.tsx": {
+    "mtime": 1790588664.887823,
+    "ast_hash": "94eab9ad7ef668d754089f4155624c14",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/presentation/firstOutfitProgress.ts": {
+    "mtime": 1790588664.8943548,
+    "ast_hash": "88493f74c7fbb78e8dad7a01f9deef6c",
+    "semantic_hash": ""
+  },
+  "src/features/stylist/tests/firstOutfitPath.test.ts": {
+    "mtime": 1790588664.9193244,
+    "ast_hash": "d7c750c8066c8e937101ffce62a9d5a3",
+    "semantic_hash": ""
+  },
+  "src/services/savedInspirationService.ts": {
+    "mtime": 1790588665.0346985,
+    "ast_hash": "0642499acab1372ef62b5924055e8052",
+    "semantic_hash": ""
+  },
+  "src/store/savedInspirationState.test.ts": {
+    "mtime": 1790588665.0045457,
+    "ast_hash": "8334c9db66d35b7dacad204d866eecf6",
+    "semantic_hash": ""
+  },
+  "src/store/savedInspirationState.ts": {
+    "mtime": 1790588664.9920552,
+    "ast_hash": "75573718caaee6862c697f2dc57a26b3",
+    "semantic_hash": ""
+  },
+  "src/store/savedInspirationStore.ts": {
+    "mtime": 1790588102.6361456,
+    "ast_hash": "3eed4325216067cd9c33988d80865301",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20260928000100_create_saved_inspirations.sql": {
+    "mtime": 1790588097.006556,
+    "ast_hash": "94a3dd669bf119816e54ed42d06d16b7",
+    "semantic_hash": ""
+  },
+  "docs/first-outfit-and-inspiration-verification.md": {
+    "mtime": 1790589404.808063,
+    "ast_hash": "9773d6b30ce313d078b4108d9fbec12d",
     "semantic_hash": ""
   }
 }

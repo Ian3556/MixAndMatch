@@ -31,7 +31,7 @@ export function buildCatalogWardrobeInput(
       material: product.material,
       season: product.seasonTags[0] ?? null,
       occasion: product.occasionTags[0] ?? null,
-      notes: product.description,
+      description: product.description,
       primaryImageUrl: product.imageUrl,
       imageUrls: product.imageUrls,
       price: variant?.price ?? product.price,

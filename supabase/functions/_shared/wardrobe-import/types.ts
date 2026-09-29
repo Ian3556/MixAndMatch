@@ -1,4 +1,8 @@
 export const MAX_IMPORTED_PRODUCTS = 50;
+export const MAX_RAW_PRODUCT_CANDIDATES = 200;
+export const MAX_JSON_LD_BLOCKS = 32;
+export const MAX_JSON_LD_DEPTH = 24;
+export const MAX_JSON_LD_NODES = 2_000;
 
 export type WardrobeImportErrorCode =
   | 'INVALID_URL'
@@ -28,6 +32,7 @@ export type ImportedProductCandidate = {
   category?: string;
   subcategory?: string;
   color?: string;
+  material?: string;
   size?: string;
   price?: number;
   currency?: string;
@@ -61,6 +66,7 @@ export type RawProductCandidate = {
   category?: string | undefined;
   subcategory?: string | undefined;
   color?: string | undefined;
+  material?: string | undefined;
   size?: string | undefined;
   price?: number | string | undefined;
   currency?: string | undefined;

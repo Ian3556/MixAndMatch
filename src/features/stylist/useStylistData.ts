@@ -49,6 +49,7 @@ export function useStylistData() {
     error: wardrobeError ?? stylistError,
     retry: () => {
       if (!user) return;
+      useStylistStore.getState().clearError();
       void Promise.all([refreshWardrobe(user.id), hydrateStylist(user.id)]);
     },
   };

@@ -133,6 +133,7 @@ export const useStylistStore = create<StylistStore>((set, get) => ({
 
   async recordFeedback(userId, recommendation, request, action) {
     requireHydratedUser(get(), userId);
+    const previous = get();
     const currentFeedback = get().feedbackByOutfit[recommendation.outfit.id] ?? {};
     let preferenceModel = get().preferenceModel;
     let history = get().history;
@@ -181,7 +182,20 @@ export const useStylistStore = create<StylistStore>((set, get) => ({
       },
       error: null,
     });
-    await persistCurrentState(userId, get, set);
+    const applied = get().feedbackByOutfit;
+    try {
+      await persistCurrentState(userId, get, set);
+    } catch (error) {
+      if (get().loadedUserId === userId && get().feedbackByOutfit === applied) {
+        set({
+          preferenceModel: previous.preferenceModel,
+          history: previous.history,
+          savedLooks: previous.savedLooks,
+          feedbackByOutfit: previous.feedbackByOutfit,
+        });
+      }
+      throw error;
+    }
   },
 
   async neverRecommendItem(userId, itemId) {
@@ -266,9 +280,11 @@ async function persistCurrentState(
   try {
     await write;
   } catch (error) {
-    set({
-      error: error instanceof Error ? error.message : 'Styling preferences could not be saved.',
-    });
+    if (get().loadedUserId === userId)
+      set({
+        error: error instanceof Error ? error.message : 'Styling preferences could not be saved.',
+      });
+    throw error;
   }
 }
 

@@ -6,6 +6,7 @@ import {
   stripTags,
 } from './html-utils.ts';
 import type { RawProductCandidate } from './types.ts';
+import { MAX_RAW_PRODUCT_CANDIDATES } from './types.ts';
 
 export function extractOpenGraphProduct(html: string, pageUrl: string): RawProductCandidate[] {
   const type = getMetaContent(html, 'og:type')?.toLowerCase();
@@ -34,33 +35,27 @@ export function extractOpenGraphProduct(html: string, pageUrl: string): RawProdu
   ];
 }
 
-export function extractPlatformProducts(html: string): RawProductCandidate[] {
+export function extractMarkupProducts(
+  html: string,
+  maximum = MAX_RAW_PRODUCT_CANDIDATES,
+): RawProductCandidate[] {
   const output: RawProductCandidate[] = [];
   const isShopify = /cdn\.shopify\.com|Shopify\.theme|\/products\//i.test(html);
   const isWooCommerce = /woocommerce|wc-block-grid|products columns-/i.test(html);
-  if (!isShopify && !isWooCommerce) return output;
 
   for (const anchor of readAnchors(html)) {
-    const pathLooksRelevant = isShopify
-      ? /\/products\//i.test(anchor.href)
-      : /product|woocommerce-loop-product/i.test(`${anchor.href} ${anchor.className}`);
-    if (!pathLooksRelevant) continue;
-    const candidate = mapAnchor(anchor, 'platform-adapter', 'medium');
-    if (candidate) output.push(candidate);
-  }
-  return output;
-}
-
-export function extractGenericHtmlProducts(html: string): RawProductCandidate[] {
-  const anchors = readAnchors(html);
-  const output: RawProductCandidate[] = [];
-
-  for (const anchor of anchors) {
     const signal = `${anchor.className} ${anchor.href}`;
-    if (!/(?:product|product-card|catalog-item|collection-item|\/p\/|\/item\/)/i.test(signal))
-      continue;
-    const candidate = mapAnchor(anchor, 'html-heuristic', 'low');
+    const platformMatch = isShopify
+      ? /\/products\//i.test(anchor.href)
+      : isWooCommerce && /product|woocommerce-loop-product/i.test(signal);
+    const genericMatch =
+      /(?:product|product-card|catalog-item|collection-item|\/p\/|\/item\/)/i.test(signal);
+    if (!platformMatch && !genericMatch) continue;
+    const candidate = platformMatch
+      ? mapAnchor(anchor, 'platform-adapter', 'medium')
+      : mapAnchor(anchor, 'html-heuristic', 'low');
     if (candidate) output.push(candidate);
+    if (output.length >= maximum) break;
   }
 
   return output;
@@ -73,19 +68,17 @@ type AnchorRecord = {
   attributes: Record<string, string>;
 };
 
-function readAnchors(html: string): AnchorRecord[] {
-  const output: AnchorRecord[] = [];
+function* readAnchors(html: string): Generator<AnchorRecord> {
   for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a\s*>/gi)) {
     const attributes = readAttributes(`<a ${match[1] ?? ''}>`);
     if (!attributes.href) continue;
-    output.push({
+    yield {
       href: attributes.href,
       className: attributes.class ?? '',
       body: match[2] ?? '',
       attributes,
-    });
+    };
   }
-  return output;
 }
 
 function mapAnchor(

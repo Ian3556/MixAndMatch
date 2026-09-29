@@ -2,6 +2,7 @@
 
 import { extractProductsFromHtml } from '../_shared/wardrobe-import/extract-products.ts';
 import { fetchHtmlPage, WardrobeImportError } from '../_shared/wardrobe-import/fetch-page.ts';
+import { createDenoPinnedFetch } from '../_shared/wardrobe-import/pinned-fetch.ts';
 import { resolvePublicDns } from '../_shared/wardrobe-import/resolve-public-dns.ts';
 import { validateImportUrl } from '../_shared/wardrobe-import/validate-url.ts';
 import type {
@@ -49,7 +50,7 @@ Deno.serve(async (request: Request) => {
 
     stage = 'page_fetch';
     const page = await fetchHtmlPage(validation.url.toString(), {
-      fetch,
+      fetchResolved: createDenoPinnedFetch(),
       resolveHostname: resolvePublicDns,
     });
     logStage('page_fetched', { domain: new URL(page.finalUrl).hostname.toLowerCase() });

@@ -1,9 +1,9 @@
 import type { CatalogJobEntryState } from './types';
 
-export function selectNextCatalogJobEntries(
-  entries: CatalogJobEntryState[],
+export function selectNextCatalogJobEntries<T extends CatalogJobEntryState>(
+  entries: T[],
   batchSize: number,
-): CatalogJobEntryState[] {
+): T[] {
   const safeBatchSize = Math.max(1, Math.min(Math.floor(batchSize), 20));
   return [...entries]
     .sort((left, right) => left.sequenceNumber - right.sequenceNumber)

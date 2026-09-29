@@ -117,4 +117,15 @@ describe('wardrobe service', () => {
       }),
     ).toMatchObject({ brand: null, currency: 'MYR' });
   });
+
+  it('keeps edit and delete operations scoped to the authenticated owner and item', async () => {
+    const testGateway = gateway();
+    const service = createWardrobeService(testGateway);
+    await service.update('user-1', 'item-1', { notes: 'Personal note' });
+    await service.delete('user-1', 'item-1');
+    expect(testGateway.update).toHaveBeenCalledWith('user-1', 'item-1', {
+      notes: 'Personal note',
+    });
+    expect(testGateway.delete).toHaveBeenCalledWith('user-1', 'item-1');
+  });
 });

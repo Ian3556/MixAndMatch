@@ -20,6 +20,7 @@ export type NormalizedClothingItem = {
   season?: string | null;
   occasion?: string | null;
   notes?: string | null;
+  description?: string | null;
   primaryImageUrl?: string | null;
   imageUrls?: string[];
   price?: number | null;
@@ -70,6 +71,7 @@ export type WardrobeItem = {
   season: string | null;
   occasion: string | null;
   notes: string | null;
+  description: string | null;
   isFavorite: boolean;
   imageUrl: string | null;
   imageUrls: string[];
@@ -100,6 +102,7 @@ export type CreateWardrobeItemInput = {
   season?: string | null;
   occasion?: string | null;
   notes?: string | null;
+  description?: string | null;
   isFavorite?: boolean;
   imageUrl?: string | null;
   imageUrls?: string[];

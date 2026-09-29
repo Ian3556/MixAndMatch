@@ -1,19 +1,33 @@
 import { getCanonicalUrl } from './html-utils.ts';
-import type { RawProductCandidate } from './types.ts';
+import {
+  MAX_JSON_LD_BLOCKS,
+  MAX_JSON_LD_DEPTH,
+  MAX_JSON_LD_NODES,
+  MAX_RAW_PRODUCT_CANDIDATES,
+  type RawProductCandidate,
+} from './types.ts';
 
 type JsonRecord = Record<string, unknown>;
 
-export function extractJsonLdProducts(html: string, pageUrl: string): RawProductCandidate[] {
+export function extractJsonLdProducts(
+  html: string,
+  pageUrl: string,
+  maximum = MAX_RAW_PRODUCT_CANDIDATES,
+): RawProductCandidate[] {
   const output: RawProductCandidate[] = [];
   const canonicalUrl = getCanonicalUrl(html);
+  const budget = { nodes: 0, maximum: Math.max(0, maximum) };
+  let blocks = 0;
 
   for (const match of html.matchAll(
     /<script\b[^>]*type\s*=\s*["']application\/ld\+json[^"']*["'][^>]*>([\s\S]*?)<\/script>/gi,
   )) {
+    blocks += 1;
+    if (blocks > MAX_JSON_LD_BLOCKS || output.length >= budget.maximum) break;
     const source = match[1]?.trim();
     if (!source) continue;
     try {
-      collectProducts(JSON.parse(source) as unknown, output, pageUrl, canonicalUrl);
+      collectProducts(JSON.parse(source) as unknown, output, pageUrl, canonicalUrl, budget, 0);
     } catch {
       // A malformed block must not prevent other metadata layers from running.
     }
@@ -26,29 +40,49 @@ function collectProducts(
   value: unknown,
   output: RawProductCandidate[],
   pageUrl: string,
-  canonicalUrl?: string,
+  canonicalUrl: string | undefined,
+  budget: { nodes: number; maximum: number },
+  depth: number,
 ) {
+  if (
+    depth > MAX_JSON_LD_DEPTH ||
+    budget.nodes >= MAX_JSON_LD_NODES ||
+    output.length >= budget.maximum
+  ) {
+    return;
+  }
+  budget.nodes += 1;
+
   if (Array.isArray(value)) {
-    value.forEach((item) => collectProducts(item, output, pageUrl, canonicalUrl));
+    for (const item of value) {
+      collectProducts(item, output, pageUrl, canonicalUrl, budget, depth + 1);
+      if (budget.nodes >= MAX_JSON_LD_NODES || output.length >= budget.maximum) break;
+    }
     return;
   }
   if (!isRecord(value)) return;
 
   const types = normalizeTypes(value['@type']);
-  if (types.includes('product')) output.push(mapProduct(value, pageUrl, canonicalUrl));
+  if (types.includes('product') && output.length < budget.maximum) {
+    output.push(mapProduct(value, pageUrl, canonicalUrl));
+  }
 
   if (types.includes('itemlist') && Array.isArray(value.itemListElement)) {
-    value.itemListElement.forEach((entry) => {
-      if (!isRecord(entry)) return;
+    for (const entry of value.itemListElement) {
+      if (output.length >= budget.maximum) break;
+      if (!isRecord(entry)) continue;
       const item = isRecord(entry.item) ? entry.item : entry;
       const itemTypes = normalizeTypes(item['@type']);
       if (itemTypes.includes('product') || (item.name && (item.url || entry.url))) {
         output.push(mapProduct({ ...item, url: item.url ?? entry.url }, pageUrl, canonicalUrl));
       }
-    });
+    }
   }
 
-  for (const nested of Object.values(value)) collectProducts(nested, output, pageUrl, canonicalUrl);
+  for (const nested of Object.values(value)) {
+    collectProducts(nested, output, pageUrl, canonicalUrl, budget, depth + 1);
+    if (budget.nodes >= MAX_JSON_LD_NODES || output.length >= budget.maximum) break;
+  }
 }
 
 function mapProduct(
@@ -72,6 +106,7 @@ function mapProduct(
     canonicalUrl: pageCanonical ?? readString(product.url),
     category: readString(product.category),
     color: readString(product.color),
+    material: readString(product.material),
     size: readString(product.size),
     price: typeof price === 'number' || typeof price === 'string' ? price : undefined,
     currency: readString(currency),

@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-n
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { IconButton } from '@/components/ui/IconButton';
+import { FirstOutfitGuide } from '@/features/stylist/components/FirstOutfitGuide';
 import { HOME_ROUTES, MAIN_ROUTES } from '@/navigation/routes';
 import type { HomeStackParamList, MainTabParamList } from '@/navigation/types';
 import { useAppTheme, type AppTheme } from '@/theme';
@@ -82,6 +83,8 @@ export function HomeScreen({ navigation }: Props) {
             </Text>
           </View>
         </View>
+
+        <FirstOutfitGuide />
 
         {status === 'loading' ? (
           <HomeEditorialSkeleton isTablet={isTablet} isWide={isWide} />

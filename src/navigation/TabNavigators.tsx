@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ExploreScreen } from '@/features/explore/screens/ExploreScreen';
+import { SavedInspirationsScreen } from '@/features/explore/screens/SavedInspirationsScreen';
 import { ExploreOutfitDetailScreen } from '@/features/explore/screens/ExploreOutfitDetailScreen';
 import { SearchResultsScreen } from '@/features/explore/screens/SearchResultsScreen';
 import { StyleCategoryScreen } from '@/features/explore/screens/StyleCategoryScreen';
@@ -35,6 +36,7 @@ import { BrandProductsScreen } from '@/features/wardrobe/screens/BrandProductsSc
 import { BrowseBrandsScreen } from '@/features/wardrobe/screens/BrowseBrandsScreen';
 import { CatalogProductDetailScreen } from '@/features/wardrobe/screens/CatalogProductDetailScreen';
 import { WardrobeItemDetailScreen } from '@/features/wardrobe/screens/WardrobeItemDetailScreen';
+import { EditWardrobeItemScreen } from '@/features/wardrobe/screens/EditWardrobeItemScreen';
 import { ImportWardrobeWebsiteScreen } from '@/features/wardrobe/screens/ImportWardrobeWebsiteScreen';
 import { WardrobeScreen } from '@/features/wardrobe/screens/WardrobeScreen';
 import { isCatalogDevToolsEnabled } from '@/constants/catalogDevTools';
@@ -74,6 +76,10 @@ export function ExploreTabNavigator() {
   return (
     <ExploreStack.Navigator screenOptions={screenOptions}>
       <ExploreStack.Screen component={ExploreScreen} name={EXPLORE_ROUTES.EXPLORE} />
+      <ExploreStack.Screen
+        component={SavedInspirationsScreen}
+        name={EXPLORE_ROUTES.SAVED_INSPIRATIONS}
+      />
       <ExploreStack.Screen component={SearchResultsScreen} name={EXPLORE_ROUTES.SEARCH_RESULTS} />
       <ExploreStack.Screen component={StyleCategoryScreen} name={EXPLORE_ROUTES.STYLE_CATEGORY} />
       <ExploreStack.Screen
@@ -112,6 +118,7 @@ export function WardrobeTabNavigator() {
         component={WardrobeItemDetailScreen}
         name={WARDROBE_ROUTES.ITEM_DETAIL}
       />
+      <WardrobeStack.Screen component={EditWardrobeItemScreen} name={WARDROBE_ROUTES.EDIT_ITEM} />
     </WardrobeStack.Navigator>
   );
 }

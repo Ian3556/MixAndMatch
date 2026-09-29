@@ -1,13 +1,16 @@
 import { WardrobeImportError } from './fetch-page.ts';
-import { isUnsafeIpAddress } from './validate-url.ts';
+import { isIpAddress, isUnsafeIpAddress } from './validate-url.ts';
 
-export async function resolvePublicDns(hostname: string): Promise<string[]> {
+export async function resolvePublicDns(hostname: string, signal?: AbortSignal): Promise<string[]> {
   const unwrapped = hostname.replace(/^\[|\]$/g, '');
   if (/^\d{1,3}(?:\.\d{1,3}){3}$/.test(unwrapped) || unwrapped.includes(':')) return [unwrapped];
 
   const responses = await Promise.all(
     ['A', 'AAAA'].map(async (type) => {
       const controller = new AbortController();
+      const relayAbort = () => controller.abort();
+      if (signal?.aborted) controller.abort();
+      else signal?.addEventListener('abort', relayAbort, { once: true });
       const timeout = setTimeout(() => controller.abort(), 3000);
       try {
         const response = await fetch(
@@ -22,9 +25,12 @@ export async function resolvePublicDns(hostname: string): Promise<string[]> {
         return (body.Answer ?? [])
           .filter((answer) => answer.type === 1 || answer.type === 28)
           .map((answer) => answer.data)
-          .filter((address): address is string => Boolean(address));
+          .filter(
+            (address): address is string => typeof address === 'string' && isIpAddress(address),
+          );
       } finally {
         clearTimeout(timeout);
+        signal?.removeEventListener('abort', relayAbort);
       }
     }),
   );

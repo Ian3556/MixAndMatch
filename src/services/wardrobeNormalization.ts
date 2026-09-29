@@ -3,6 +3,7 @@ import type {
   CreateWardrobeItemInput,
   NormalizedClothingItem,
 } from '@/types/wardrobe';
+import { resolveWardrobeMetadata } from '@/services/wardrobeMetadata';
 
 export class WardrobeNormalizationError extends Error {
   constructor(message: string) {
@@ -19,6 +20,14 @@ export function normalizeClothingItem(input: NormalizedClothingItem): Normalized
 
   const primaryImageUrl = nullable(input.primaryImageUrl);
   const imageUrls = uniqueStrings([primaryImageUrl, ...(input.imageUrls ?? [])]);
+  const description = nullable(input.description);
+  const resolved = resolveWardrobeMetadata({ ...input, description });
+  const sources = { ...resolved.sources };
+  if (input.sourceType === 'manual') {
+    for (const key of Object.keys(sources) as (keyof typeof sources)[]) {
+      if (sources[key] === 'source') sources[key] = 'user';
+    }
+  }
 
   return {
     sourceType: input.sourceType,
@@ -28,21 +37,26 @@ export function normalizeClothingItem(input: NormalizedClothingItem): Normalized
     sourceUrl: nullable(input.sourceUrl),
     sourceDomain: nullable(input.sourceDomain),
     externalProductId: nullable(input.externalProductId),
-    brand: nullable(input.brand),
-    subcategory: nullable(input.subcategory),
-    color: nullable(input.color),
+    brand: resolved.brand,
+    subcategory: resolved.subcategory,
+    color: resolved.color,
     secondaryColor: nullable(input.secondaryColor),
     size: nullable(input.size),
     pattern: nullable(input.pattern),
-    material: nullable(input.material),
-    season: nullable(input.season),
-    occasion: nullable(input.occasion),
+    material: resolved.material,
+    season: resolved.season,
+    occasion: resolved.occasion,
     notes: nullable(input.notes),
+    description,
     primaryImageUrl: primaryImageUrl ?? imageUrls[0] ?? null,
     imageUrls,
     price: normalizePrice(input.price),
     currency: normalizeCurrency(input.currency),
-    metadata: input.metadata ?? {},
+    metadata: {
+      ...(input.metadata ?? {}),
+      ...(description ? { productDescription: description } : {}),
+      metadataSources: sources,
+    },
   };
 }
 
@@ -66,6 +80,7 @@ export function buildWardrobeInput(
     season: normalized.season ?? null,
     occasion: normalized.occasion ?? null,
     notes: normalized.notes ?? null,
+    description: normalized.description ?? null,
     isFavorite,
     imageUrl: normalized.primaryImageUrl ?? null,
     imageUrls: normalized.imageUrls ?? [],

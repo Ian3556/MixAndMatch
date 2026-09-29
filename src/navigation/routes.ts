@@ -34,6 +34,7 @@ export const HOME_ROUTES = {
 
 export const EXPLORE_ROUTES = {
   EXPLORE: 'Explore',
+  SAVED_INSPIRATIONS: 'SavedInspirations',
   SEARCH_RESULTS: 'SearchResults',
   STYLE_CATEGORY: 'StyleCategory',
   INSPIRATION_DETAIL: 'InspirationDetail',
@@ -50,6 +51,7 @@ export const WARDROBE_ROUTES = {
   ADD_ITEM_DETAILS: 'AddItemDetails',
   ADD_ITEM_REVIEW: 'AddItemReview',
   ITEM_DETAIL: 'WardrobeItemDetail',
+  EDIT_ITEM: 'EditWardrobeItem',
 } as const;
 
 export const STYLIST_ROUTES = {

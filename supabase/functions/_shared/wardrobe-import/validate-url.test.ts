@@ -33,7 +33,15 @@ describe('wardrobe import URL validation', () => {
     expect(isUnsafeIpAddress('172.20.1.4')).toBe(true);
     expect(isUnsafeIpAddress('fe80::1')).toBe(true);
     expect(isUnsafeIpAddress('fd00::1')).toBe(true);
+    expect(isUnsafeIpAddress('::ffff:7f00:1')).toBe(true);
+    expect(isUnsafeIpAddress('::ffff:a00:1')).toBe(true);
+    expect(isUnsafeIpAddress('192.0.2.1')).toBe(true);
+    expect(isUnsafeIpAddress('198.51.100.1')).toBe(true);
+    expect(isUnsafeIpAddress('203.0.113.1')).toBe(true);
+    expect(isUnsafeIpAddress('2001:db8::1')).toBe(true);
     expect(isUnsafeIpAddress('8.8.8.8')).toBe(false);
+    expect(isUnsafeIpAddress('::ffff:808:808')).toBe(false);
+    expect(isUnsafeIpAddress('2001:4860:4860::8888')).toBe(false);
     expect(validateImportUrl('http://127.0.0.1/redirect')).toMatchObject({
       ok: false,
       code: 'UNSAFE_URL',

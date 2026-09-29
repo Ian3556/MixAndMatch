@@ -3,12 +3,21 @@ import { type PropsWithChildren, useEffect } from 'react';
 
 import { beginStartupProgress, markStartupStep } from '@/features/startup/startupProgress';
 import { useAuthStore } from '@/store/authStore';
+import { savedInspirationStore } from '@/store/savedInspirationStore';
 import { startSupabaseAutoRefresh } from '@supabase';
 
 export function AuthBootstrap({ children }: PropsWithChildren) {
   const initialize = useAuthStore((state) => state.initialize);
   const dispose = useAuthStore((state) => state.dispose);
   const handleAuthUrl = useAuthStore((state) => state.handleAuthUrl);
+
+  useEffect(
+    () =>
+      useAuthStore.subscribe((state, previous) => {
+        if (state.user?.id !== previous.user?.id) savedInspirationStore.getState().reset();
+      }),
+    [],
+  );
 
   useEffect(() => {
     beginStartupProgress();

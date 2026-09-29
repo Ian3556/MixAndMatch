@@ -1,7 +1,11 @@
 import { create } from 'zustand';
 
 import { createSupabaseWardrobeGateway } from '@/services/supabaseWardrobeGateway';
-import { createWardrobeService, type WardrobeService } from '@/services/wardrobeService';
+import {
+  createWardrobeService,
+  type WardrobeService,
+  type WardrobeUpdate,
+} from '@/services/wardrobeService';
 import type {
   CreateWardrobeItemInput,
   WardrobeItem,
@@ -21,6 +25,7 @@ type WardrobeStore = {
   addMany: (userId: string, inputs: CreateWardrobeItemInput[]) => Promise<WardrobeItemSaveResult[]>;
   setViewMode: (viewMode: WardrobeViewMode) => void;
   toggleFavorite: (userId: string, itemId: string) => Promise<void>;
+  updateItem: (userId: string, itemId: string, payload: WardrobeUpdate) => Promise<void>;
   deleteItem: (userId: string, itemId: string) => Promise<void>;
   reset: () => void;
 };
@@ -86,6 +91,14 @@ export const useWardrobeStore = create<WardrobeStore>((set, get) => ({
     const item = get().items.find((candidate) => candidate.id === itemId);
     if (!item) return;
     const updated = await getService().update(userId, itemId, { is_favorite: !item.isFavorite });
+    set((state) => ({
+      items: state.items.map((candidate) => (candidate.id === itemId ? updated : candidate)),
+    }));
+  },
+
+  async updateItem(userId, itemId, payload) {
+    const updated = await getService().update(userId, itemId, payload);
+    if (get().loadedUserId !== userId) return;
     set((state) => ({
       items: state.items.map((candidate) => (candidate.id === itemId ? updated : candidate)),
     }));

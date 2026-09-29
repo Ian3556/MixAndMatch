@@ -4,6 +4,7 @@ import type {
   WardrobeItem,
   WardrobeItemSaveResult,
 } from '@/types/wardrobe';
+import { resolveWardrobeMetadata, type MetadataValue } from '@/services/wardrobeMetadata';
 
 export type WardrobeRow = Database['public']['Tables']['wardrobe_items']['Row'];
 export type WardrobeInsert = Database['public']['Tables']['wardrobe_items']['Insert'];
@@ -92,22 +93,53 @@ export function createWardrobeService(gateway: WardrobeGateway) {
 }
 
 export function mapWardrobeRow(row: WardrobeRow): WardrobeItem {
+  const metadata = asMetadata(row.metadata);
+  const storedDescription =
+    typeof metadata.productDescription === 'string' ? metadata.productDescription : null;
+  const legacyDescription =
+    !storedDescription &&
+    row.notes &&
+    (row.source_type === 'catalog' ||
+      (row.source_type === 'url_import' && typeof metadata.extractionMethod === 'string'))
+      ? row.notes
+      : null;
+  const description = storedDescription ?? legacyDescription;
+  const suppressed = Array.isArray(metadata.metadataSuppressed)
+    ? metadata.metadataSuppressed.filter(
+        (value): value is MetadataValue => typeof value === 'string',
+      )
+    : [];
+  const resolved = resolveWardrobeMetadata({
+    name: row.name,
+    category: row.category,
+    brand: row.brand,
+    color: row.primary_color,
+    subcategory: row.subcategory,
+    material: row.material,
+    season: row.season,
+    occasion: row.occasion,
+    description,
+    sourceDomain: row.source_domain,
+    sourceUrl: row.source_url,
+    suppressed,
+  });
   return {
     id: row.id,
     userId: row.user_id,
     catalogProductId: row.catalog_product_id,
     name: row.name,
     category: row.category,
-    subcategory: row.subcategory,
-    primaryColor: row.primary_color,
+    subcategory: resolved.subcategory,
+    primaryColor: resolved.color,
     secondaryColor: row.secondary_color,
     size: row.size,
     pattern: row.pattern,
-    material: row.material,
-    brand: row.brand,
-    season: row.season,
-    occasion: row.occasion,
-    notes: row.notes,
+    material: resolved.material,
+    brand: resolved.brand,
+    season: resolved.season,
+    occasion: resolved.occasion,
+    notes: legacyDescription ? null : row.notes,
+    description,
     isFavorite: row.is_favorite,
     imageUrl: row.image_url,
     imageUrls: row.image_urls,
@@ -118,7 +150,14 @@ export function mapWardrobeRow(row: WardrobeRow): WardrobeItem {
     currency: row.currency,
     importMethod: row.import_method,
     sourceType: row.source_type,
-    metadata: asMetadata(row.metadata),
+    metadata: {
+      ...metadata,
+      ...(description ? { productDescription: description } : {}),
+      metadataSources:
+        typeof metadata.metadataSources === 'object' && metadata.metadataSources !== null
+          ? metadata.metadataSources
+          : resolved.sources,
+    },
     deduplicationKey: row.deduplication_key,
     createdAt: row.created_at,
     updatedAt: row.updated_at,

@@ -71,15 +71,29 @@ export function isUnsafeIpAddress(value: string): boolean {
   if (ipv4) return isUnsafeIpv4(ipv4);
 
   if (!normalized.includes(':')) return false;
+  const ipv6 = parseIpv6(normalized);
+  if (!ipv6) return true;
 
-  if (normalized === '::' || normalized === '::1') return true;
-  if (normalized.startsWith('fc') || normalized.startsWith('fd')) return true;
+  const mappedIpv4 = readMappedIpv4(ipv6);
+  if (mappedIpv4) return isUnsafeIpv4(mappedIpv4);
 
-  const firstGroup = Number.parseInt(normalized.split(':')[0] || '0', 16);
-  if (Number.isFinite(firstGroup) && firstGroup >= 0xfe80 && firstGroup <= 0xfebf) return true;
+  // Import targets must use globally routable unicast addresses. This rejects unspecified,
+  // loopback, IPv4-compatible, NAT64, ULA, link-local, multicast and other special ranges.
+  const globallyRoutableUnicast = (ipv6[0]! & 0xe000) === 0x2000;
+  if (!globallyRoutableUnicast) return true;
 
-  const mappedIpv4 = normalized.match(/(?:^|:)(\d{1,3}(?:\.\d{1,3}){3})$/)?.[1];
-  return mappedIpv4 ? isUnsafeIpAddress(mappedIpv4) : false;
+  // Documentation and ORCHID ranges are not valid public service destinations.
+  if (ipv6[0] === 0x2001 && ipv6[1] === 0x0db8) return true;
+  if (ipv6[0] === 0x2001 && ((ipv6[1]! & 0xfff0) === 0x0010 || (ipv6[1]! & 0xfff0) === 0x0020)) {
+    return true;
+  }
+
+  return false;
+}
+
+export function isIpAddress(value: string): boolean {
+  const normalized = stripIpv6Brackets(value).toLowerCase();
+  return parseIpv4(normalized) !== null || parseIpv6(normalized) !== null;
 }
 
 function parseIpv4(value: string): number[] | null {
@@ -89,7 +103,7 @@ function parseIpv4(value: string): number[] | null {
 }
 
 function isUnsafeIpv4(parts: number[]): boolean {
-  const [first = 0, second = 0] = parts;
+  const [first = 0, second = 0, third = 0] = parts;
   return (
     first === 0 ||
     first === 10 ||
@@ -98,10 +112,52 @@ function isUnsafeIpv4(parts: number[]): boolean {
     (first === 169 && second === 254) ||
     (first === 172 && second >= 16 && second <= 31) ||
     (first === 192 && second === 0) ||
+    (first === 192 && second === 0 && third === 2) ||
+    (first === 192 && second === 88 && third === 99) ||
     (first === 192 && second === 168) ||
     (first === 198 && (second === 18 || second === 19)) ||
+    (first === 198 && second === 51 && third === 100) ||
+    (first === 203 && second === 0 && third === 113) ||
     first >= 224
   );
+}
+
+function parseIpv6(value: string): number[] | null {
+  if (!/^[0-9a-f:.]+$/.test(value) || (value.match(/::/g)?.length ?? 0) > 1) return null;
+
+  let source = value;
+  const dottedSuffix = source.match(/(?:^|:)(\d{1,3}(?:\.\d{1,3}){3})$/)?.[1];
+  if (dottedSuffix) {
+    const dotted = parseIpv4(dottedSuffix);
+    if (!dotted) return null;
+    const replacement = `${((dotted[0]! << 8) | dotted[1]!).toString(16)}:${((dotted[2]! << 8) | dotted[3]!).toString(16)}`;
+    source = source.slice(0, -dottedSuffix.length) + replacement;
+  }
+
+  const [leftSource, rightSource] = source.split('::');
+  const left = leftSource ? leftSource.split(':') : [];
+  const right = rightSource ? rightSource.split(':') : [];
+  if (source.includes('::')) {
+    const omitted = 8 - left.length - right.length;
+    if (omitted < 1) return null;
+    return parseIpv6Groups([...left, ...Array<string>(omitted).fill('0'), ...right]);
+  }
+  return parseIpv6Groups(left);
+}
+
+function parseIpv6Groups(groups: string[]): number[] | null {
+  if (groups.length !== 8) return null;
+  const parsed = groups.map((group) =>
+    /^[0-9a-f]{1,4}$/.test(group) ? Number.parseInt(group, 16) : NaN,
+  );
+  return parsed.every(Number.isFinite) ? parsed : null;
+}
+
+function readMappedIpv4(groups: number[]): number[] | null {
+  if (groups.slice(0, 5).every((group) => group === 0) && groups[5] === 0xffff) {
+    return [groups[6]! >> 8, groups[6]! & 0xff, groups[7]! >> 8, groups[7]! & 0xff];
+  }
+  return null;
 }
 
 function stripIpv6Brackets(value: string): string {

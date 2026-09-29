@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View, type DimensionValue } from 'react-native';
+import type { ReactNode } from 'react';
 
 import type { InspirationFixture } from '@/fixtures/inspiration';
 import { useAppTheme, type AppTheme } from '@/theme';
@@ -9,12 +10,12 @@ import { PlaceholderArtwork } from './PlaceholderArtwork';
 type InspirationCardProps = {
   item: InspirationFixture;
   onOpen: () => void;
-  onSave: () => void;
+  saveAction: ReactNode;
   onMore: () => void;
   width?: DimensionValue;
 };
 
-export function InspirationCard({ item, onOpen, onSave, onMore, width }: InspirationCardProps) {
+export function InspirationCard({ item, onOpen, saveAction, onMore, width }: InspirationCardProps) {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
@@ -37,9 +38,9 @@ export function InspirationCard({ item, onOpen, onSave, onMore, width }: Inspira
             {item.category}
           </Text>
         </View>
-        <IconButton label={`Save ${item.title}`} onPress={onSave} symbol="♡" />
         <IconButton label={`More options for ${item.title}`} onPress={onMore} symbol="⋯" />
       </View>
+      {saveAction}
     </View>
   );
 }

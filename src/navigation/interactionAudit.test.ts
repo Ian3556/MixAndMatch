@@ -95,10 +95,12 @@ describe('application interaction audit', () => {
   });
 
   it('pushes related Explore outfits and overlays the circular Back control on the image', () => {
-    const detail = readFileSync(
+    const detail = [
       'src/features/explore/screens/ExploreOutfitDetailScreen.tsx',
-      'utf8',
-    );
+      'src/features/explore/components/InspirationDetailContent.tsx',
+    ]
+      .map((file) => readFileSync(file, 'utf8'))
+      .join('\n');
 
     expect(detail).toContain('navigation.push(EXPLORE_ROUTES.INSPIRATION_DETAIL');
     expect(detail).toContain('<ExploreMasonryFeed');

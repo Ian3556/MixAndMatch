@@ -1,4 +1,5 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ActionButton } from '@/components/ActionButton';
 import { useCallback, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
@@ -88,6 +89,12 @@ export function ExploreScreen({ navigation }: Props) {
     <>
       <AppScreen hideHeader title="">
         <View style={styles.page}>
+          <ActionButton
+            label="Saved inspirations"
+            onPress={() => navigation.navigate(EXPLORE_ROUTES.SAVED_INSPIRATIONS)}
+            square
+            variant="text"
+          />
           <View style={styles.searchRow}>
             <View style={styles.search}>
               <SearchBar
